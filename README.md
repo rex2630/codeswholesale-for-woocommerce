@@ -14,6 +14,7 @@ TO DO
 Nice to have
 ------------
 * Post back query from CodesWholesale to shop about stock instead cron (benefit: more accurate stock details)
+* Post back query from CodesWholesale to shop to let know that preorder is ready to download
 
 What it does
 ------------
