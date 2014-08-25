@@ -9,6 +9,7 @@ TO DO
 * Add image codes to custom email about completed order
 * Cron job to update stock information
 * Cron job to check that all orders are full filled with keys
+* Somehow support preorders
 
 
 What it does
