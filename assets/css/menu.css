@@ -1,0 +1,9 @@
+.dashicons-admin-codeswholesale {
+	background-image: url("../images/codeswholesale-icon.png");
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}
+
+.woocommerce_options_panel label {
+    width: 200px !important;
+}

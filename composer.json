@@ -1,0 +1,24 @@
+{
+    "name": "codeswholesale/woocommerce",
+    "type": "library",
+    "description": "Plugin for WordPress/WooCommerce",
+    "keywords": [
+        "codeswholesale",
+        "cloud",
+        "security",
+        "api",
+        "games",
+        "cd-keys"],
+    "homepage": "https://github.com/codeswholesale/codeswholesale-woocommerce",
+    "license": "Apache 2.0",
+    "authors": [
+        {
+            "name": "CodesWholesale.com",
+            "email": "devteam@codeswholesale.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "codeswholesale/sdk": "1.0.*@beta"
+    }
+}
