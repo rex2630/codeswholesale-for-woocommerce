@@ -33,6 +33,8 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
     <?php endforeach; ?>
 
+    <br />
+
 <?php endforeach; ?>
 
 <?php do_action('woocommerce_email_after_order_table', $order, $sent_to_admin, $plain_text); ?>

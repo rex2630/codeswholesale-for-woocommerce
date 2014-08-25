@@ -63,7 +63,7 @@ final class CodesWholesale
 
         $this->includes();
 
-        $this->configureCwClient();
+        $this->configure_cw_client();
 
     }
 
@@ -106,6 +106,7 @@ final class CodesWholesale
         include_once( 'includes/class-cw-install.php' );
         include_once( 'includes/class-cw-checkout.php');
         include_once( 'includes/class-cw-sendkeys.php');
+        include_once( 'includes/class-cw-update-stock.php');
 
         if (is_admin()) {
 
@@ -172,18 +173,14 @@ final class CodesWholesale
     /**
      *
      */
-    private function configureCwClient()
+    private function configure_cw_client()
     {
-        if(is_admin()) {
-
-            $json = json_decode(get_option(CodesWholesaleConst::SETTINGS_CODESWHOLESALE_PARAMS_NAME));
-
-            if($json) {
-                $params = get_object_vars($json);
-                $params['cw.token_storage'] = new \fkooman\OAuth\Client\SessionStorage();
-                $clientBuilder = new \CodesWholesale\ClientBuilder($params);
-                $this->codesWholesaleClient = $clientBuilder->build();
-            }
+        $json = json_decode(get_option(CodesWholesaleConst::SETTINGS_CODESWHOLESALE_PARAMS_NAME));
+        if($json) {
+            $params = get_object_vars($json);
+            $params['cw.token_storage'] = new \fkooman\OAuth\Client\SessionStorage();
+            $clientBuilder = new \CodesWholesale\ClientBuilder($params);
+            $this->codesWholesaleClient = $clientBuilder->build();
         }
     }
 
@@ -200,7 +197,7 @@ final class CodesWholesale
     public function refreshCodesWholesaleClient()
     {
         $_SESSION["php-oauth-client"]= array();
-        $this->configureCwClient();
+        $this->configure_cw_client();
     }
 }
 

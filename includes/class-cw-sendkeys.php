@@ -31,7 +31,6 @@ if (!class_exists('CW_SendKeys')) :
 
             $items = $order->get_items();
 
-
             foreach ($items as $item_key => $item) {
 
                 $product_id = $item["product_id"];
