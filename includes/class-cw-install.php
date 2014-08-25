@@ -16,6 +16,7 @@ if (!class_exists('CW_Install')) :
         public function __construct()
         {
             register_activation_hook(CW_PLUGIN_FILE, array($this, 'install'));
+            add_action( 'woocommerce_email', array($this, 'unhook_those_pesky_emails' ));
         }
 
         /**
@@ -40,6 +41,9 @@ if (!class_exists('CW_Install')) :
             add_option(CodesWholesaleConst::SETTINGS_CODESWHOLESALE_PARAMS_NAME, json_encode($params));
         }
 
+        public function unhook_those_pesky_emails( $email_class) {
+            remove_action('woocommerce_order_status_completed_notification', array(&$email_class->emails['WC_Email_Customer_Completed_Order'], 'trigger'));
+        }
     }
 
 endif;

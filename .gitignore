@@ -18,3 +18,5 @@
 .idea/workspace.xml
 
 vendor/*
+
+composer.lock

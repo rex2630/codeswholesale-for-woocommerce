@@ -51,7 +51,7 @@ if (!class_exists('CW_Email_Customer_Completed_Order')) :
         /**
          * @param $sendTo
          */
-        public function sendKeys()
+        public function send_keys()
         {
             $this->send($this->get_recipient(), $this->get_subject(), $this->get_content(), $this->get_headers(), $this->get_attachments());
         }

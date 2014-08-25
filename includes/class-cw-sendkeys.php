@@ -55,7 +55,7 @@ if (!class_exists('CW_SendKeys')) :
             include('emails/class-cw-email-customer-completed-order.php');
 
             $email = new CW_Email_Customer_Completed_Order($keys, $order);
-            $email->sendKeys();
+            $email->send_keys();
         }
     }
 

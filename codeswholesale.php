@@ -157,7 +157,7 @@ final class CodesWholesale
      * @return string
      */
     public function template_path() {
-        return apply_filters( 'CW_TEMPLATE_PATH', 'codeswholesale/' );
+        return apply_filters( 'CW_TEMPLATE_PATH', 'codeswholesale-woocommerce/' );
     }
 
     /**
