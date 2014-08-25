@@ -12,11 +12,12 @@ if (!class_exists('CW_Email_Customer_Completed_Order')) :
     {
 
         private $keys;
+        private $attachments;
 
         /**
          * Constructor
          */
-        function __construct(array $keys, $order)
+        function __construct($order)
         {
 
             $this->id = 'customer_completed_order';
@@ -36,7 +37,6 @@ if (!class_exists('CW_Email_Customer_Completed_Order')) :
             parent::__construct();
 
             $this->object = $order;
-            $this->keys = $keys;
 
             $this->recipient = $this->object->billing_email;
 
@@ -47,12 +47,21 @@ if (!class_exists('CW_Email_Customer_Completed_Order')) :
             $this->replace[] = $this->object->get_order_number();
         }
 
+        /**
+         *
+         * @return mixed
+         */
+        function get_attachments() {
+            return apply_filters( 'woocommerce_email_attachments',$this->attachments , $this->id, $this->object );
+        }
 
         /**
          * @param $sendTo
          */
-        public function send_keys()
+        public function send_keys(array $keys, $attachments)
         {
+            $this->keys = $keys;
+            $this->attachments = $attachments;
             $this->send($this->get_recipient(), $this->get_subject(), $this->get_content(), $this->get_headers(), $this->get_attachments());
         }
 

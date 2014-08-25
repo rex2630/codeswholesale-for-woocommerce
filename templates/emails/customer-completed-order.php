@@ -16,7 +16,21 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
     <b><?php echo $key['item']['name']; ?> </b> <br/>
 
     <?php foreach ($key['codes'] as $code) : ?>
-        <?php echo $code->getCode(); ?> <br/>
+
+        <?php
+            if($code->isText())
+            {
+                echo $code->getCode();
+            }
+
+            else if ($code->isImage())
+            {
+                echo 'Check in attachment file: '. $code->getFileName();
+            }
+        ?>
+
+        <br />
+
     <?php endforeach; ?>
 
 <?php endforeach; ?>
