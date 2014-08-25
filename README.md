@@ -13,6 +13,6 @@ TO DO
 
 What it does
 ------------
-* Adds a field to product in "General tab"
+* Adds a field to product to match with CodesWholesale's product in "General tab" 
 * Sends buys and sends keys when order is marked as complete
 * Disable with plugin activation, WooCommerce's email notification about completed order
