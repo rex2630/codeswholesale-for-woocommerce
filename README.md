@@ -11,6 +11,10 @@ TO DO
 * Somehow support preorders
 
 
+Nice to have
+------------
+* Post back query from CodesWholesale to shop about stock instead cron (benefit: more accurate stock details)
+
 What it does
 ------------
 * Adds a field to product to match with CodesWholesale's product in "General tab" 
