@@ -14,5 +14,5 @@ TO DO
 What it does
 ------------
 * Adds a field to product to match with CodesWholesale's product in "General tab" 
-* Sends buys and sends keys (text and images) when order is marked as complete
+* Buys and sends keys (text and images) when order is marked as complete
 * Disable with plugin activation, WooCommerce's email notification about completed order
