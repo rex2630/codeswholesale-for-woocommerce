@@ -79,8 +79,6 @@ if (!class_exists('CW_Admin_Menus')) :
 
             if(isset($_POST['cw_complete_order'])) {
                 update_option(CodesWholesaleConst::AUTOMATICALLY_COMPLETE_ORDER_OPTION_NAME, $_POST['cw_complete_order']);
-            } else {
-                update_option(CodesWholesaleConst::AUTOMATICALLY_COMPLETE_ORDER_OPTION_NAME, CodesWholesaleAutoCompleteOrder::NOT_COMPLETE);
             }
 
             if(isset($_POST['cw_balance_value'])) {

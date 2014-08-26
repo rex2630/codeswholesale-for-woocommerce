@@ -29,7 +29,7 @@ if (!class_exists('CW_SendKeys')) :
             $attachments = array();
             $keys = array();
             $error = null;
-            $balance_value = get_option(CodesWholesaleConst::NOTIFY_LOW_BALANCE_VALUE_OPTION_NAME);
+            $balance_value = floatval(get_option(CodesWholesaleConst::NOTIFY_LOW_BALANCE_VALUE_OPTION_NAME));
 
             $items = $order->get_items();
 
@@ -77,7 +77,7 @@ if (!class_exists('CW_SendKeys')) :
 
                 $account = CW()->getCodesWholesaleClient()->getAccount();
 
-                if ($balance_value > 10) {
+                if ($balance_value >= $account->getCurrentBalance()) {
                     do_action("codeswholesale_balance_to_low", $account);
                 }
 
