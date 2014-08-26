@@ -2,6 +2,7 @@
 /**
  * Plugin Name: CodesWholesale for WooCommerce
  * Plugin URI: http://docs.codeshowlesale.com
+ * Depends: WooCommerce
  * Description: Integration with CodesWholesale API.
  * Version: 1.0
  * Author: DevTeam devteam@codeswholesale.com
@@ -26,7 +27,12 @@ final class CodesWholesaleConst {
     const PRODUCT_CODESWHOLESALE_ID_PROP_NAME      = "_codeswholesale_product_id";
     const ORDER_FULL_FILLED_PARAM_NAME             = "_codeswholesale_filled";
     const AUTOMATICALLY_COMPLETE_ORDER_OPTION_NAME = "_codeswholesale_auto_complete";
+    const NOTIFY_LOW_BALANCE_VALUE_OPTION_NAME     = "_codeswholesale_notify_balance_value";
     const SETTINGS_CODESWHOLESALE_PARAMS_NAME      = "codeswholesale_params";
+
+    static public function format_money($money){
+        return  "€". number_format($money, 2, '.', '');
+    }
 
 }
 
@@ -76,6 +82,8 @@ final class CodesWholesale
         $this->includes();
 
         $this->configure_cw_client();
+
+        $this->emails();
 
     }
 
@@ -214,6 +222,11 @@ final class CodesWholesale
         $_SESSION["php-oauth-client"]= array();
         $this->configure_cw_client();
     }
+
+    public function emails()
+    {
+
+    }
 }
 
 /**
@@ -228,3 +241,5 @@ function CW()
 }
 
 CW();
+
+

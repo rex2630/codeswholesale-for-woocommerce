@@ -38,8 +38,11 @@ if (!class_exists('CW_Install')) :
                 'cw.endpoint_uri' => static::$default_env
             );
 
+
+            add_option(CodesWholesaleConst::NOTIFY_LOW_BALANCE_VALUE_OPTION_NAME, 100);
             add_option(CodesWholesaleConst::AUTOMATICALLY_COMPLETE_ORDER_OPTION_NAME, 0);
             add_option(CodesWholesaleConst::SETTINGS_CODESWHOLESALE_PARAMS_NAME, json_encode($params));
+
         }
 
         public function unhook_those_pesky_emails( $email_class) {

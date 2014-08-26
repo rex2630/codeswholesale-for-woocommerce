@@ -39,7 +39,7 @@ if (!class_exists('CW_Admin_Menus')) :
                 'post_type' => 'shop_order',
 
                 'meta_key'    => '_codeswholesale_filled',
-                'meta_value'  => 0,
+                'meta_value'  => 1,
 
                 'tax_query' => array(
                     array(
@@ -48,7 +48,7 @@ if (!class_exists('CW_Admin_Menus')) :
                         'terms' => $term->term_id)
                 ),
 
-                'numberposts' => -1
+                'numberposts' => 1
 
             ));
 
@@ -83,6 +83,10 @@ if (!class_exists('CW_Admin_Menus')) :
                 update_option(CodesWholesaleConst::AUTOMATICALLY_COMPLETE_ORDER_OPTION_NAME, CodesWholesaleAutoCompleteOrder::NOT_COMPLETE);
             }
 
+            if(isset($_POST['cw_balance_value'])) {
+                update_option(CodesWholesaleConst::NOTIFY_LOW_BALANCE_VALUE_OPTION_NAME, $_POST['cw_balance_value']);
+            }
+
             $account = null;
             $error = null;
 
@@ -93,6 +97,7 @@ if (!class_exists('CW_Admin_Menus')) :
                 $error = $e;
             }
 
+            $balance_value = get_option(CodesWholesaleConst::NOTIFY_LOW_BALANCE_VALUE_OPTION_NAME);
             $auto_order_complete = get_option(CodesWholesaleConst::AUTOMATICALLY_COMPLETE_ORDER_OPTION_NAME);
             $settings = CW_Settings_Vo::fromOption(get_option(CodesWholesaleConst::SETTINGS_CODESWHOLESALE_PARAMS_NAME));
 
@@ -179,6 +184,19 @@ if (!class_exists('CW_Admin_Menus')) :
                                                     Automatically complete order when payment is received
                                                 </label>
                                             </fieldset>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th scope="row"><label for="cw_balance_value">Balance value</label></th>
+                                        <td>
+                                            <input name="cw_balance_value" type="text" id="cw_balance_value"
+                                                   value="<?php echo $balance_value; ?>"
+                                                   class="regular-text"/>
+
+                                            <p class="description">
+                                                If your balance will reach under this value you will receive an email with warning.
+                                            </p>
                                         </td>
                                     </tr>
 
