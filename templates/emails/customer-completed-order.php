@@ -23,6 +23,12 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
                 echo $code->getCode();
             }
 
+            else if($code->isPreOrder()) {
+
+                echo 'This key is Pre-Order';
+
+            }
+
             else if ($code->isImage())
             {
                 echo 'Check in attachment file: '. $code->getFileName();
