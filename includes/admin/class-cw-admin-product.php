@@ -25,9 +25,12 @@ if (!class_exists('CW_Admin_Product')) :
             $options = array();
 
             $prods = CW()->getCodesWholesaleClient()->getProducts();
+
+            $options[] = "---- CHOOSE ONE ----";
+
             foreach ($prods as $prod) {
                 $options[$prod->getProductId()] = $prod->getName() . " - " .
-                    $prod->getPlatform() . " - " . money_format('€%i', $prod->getDefaultPrice());
+                    $prod->getPlatform() . " - €". number_format($prod->getDefaultPrice(), 2, '.', '');
             }
 
             echo '<div class="options_group">';

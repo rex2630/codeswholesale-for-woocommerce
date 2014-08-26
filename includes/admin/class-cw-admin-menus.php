@@ -202,7 +202,8 @@ if (!class_exists('CW_Admin_Menus')) :
                                                 </li>
 
                                                 <li>
-                                                    <b>Money to use:</b> <?php  echo money_format('€%i', $account->getTotalToUse()); ?>
+                                                    <b>Money to use:</b> 
+                                                    <?php echo "€". number_format($account->getTotalToUse(), 2, '.', ''); ?>
                                                 </li>
                                             <?php endif; ?>
                                         </ul>
