@@ -14,7 +14,7 @@ if (!class_exists('CW_Checkout')) :
 
         public function add_codeswholesale_status($order_id)
         {
-            add_post_meta($order_id, "_codeswholesale_filled", 0);
+            add_post_meta($order_id, CodesWholesaleConst::ORDER_FULL_FILLED_PARAM_NAME, CodesWholesaleOrderFullFilledStatus::TO_FILL);
         }
     }
 

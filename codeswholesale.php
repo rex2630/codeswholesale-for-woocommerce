@@ -15,10 +15,16 @@ if ( !in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', 
     die('no WooCommerce plugin found');
 }
 
+final class CodesWholesaleOrderFullFilledStatus {
+    const FILLED  = 1;
+    const TO_FILL = 0;
+}
+
 final class CodesWholesaleConst {
 
     const ORDER_ITEM_LINKS_PROP_NAME          = "_codeswholesale_links";
     const PRODUCT_CODESWHOLESALE_ID_PROP_NAME = "_codeswholesale_product_id";
+    const ORDER_FULL_FILLED_PARAM_NAME        = "_codeswholesale_filled";
     const SETTINGS_CODESWHOLESALE_PARAMS_NAME = "codeswholesale_params";
 
 }
@@ -106,7 +112,10 @@ final class CodesWholesale
         include_once( 'includes/class-cw-install.php' );
         include_once( 'includes/class-cw-checkout.php');
         include_once( 'includes/class-cw-sendkeys.php');
-        include_once( 'includes/class-cw-update-stock.php');
+
+        include_once( 'includes/abstracts/class-cw-cron-job.php');
+        include_once( 'includes/class-cw-cron-update-stock.php');
+        include_once( 'includes/class-cw-cron-check-filled-orders.php');
 
         if (is_admin()) {
 

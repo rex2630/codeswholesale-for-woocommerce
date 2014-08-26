@@ -59,6 +59,8 @@ if (!class_exists('CW_SendKeys')) :
                 wc_add_order_item_meta($item_key, CodesWholesaleConst::ORDER_ITEM_LINKS_PROP_NAME, json_encode($links), true);
             }
 
+            update_post_meta($order_id, CodesWholesaleConst::ORDER_FULL_FILLED_PARAM_NAME, CodesWholesaleOrderFullFilledStatus::FILLED);
+
             $email = new CW_Email_Customer_Completed_Order($order);
             $email->send_keys($keys, $attachments);
 

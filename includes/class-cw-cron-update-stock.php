@@ -4,61 +4,20 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
 if (!class_exists('CW_Update_Stock')) :
 
-    class CW_Update_Stock
+    class CW_Cron_Update_Stock extends CW_Cron_Job
     {
         /**
          *
          */
         public function __construct()
         {
-            add_filter('cron_schedules', array($this, 'cron_add'));
-
-            register_activation_hook(CW_PLUGIN_FILE, array($this, 'schedule_update'));
-            register_deactivation_hook(CW_PLUGIN_FILE, array($this, 'remove_schedule'));
-
-            add_action("codeswholesale_update_stock_action", array($this, 'update_stock_data'));
-        }
-
-        /*
-         *
-         * public static function deactivate() {
-         *  6
-         *     wp_clear_scheduled_hook('my_hourly_event');
-         *   7
-         *  } // end activate
-         */
-        public function schedule_update()
-        {
-            wp_schedule_event(time(), "each_three", "codeswholesale_update_stock_action");
+            parent::__construct("codeswholesale_update_stock_action");
         }
 
         /**
          *
          */
-        public function remove_schedule()
-        {
-            wp_clear_scheduled_hook('codeswholesale_update_stock_action');
-        }
-
-        /**
-         * @param $schedules
-         * @return mixed
-         */
-        public function cron_add($schedules)
-        {
-            // Adds once weekly to the existing schedules.
-            $schedules['each_three'] = array(
-                'interval' => 10,
-                'display' => "Each Three"
-            );
-
-            return $schedules;
-        }
-
-        /**
-         *
-         */
-        public function update_stock_data()
+        public function cron_job()
         {
             $products = get_posts(array(
                 'post_type' => 'product',
@@ -96,9 +55,10 @@ if (!class_exists('CW_Update_Stock')) :
                 }
             }
 
+            echo "Stock updated. \n";
         }
     }
 
 endif;
 
-new CW_Update_Stock();
+new CW_Cron_Update_Stock();
