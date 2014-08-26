@@ -27,4 +27,4 @@ How to use
 ----------
 1. Download and install into your WordPress - WooCommerce plugin is required.
 2. CodesWholesale tab will apear in admin menu. Under this tab you can configure which endpoint you would like to use. For start we recommend Sandbox to test behaviour of plugin and to check if keys are really send to your customer.
-3. 
+3. While editing a product you should see a new field in "General tab" to connect your product with CodesWholesale product.
