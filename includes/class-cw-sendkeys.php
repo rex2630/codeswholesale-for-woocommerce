@@ -21,6 +21,12 @@ if (!class_exists('CW_SendKeys')) :
          */
         public function send_keys_for_order($order_id)
         {
+            $is_full_filled = get_post_meta($order_id, CodesWholesaleConst::ORDER_FULL_FILLED_PARAM_NAME);
+
+            if($is_full_filled == CodesWholesaleOrderFullFilledStatus::FILLED) {
+                return;
+            }
+
             WC()->mailer()->emails["CW_Email_Notify_Low_Balance"]       = include("emails/class-cw-email-notify-low-balance.php");
             WC()->mailer()->emails["CW_Email_Customer_Completed_Order"] = include("emails/class-cw-email-customer-completed-order.php");
             WC()->mailer()->emails["CW_Email_Order_Error"]              = include("emails/class-cw-email-order-error.php");
@@ -29,7 +35,7 @@ if (!class_exists('CW_SendKeys')) :
             $attachments = array();
             $keys = array();
             $error = null;
-            $balance_value = floatval(get_option(CodesWholesaleConst::NOTIFY_LOW_BALANCE_VALUE_OPTION_NAME));
+            $balance_value = doubleval(get_option(CodesWholesaleConst::NOTIFY_LOW_BALANCE_VALUE_OPTION_NAME));
 
             $items = $order->get_items();
 
@@ -77,7 +83,7 @@ if (!class_exists('CW_SendKeys')) :
 
                 $account = CW()->getCodesWholesaleClient()->getAccount();
 
-                if ($balance_value >= $account->getCurrentBalance()) {
+                if ($balance_value >= doubleval($account->getCurrentBalance())) {
                     do_action("codeswholesale_balance_to_low", $account);
                 }
 
