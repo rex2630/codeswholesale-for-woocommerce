@@ -20,4 +20,4 @@ What it does
 * Buys and sends keys (text and images) when order is marked as complete
 * Disable with plugin activation, WooCommerce's email notification about completed order
 * Cron job to update stock information
-* Cron job to check that all orders are full filled with keys
+* Cron job to check that all completed orders are full filled with keys
