@@ -21,3 +21,10 @@ What it does
 * Disable with plugin activation, WooCommerce's email notification about completed order
 * Cron job to update stock information
 * Cron job to check that all completed orders are full filled with keys
+
+
+How to use
+----------
+1. Download and install into your WordPress - WooCommerce plugin is required.
+2. CodesWholesale tab will apear in admin menu. Under this tab you can configure which endpoint you would like to use. For start we recommend Sandbox to test behaviour of plugin and to check if keys are really send to your customer.
+3. 
