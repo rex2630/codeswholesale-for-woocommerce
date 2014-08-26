@@ -21,6 +21,8 @@ What it does
 * Disable with plugin activation, WooCommerce's email notification about completed order
 * Cron job to update stock information
 * Cron job to check that all completed orders are full filled with keys
+* Error reprting to admin's email
+* Low balance notification
 
 
 How to use
