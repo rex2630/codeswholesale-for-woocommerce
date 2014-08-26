@@ -44,7 +44,7 @@ abstract class CW_Cron_Job
     {
         // Adds each three minutes
         $schedules['each_three'] = array(
-            'interval' => 1,
+            'interval' => 180,
             'display' => "Each Three"
         );
 
