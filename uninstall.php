@@ -14,3 +14,4 @@ if( ! defined( 'WP_UNINSTALL_PLUGIN' ) )
 	exit();
 
 delete_option( "codeswholesale_params" );
+delete_option( CodesWholesaleConst::AUTOMATICALLY_COMPLETE_ORDER_OPTION_NAME );

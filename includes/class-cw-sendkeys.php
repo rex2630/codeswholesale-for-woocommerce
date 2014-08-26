@@ -64,6 +64,8 @@ if (!class_exists('CW_SendKeys')) :
             $email = new CW_Email_Customer_Completed_Order($order);
             $email->send_keys($keys, $attachments);
 
+            $order->add_order_note( "Game keys sent - done." );
+
             foreach($attachments as $attachment) {
                 unlink($attachment);
             }

@@ -22,11 +22,17 @@ final class CodesWholesaleOrderFullFilledStatus {
 
 final class CodesWholesaleConst {
 
-    const ORDER_ITEM_LINKS_PROP_NAME          = "_codeswholesale_links";
-    const PRODUCT_CODESWHOLESALE_ID_PROP_NAME = "_codeswholesale_product_id";
-    const ORDER_FULL_FILLED_PARAM_NAME        = "_codeswholesale_filled";
-    const SETTINGS_CODESWHOLESALE_PARAMS_NAME = "codeswholesale_params";
+    const ORDER_ITEM_LINKS_PROP_NAME               = "_codeswholesale_links";
+    const PRODUCT_CODESWHOLESALE_ID_PROP_NAME      = "_codeswholesale_product_id";
+    const ORDER_FULL_FILLED_PARAM_NAME             = "_codeswholesale_filled";
+    const AUTOMATICALLY_COMPLETE_ORDER_OPTION_NAME = "_codeswholesale_auto_complete";
+    const SETTINGS_CODESWHOLESALE_PARAMS_NAME      = "codeswholesale_params";
 
+}
+
+final class CodesWholesaleAutoCompleteOrder {
+    const COMPLETE = 1;
+    const NOT_COMPLETE = 0;
 }
 
 

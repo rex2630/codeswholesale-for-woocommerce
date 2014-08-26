@@ -77,6 +77,12 @@ if (!class_exists('CW_Admin_Menus')) :
                 $this->updateSettings();
             }
 
+            if(isset($_POST['cw_complete_order'])) {
+                update_option(CodesWholesaleConst::AUTOMATICALLY_COMPLETE_ORDER_OPTION_NAME, $_POST['cw_complete_order']);
+            } else {
+                update_option(CodesWholesaleConst::AUTOMATICALLY_COMPLETE_ORDER_OPTION_NAME, CodesWholesaleAutoCompleteOrder::NOT_COMPLETE);
+            }
+
             $account = null;
             $error = null;
 
@@ -87,6 +93,7 @@ if (!class_exists('CW_Admin_Menus')) :
                 $error = $e;
             }
 
+            $auto_order_complete = get_option(CodesWholesaleConst::AUTOMATICALLY_COMPLETE_ORDER_OPTION_NAME);
             $settings = CW_Settings_Vo::fromOption(get_option(CodesWholesaleConst::SETTINGS_CODESWHOLESALE_PARAMS_NAME));
 
             ?>
@@ -158,8 +165,24 @@ if (!class_exists('CW_Admin_Menus')) :
                                         </td>
                                     </tr>
 
-                                </table>
+                                    <tr>
+                                        <th scope="row">Orders</th>
+                                        <td>
+                                            <fieldset>
+                                                <legend class="screen-reader-text"><span>Automatically complete order when payment is received</span></legend>
+                                                <label for="cw_complete_order">
+                                                    <input name="cw_complete_order"
+                                                           type="checkbox"
+                                                           id="cw_complete_order"
+                                                           value="1"
+                                                           <?php if ($auto_order_complete == 1) : ?>checked<?php endif; ?> />
+                                                    Automatically complete order when payment is received
+                                                </label>
+                                            </fieldset>
+                                        </td>
+                                    </tr>
 
+                                </table>
 
 
                                 <p class="submit">
