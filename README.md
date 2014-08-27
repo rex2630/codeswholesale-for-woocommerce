@@ -6,13 +6,13 @@ CodesWholesale integration plugin for WooCommerce
 
 What it does
 ------------
-* Adds a field to product to match with CodesWholesale's product in "General tab" 
+* Adds a field to product in order to match with CodesWholesale's product in "General tab" 
 * Buys and sends keys (text and images) when order is marked as complete
 * Disable with plugin activation, WooCommerce's email notification about completed order
 * Cron job to update stock information
 * Cron job to check that all completed orders are full filled with keys
 * Error reprting to admin's email
-* Low balance notification
+* [CodesWholesale's](http://codeswholesale.com) low balance notification
 * Automatically complete order when payment is received
 
 
@@ -34,13 +34,13 @@ How to test
  - Go through checkout process and put your real email (here you will need PayPal configured to sandbox if you don't want to do that choose bank transfer)
  - When your checkout is finished and if you've marked "Automatically complete order when payment is received" in plugin's configuration you should recive an email with keys, otherwise go to admin panel and mark order as "complete" (you will need to do that with bank transfer too)
  
-5. Repeat step 3 and 4 for all products in Sandbox.
+5. Repeat 3rd and 4th step for all products in Sandbox.
   - Match with "Test with image codes only"
     - In email with keys you should get images in attachment
   - Match with "Test product with high price"
-    - You should receive email that something was wrong doing te script execution 
+    - You should receive email that something was wrong during script execution 
   - Match with "Test pre order product"
-    - You should receive an email about pre orderes codes in our system
+    - You should receive an email about pre ordered codes in CW
 
 Nice to have
 ------------
