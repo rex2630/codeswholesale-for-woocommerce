@@ -18,7 +18,7 @@ What it does
 
 How to test
 ----------
-1. Download zip file from [here](http://codeswholesale.com/go/woocommerce-zip), install it into your WordPress and active plugin.
+1. Download zip file from [here](http://codeswholesale.com/go/woocommerce-zip), install it into your WordPress and activate plugin.
   - WooCommerce plugin is required.
   
 2. CodesWholesale tab will apear in admin menu. Under this tab you can configure few things:
