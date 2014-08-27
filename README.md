@@ -31,9 +31,8 @@ How to test
 
 4. Create and order at your front:
  - Add previously added product to cart.
- - Go through checkout process and put your real email (here you will need PayPal configured to sandbox if not choose bank transfer)
- - If you've marked "Automatically complete order when payment is received" in plugins configuration you should recive an email with keys
- - If you don't have PayPal's sandbox you have to go to admin panel and mark order as "complete", it will trigger script
+ - Go through checkout process and put your real email (here you will need PayPal configured to sandbox if you don't want to do that choose bank transfer)
+ - When your checkout is finished and if you've marked "Automatically complete order when payment is received" in plugin's configuration you should recive an email with keys, otherwise go to admin panel and mark order as "complete" (you will need to do that with bank transfer too)
 
 Nice to have
 ------------
