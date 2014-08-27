@@ -69,13 +69,17 @@ if (!class_exists('CW_SendKeys')) :
                     wc_add_order_item_meta($item_key, CodesWholesaleConst::ORDER_ITEM_LINKS_PROP_NAME, json_encode($links), true);
 
                 } catch (\CodesWholesale\Resource\ResourceError $e) {
+
                     $this->support_resource_error($e, $order);
                     $error = $e;
                     break;
+
                 } catch (Exception $e) {
+
                     $this->support_error($e, $order);
                     $error = $e;
                     break;
+
                 }
             }
 
@@ -134,7 +138,7 @@ if (!class_exists('CW_SendKeys')) :
 
         public function support_error($e, $order)
         {
-            do_action("codeswholesale_order_error", array('error' => $e, "title" => "Error occurred"));
+            do_action("codeswholesale_order_error", array('error' => $e, "title" => "Error occurred", "order" => $order));
         }
     }
 
