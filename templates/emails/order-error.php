@@ -13,8 +13,8 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
     <b>Error class</b>: <?php echo get_class($error); ?> <br />
     <b>Message</b>: <?php echo $error->getMessage(); ?> <br /> <br />
 
-    <b>Dump:</b> <br />
-    <?php var_dump($error); ?>
+    <b>Stack trace:</b> <br />
+    <pre><small><?php echo $error->getTraceAsString() ?></small></pre>
 </p>
 
 <?php do_action('woocommerce_email_footer'); ?>

@@ -14,8 +14,6 @@ class CW_Admin_Assets {
 	 */
 	public function __construct() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_styles' ) );
-		//add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
-		//add_action( 'admin_head', array( $this, 'product_taxonomy_styles' ) );
 	}
 
 	/**
