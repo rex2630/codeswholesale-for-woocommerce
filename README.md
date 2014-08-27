@@ -29,7 +29,11 @@ How to test
 3. Go to "Add product", put your details and in the "General tab" select [CodesWholesale's](http://codeswholesale.com) product to match. This will tell the script what product is buying your customer.
   - At first step choose "Test with text codes only"
 
-4. Log out from WordPress admin panel, add this product to cart go through checkout process to create an order.
+4. Create and order at your front:
+ - Add previously added product to cart.
+ - Go through checkout process and put your real email (here you will need PayPal configured to sandbox if not choose bank transfer)
+ - If you've marked "Automatically complete order when payment is received" in plugins configuration you should recive an email with keys
+ - If you don't have PayPal's sandbox you have to go to admin panel and mark order as "complete", it will trigger script
 
 Nice to have
 ------------
