@@ -3,11 +3,6 @@ codeswholesale-woocommerce
 
 CodesWholesale integration plugin for WooCommerce
 
-TO DO
------
-* Automatically complete order when payment is received
-* Somehow support preorders
-
 
 Nice to have
 ------------
@@ -23,6 +18,7 @@ What it does
 * Cron job to check that all completed orders are full filled with keys
 * Error reprting to admin's email
 * Low balance notification
+* Automatically complete order when payment is received
 
 
 How to use
