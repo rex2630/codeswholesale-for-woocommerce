@@ -16,7 +16,7 @@ What it does
 * Automatically complete order when payment is received
 
 
-How to test
+How to use
 ----------
 1. Download zip file from [here](http://codeswholesale.com/go/woocommerce-zip), install it into your WordPress and activate plugin.
   - WooCommerce plugin is required.
@@ -41,6 +41,10 @@ How to test
     - You should receive email that something was wrong during script execution 
   - Match with "Test pre order product"
     - You should receive an email about pre ordered codes in CW
+
+6. When all features are well known for you and you agree with that switch environment to "Live" and start selling.
+
+7. Write any feedback to devteam@codeswholesale.com
 
 Nice to have
 ------------
