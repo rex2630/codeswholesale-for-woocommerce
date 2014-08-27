@@ -33,6 +33,14 @@ How to test
  - Add previously added product to cart.
  - Go through checkout process and put your real email (here you will need PayPal configured to sandbox if you don't want to do that choose bank transfer)
  - When your checkout is finished and if you've marked "Automatically complete order when payment is received" in plugin's configuration you should recive an email with keys, otherwise go to admin panel and mark order as "complete" (you will need to do that with bank transfer too)
+ 
+5. Repeat step 3 and 4 for all products in Sandbox.
+  - Match with "Test with image codes only"
+    - In email with keys you should get images in attachment
+  - Match with "Test product with high price"
+    - You should receive email that something was wrong doing te script execution 
+  - Match with "Test pre order product"
+    - You should receive an email about pre orderes codes in our system
 
 Nice to have
 ------------
