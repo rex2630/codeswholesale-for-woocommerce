@@ -4,11 +4,6 @@ codeswholesale-woocommerce
 CodesWholesale integration plugin for WooCommerce
 
 
-Nice to have
-------------
-* Post back query from CodesWholesale to shop about stock instead cron (benefit: more accurate stock details)
-* Post back query from CodesWholesale to shop to let know that preorder is ready to download
-
 What it does
 ------------
 * Adds a field to product to match with CodesWholesale's product in "General tab" 
@@ -31,6 +26,12 @@ How to test
  - If you'd like to automatically send keys after payment is recived e.g. from PayPal mark checkbox with "Automatically complete order when payment is received"
  - Balance value: While purchasing keys from [CodesWholesale.com](http://codeswholesale.com), script will check if your current balance is less than value from this field - if yes, it will send a notification email to shop's administrator.
 
-3. While editing a product you should see a new field in "General tab" to connect your product with CodesWholesale product. For a start you can match one to "Test with text codes only".
+3. Go to "Add product", put your details and in the "General tab" select [CodesWholesale's](http://codeswholesale.com) product to match. This will tell the script what product is buying your customer.
+  - At first step choose "Test with text codes only"
 
 4. Log out from WordPress admin panel, add this product to cart go through checkout process to create an order.
+
+Nice to have
+------------
+* Post back query from CodesWholesale to shop about stock instead cron (benefit: more accurate stock details)
+* Post back query from CodesWholesale to shop to let know that preorder is ready to download
