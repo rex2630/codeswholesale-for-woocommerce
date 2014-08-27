@@ -23,10 +23,11 @@ What it does
 
 How to test
 ----------
-1. Download zip file from [here](http://codeswholesale.com),install it into your WordPress and active plugin.
+1. Download zip file from [here](http://codeswholesale.com), install it into your WordPress and active plugin.
   - WooCommerce plugin is required.
   
-2. CodesWholesale tab will apear in admin menu. Under this tab you can configure which endpoint you would like to use. For start we recommend Sandbox to test behaviour of plugin and to check if keys are really send to your customer.
+2. CodesWholesale tab will apear in admin menu. Under this tab you can configure few things:
+ - Environment sandbox or live, for tests is recommended to use sandbox but if you want to go live choose "live" and put your API credentials.
 
 3. While editing a product you should see a new field in "General tab" to connect your product with CodesWholesale product. For a start you can match one to "Test with text codes only".
 
