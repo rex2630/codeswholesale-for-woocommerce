@@ -28,6 +28,7 @@ How to test
   
 2. CodesWholesale tab will apear in admin menu. Under this tab you can configure few things:
  - Environment sandbox or live, for tests is recommended to use sandbox but if you want to go live choose "live" and put your API credentials.
+ - If you'd like to automatically send keys after payment is recived e.g. from PayPal turn on checkbox "Automatically complete order when payment is received"
 
 3. While editing a product you should see a new field in "General tab" to connect your product with CodesWholesale product. For a start you can match one to "Test with text codes only".
 
