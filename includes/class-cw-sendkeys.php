@@ -23,13 +23,14 @@ if (!class_exists('CW_SendKeys')) :
         {
             $is_full_filled = get_post_meta($order_id, CodesWholesaleConst::ORDER_FULL_FILLED_PARAM_NAME);
 
-            if($is_full_filled == CodesWholesaleOrderFullFilledStatus::FILLED) {
+            if ($is_full_filled == CodesWholesaleOrderFullFilledStatus::FILLED) {
                 return;
             }
 
             WC()->mailer()->emails["CW_Email_Notify_Low_Balance"]       = include("emails/class-cw-email-notify-low-balance.php");
             WC()->mailer()->emails["CW_Email_Customer_Completed_Order"] = include("emails/class-cw-email-customer-completed-order.php");
             WC()->mailer()->emails["CW_Email_Order_Error"]              = include("emails/class-cw-email-order-error.php");
+            WC()->mailer()->emails["CW_Email_Notify_Preorder"]          = include("emails/class-cw-email-notify-preorder.php");
 
             $order = new WC_Order($order_id);
             $attachments = array();
@@ -41,6 +42,7 @@ if (!class_exists('CW_SendKeys')) :
 
             foreach ($items as $item_key => $item) {
 
+                $pre_orders = 0;
                 $product_id = $item["product_id"];
                 $qty = $item["qty"];
                 $cw_product_id = get_post_meta($product_id, CodesWholesaleConst::PRODUCT_CODESWHOLESALE_ID_PROP_NAME, true);
@@ -56,6 +58,10 @@ if (!class_exists('CW_SendKeys')) :
 
                         if ($code->isImage()) {
                             $attachments[] = \CodesWholesale\Util\CodeImageWriter::write($code, CW()->plugin_path() . "/temp");
+                        }
+
+                        if ($code->isPreOrder()) {
+                            $pre_orders++;
                         }
 
                         $links[] = $code->getHref();
@@ -80,6 +86,14 @@ if (!class_exists('CW_SendKeys')) :
                     $error = $e;
                     break;
 
+                }
+
+                if ($pre_orders > 0) {
+                    do_action("codeswholesale_preordered_codes", array('item' => $item, 'count' => $pre_orders, 'order' => $order));
+                    $order->add_order_note(
+                        sprintf("Pre-ordered keys %d, for product: %s", $pre_orders, $item['name'])
+                    );
+                    $pre_orders = 0;
                 }
             }
 

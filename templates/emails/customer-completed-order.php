@@ -25,7 +25,7 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
             else if($code->isPreOrder()) {
 
-                echo 'This key is Pre-Order';
+                echo 'This key is Pre-Ordered';
 
             }
 
