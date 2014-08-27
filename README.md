@@ -42,7 +42,7 @@ How to use
   - Match with "Test pre order product"
     - You should receive an email about pre ordered codes in CW
 
-6. When all features are well known for you and you agree with that switch environment to "Live" and start selling.
+6. When all features are well known for you and you agree with them switch environment to "Live" and start selling.
 
 7. Write any feedback to devteam@codeswholesale.com
 
