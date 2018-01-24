@@ -1,0 +1,107 @@
+.codeswholesale-inline-block ul li{
+    display: inline-block;
+    padding:0 30px 10px 0;
+}
+.codeswholesale_no_vertical_padding {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+.codeswholesale_no_wrap {
+    white-space: nowrap !important;
+}
+.codeswholesale input[type="text"] {
+    width: 400px;
+    margin: 0;
+    padding: 6px;
+    box-sizing: border-box;
+}
+.codeswholesale select {
+    width: 400px;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+input[name="cw_options[orders_auto_complete]"],
+input[name="cw_options[product_price_charmer]"] {
+    box-shadow: none !important;
+    outline: none !important;
+    height: 22px;
+    width: 22px;
+    padding: 3px !important;
+}
+
+input[name="cw_options[currency]"] {
+    box-shadow: none !important;
+    outline: none !important;
+    height: 22px;
+    width: 22px;
+    padding: 3px !important;
+}
+
+#cst-title {
+    font-weight: 100 !important;
+    font-size: 30px !important;
+    background-color: #333 !important;
+    padding: 20px 30px !important;
+    margin: 0px 0px 20px 0px !important;
+    color: #21e47a !important;
+}
+
+.cst-desc {
+    font-weight: 300 !important;
+}
+
+.input-desc {
+    font-weight: 300 !important;
+}
+
+.cst-label th {
+    padding-top: 11px !important;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+}
+
+.connection-status {
+    margin: 30px 20px !important;
+    padding: 0px 20px 3px 20px;
+    border-left: 1px solid #999;
+}
+
+#status-ul {
+    margin: 0px;
+    padding: 0px;
+}
+
+#nav-img {
+    height: 30px;
+}
+
+.success {
+    font-size: 18px;
+    font-weight: 100;
+    color: #21e47a;
+}
+
+.failed {
+    font-size: 18px;
+    font-weight: 100;
+    color: rgba(220, 62, 62, 0.97);
+}
+
+.dashicons-admin-codeswholesale {
+    background-image: url("../images/codeswholesale-icon.png");
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}
+
+.woocommerce_options_panel label,
+.woocommerce_options_panel legend{
+    width: 200px !important;
+}
+
+#cst-post-body-content {
+    background-color: #fff;
+    padding: 0px 20px;
+    max-width: 1200px;
+    border: 1px solid #333;
+}
