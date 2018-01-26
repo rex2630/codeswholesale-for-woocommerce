@@ -123,7 +123,6 @@ class ImportExec
                      foreach ($relatedInternalProducts as $post) {
                         $diff = $this->diffGenerator->getDiff($externalProduct, $post);
 
-                        // Jeżeli nie ma zmian sprawdzanych w diffGenerator to nie robi aktualizacji rekordu
                         if (0 !== count($diff)) {
                             $this->updater->updateWooCommerceProduct($post->ID, $externalProduct);
                             $this->importModel->increaseUpdateCount();

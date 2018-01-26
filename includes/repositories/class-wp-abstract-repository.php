@@ -20,15 +20,11 @@ abstract class WP_AbstractRepository implements WP_Repository
     }
 
     /**
-     * Unikalna nazwa klasy bez prefixów
-     *
      * @return string
      */
     abstract protected function getName(): string;
 
     /**
-     * Pełna nazwa tabeli w bazie danych
-     *
      * @return string
      */
     public function getTableName(): string
