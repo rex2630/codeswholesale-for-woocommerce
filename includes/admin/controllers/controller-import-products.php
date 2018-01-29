@@ -150,7 +150,6 @@ if (!class_exists('CW_Controller_Import_products')) :
         }
     }
 
-    // @todo create global object in vendor
     class AjaxResult {
         public $status;
         public $message;

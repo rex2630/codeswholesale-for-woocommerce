@@ -45,7 +45,6 @@
                     <?php /** @var \CodesWholesale\Resource\Order $item */ ?>
                     <?php foreach ($this->orders as $item) : ?>
                         <tr>
-<!--                            --><?php //$item-> die; ?>
                             <td><p><?php echo $item->getOrderId(); ?></p></td>
                             <td><p><?php echo CW()->getWooCommerceOrderIdByExternalId($item->getOrderId()) ?></p></td>
                             <td><?php echo $item->getStatus(); ?></td>

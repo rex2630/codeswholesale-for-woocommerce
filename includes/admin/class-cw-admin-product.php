@@ -21,7 +21,7 @@ if (!class_exists('CW_Admin_Product')) :
             add_action('woocommerce_product_options_general_product_data', array($this, 'output_custom_fields'));
             add_action('woocommerce_process_product_meta', array($this, 'save_custom_fields'));
 
-            //ajax actions
+            // ajax actions
             add_action( 'wp_ajax_get_calculated_price', array($this, 'get_calculated_price'));
         }
 

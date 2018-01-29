@@ -32,7 +32,6 @@ class WP_ImportPropertyModelFactory
             return $model;
 
         } catch (\Exception $e) {
-            //TODO Poprawić obsługę błędów
             throw new \Requests_Exception('Bad request', 'invalid_request');
         }
     }
