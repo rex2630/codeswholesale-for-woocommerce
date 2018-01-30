@@ -21,7 +21,7 @@ class WP_ConfigurationChecker
                 throw new \Exception(sprintf("Too low php version (%s) in shell. Require php version 7.0 or higher", $detailsPhpVersion[0]));
             }
         } else {
-            throw new \Exception("Cannot find php version in shell");
+            throw new \Exception("We met issue with your PATH to Php. Contact with your administrator");
         }
     }
 
@@ -34,7 +34,7 @@ class WP_ConfigurationChecker
         $output = ExecManager::exec(ExecManager::PHP_PATH, 'db-connection-exec.php', false);
 
         if (count($output) > 0) {
-            throw new \Exception("DB exception");
+            throw new \Exception("Something went wrong with your Database connection. Check your wp-config.php and change localhost to 127.0.0.1");
         }
     }
 }
