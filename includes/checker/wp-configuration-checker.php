@@ -22,7 +22,7 @@ class WP_ConfigurationChecker
             if (is_array($exlodePhpVersion) && count($exlodePhpVersion) > 0) {
                 $phpVersion = (int) str_replace('PHP ', '', strtoupper($exlodePhpVersion[0]));
                 if ($phpVersion < 7) {
-                    throw new \Exception(sprintf("Too low php version (%s) in shell. Require php version 7.0 or higher", $detailsPhpVersion[0]));
+                    throw new \Exception(sprintf("PHP (%s) in shell is no longer compatible. You need an upgrade to PHP 7.0 or higher.", $detailsPhpVersion[0]));
                 }
             }
         }
