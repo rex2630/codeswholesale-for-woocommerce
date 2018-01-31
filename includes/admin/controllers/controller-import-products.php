@@ -100,7 +100,7 @@ if (!class_exists('CW_Controller_Import_products')) :
 
                         $this->import_repository->save($importModel);
 
-                        ExecManager::exec(ExecManager::PHP_PATH, 'import-exec.php');
+                        ExecManager::exec(ExecManager::getPhpPath(), 'import-exec.php');
 
                         $result->status = true;
                         $result->message = __("The import is in progress", "woocommerce");

@@ -6,6 +6,14 @@ class ExecManager
 //    const PHP_PATH = '/usr/bin/php7.1';
 
     /**
+     * @return string
+     */
+    public static function getPhpPath(): string
+    {
+        return PHP_BINDIR . '/php';
+    }
+    
+    /**
      * @param string $cmd
      * @param string $path
      * @param bool   $inBackgroud
