@@ -3,7 +3,7 @@ Contributors: Devteam CodesWholesale
 Tags: woocommerce, restapi, codeswholesale, games, cd-keys
 Requires at least: 4.4.0
 Tested up to: 4.9.2
-Stable tag: 2.0
+Stable tag: 2.1
 License: Apache License Version 2.0, January 2004
 License URI: http://www.apache.org/licenses/
 
