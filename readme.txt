@@ -1,6 +1,6 @@
 === CodesWholesale.com for WooCommerce ===
 Contributors: Devteam CodesWholesale
-Tags: woocommerce, restapi, codeswholesale, games, cd-keys
+Tags: woocommerce, api , codeswholesale api, digital games, digital games to sell, cd-keys, automated game delivery, digital game catalogue, digital product catalogue, automated game supply chain, digital products, digital products to sell
 Requires at least: 4.4.0
 Tested up to: 4.9.2
 Stable tag: 2.1
@@ -13,21 +13,21 @@ CodesWholesale.com integration plugin for WooCommerce.
 
 = About CodesWholesale.com =
 
-CodesWholesale.com is a wholesale platform for digital games distribution created for e-tailers, suppliers, publishers, and developers worldwide. With a robust variety of platform features, it ensures an efficient game supply chain for all participants of the market. Easy-to-use plugins enable any retailer to create or expand their current offering with over 1,500 digital products including back-catalogue and latest video games.
+CodesWholesale.com is a wholesale platform for digital games distribution created for e-tailers, suppliers, publishers, and developers worldwide. With a robust variety of platform features, it ensures an efficient game supply chain for all participants of the market. The easy-to-use Woocommerce plugin enables any retailer to create or expand their current offering with over 2000 digital products including back-catalogue as well as bestselling and pre-order games.
 Our automated games supply chain is supported by the API-based technology.
 
 = With CodesWholesale.com, e-commerce retailers can =
 
-1. Source digital products from 100% vetted distributors
-2. Start reselling almost 1,500 digital products in no time
-3. Cut time spent on order management and order fulfillment
+* Source digital products from 100% vetted distributors
+* Start reselling over 2000 digital products in no time
+* Cut time spent on order management and order fulfillment
 
-= Superpower your digital business with CodesWholesale plugin and: =
+= Superpower your digital business with the CodesWholesale plugin and =
 
-1. Sell hundreds of digital games automatically, round-the-clock
-2. Import product details on auto-pilot
-3. Enjoy no fees and minimum formalities
-4. Source and deliver game keys straight to your customers
+- Sell hundreds of digital games automatically, round-the-clock
+- Import product details on auto-pilot
+- Enjoy no fees and minimum formalities
+- Source and deliver game keys straight to your customers
 
 = Top features - everything your game business needs: =
 
@@ -65,7 +65,7 @@ OK, so you’ve applied the right filter and need to export the products to an e
 
 *Rate the risk of your clients’ orders*
 
-Not all orders submitted by your clients are fully secure. How do you know that? Use CodesWholesale risk score feature and have full control over them.
+Not all orders submitted by your clients are fully secure. How do you know that? Use CodesWholesale risk score feature and have full control over your clients’ orders.
 
 *Download invoice in pdf*
 
@@ -73,11 +73,11 @@ Invoices are generated automatically for each order created via API. They are st
 
 *Get brand-new notifications via postback URL*
 
-With the upgraded plugin, you will always get a notification for new product arrivals, products hidden from the price list or products whose details change.
+With the upgraded plugin, you will always get a notification for new product arrivals, products hidden from the price list or products whose details have changed.
 
 *Double-check the price*
 
-Always compare the price you’ve set with the one displayed on the price list. Otherwise, you risk losing on sales.
+Always compare the price you have set with the one displayed on the price list. Otherwise, you risk losing on sales.
 
 *Enable pre-order products*
 
@@ -92,19 +92,14 @@ Best of all, it’s absolutely free!
 
 == Installation ==
 
-1. Upload and install the plugin through 'Plugins' tab.
-2. Use the 'CodesWholesale' menu to configure your plugin
-
-== Frequently Asked Questions ==
-
-= How to get started =
-
-1. Go to the Plugins tab.
-2. Type CodesWholesale.com into the search box.
-3. Press the button Active in the upper right-hand corner.
+1. Go to the *Plugins* tab.
+2. Type *CodesWholesale.com* into the search box.
+3. Press the *button Active* in the upper right-hand corner.
 4. Go to the CodesWholesale.com panel to configure your plugin settings.
 
 Now, you’re ready to go!
+
+== Frequently Asked Questions ==
 
 = What version of Woocommerce do you support? =
 
@@ -117,24 +112,24 @@ PHP 7.0 or above is required. Everything will work seamlessly if you stick to th
 = How do I generate my client ID, client secret and signature? =
 
 1. Sign in to your CodesWholesale account.
-2. Go to the API tab.
-3. Click Generate client credentials.
+2. Go to the *API* tab.
+3. Click *Generate client credentials*.
 
 * Keep the client secret for future reference - it will get hidden after you leave the page.
 
 = What to do if I lose my client secret or signature? =
 
 1. Sign in to your CodesWholesale account.
-2. Visit the API tab.
-3. Click Delete client secret.
-4. Confirm your choice by clicking Yes, I'm sure - delete them. Don't worry, you will not delete your account.
+2. Visit the *API* tab.
+3. Click *Delete client secret*.
+4. Confirm your choice by clicking *Yes, I'm sure - delete them*. Don't worry, you will not delete your account.
 5. Generate new credentials by clicking the button.
 6. Copy and write down the client secret.
 7. Update your API settings.
 
 = Where can I get help? =
 
-You have questions, we have answers. Be sure to visit our recent post here [podlinkować do bloga] and learn about all the latest features added to the plugin. You can always search the question bank in our FAQ [podlinkować] and if you’re still in doubt, please reach us out via email devteam@codeswholesale or skype: devteam.codeswholesale. We’d love to help!
+You have questions, we have answers. Be sure to visit our recent post [here](https://codeswholesale.com/blog/api-2-0-for-woocommerce-store-owners/) and learn about all the latest features added to the plugin. You can always search the question bank in our [FAQ](https://codeswholesale.com/faq/reseller) and if you’re still in doubt, please reach us out via email: devteam@codeswholesale or skype: devteam.codeswholesale. We’d love to help!
 
 = What themes work well with CodesWholesale? =
 
@@ -160,3 +155,4 @@ What you get with API 2.0:
 = 2.1 =
 
 - PHP PATH issue when importing product (fixed)
+
