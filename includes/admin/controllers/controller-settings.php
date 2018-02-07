@@ -245,11 +245,39 @@ if (!class_exists('CW_Controller_Settings')) :
                         ApiClient::sendActivity(ApiClient::CONNECTED_TO_WOOCOMMERCE);
                     }
                 }
-
-                unset($_SESSION['cw_options']);
             }
         }
 
+		public function clearSettingsSession() {
+            unset($_SESSION['cw_options']);
+        }
+		
+		public function isChangedPriceSettings() {
+            $options        = $this->get_options();
+            $sessionOptions = $_SESSION['cw_options'];
+            $changed        = false;
+            
+            if($sessionOptions) {
+                if($sessionOptions['spread_type'] != $options['spread_type']) {
+                    $changed = true;
+                }
+
+                if($sessionOptions['spread_value'] != $options['spread_value']) {
+                    $changed = true;
+                }
+
+                if($sessionOptions['product_price_charme'] != $options['product_price_charme']) {;
+                    $changed = true;
+                }
+
+                if($sessionOptions['currency'] != $options['currency']) {
+                    $changed = true;
+                }  
+            }
+
+            return $changed;
+        }
+		
         protected function isChangedTokenOnLive()
         {
             $options = $this->get_options();

@@ -56,11 +56,15 @@
 
                             echo '<div class="updated inline"><p>' . __( 'Your changes have been saved.', 'codeswholesale-for-woocommerce' ) . '</p></div>';
                             try {
-                                ExecManager::exec(ExecManager::getPhpPath(), 'update-products-price.php');
-                                echo '<div class="updated inline"><p>' . __( 'Your products price have been updated.', 'codeswholesale-for-woocommerce' ) . '</p></div>';
-                            } catch (Exception $ex) {
+								if($this->isChangedPriceSettings()) {
+								   ExecManager::exec(ExecManager::getPhpPath(), 'update-products-price.php');
+									echo '<div class="updated inline"><p>' . __( 'Your products price have been updated.', 'codeswholesale-for-woocommerce' ) . '</p></div>';
+								}
+                              } catch (Exception $ex) {
                                 echo '<div class="error inline"><p><strong>' . __('Warning!') . '</strong> ' . $ex->getMessage() . '</p></div>';
                             }
+							
+							$this->clearSettingsSession();
                         }
 
                         settings_fields('cw-settings-group');

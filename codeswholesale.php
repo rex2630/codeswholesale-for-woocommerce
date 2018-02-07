@@ -120,6 +120,14 @@ final class CodesWholesale
 
     public function codeswholesale_install()
     {
+		if ( !is_plugin_active('woocommerce/woocommerce.php')) {
+            // Deactivate the plugin
+            deactivate_plugins(FILE);
+
+            $error_message = __('This plugin requires <a href="http://wordpress.org/extend/plugins/woocommerce/">WooCommerce</a> to be active!', 'woocommerce');
+            die($error_message);
+        } 
+		
         $options = CW()->get_options();
 
         if (1 == $options['environment'] && CW()->isClientCorrect()) {
