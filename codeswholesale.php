@@ -118,7 +118,7 @@ final class CodesWholesale
         $this->configure_cw_client();
     }
 
-    public function codeswholesale_install()
+    public static function codeswholesale_install()
     {
 		if ( !is_plugin_active('woocommerce/woocommerce.php')) {
             // Deactivate the plugin
@@ -135,7 +135,7 @@ final class CodesWholesale
         }
     }
     
-    public function codeswholesale_uninstall()
+    public static function codeswholesale_uninstall()
     {
         $options = CW()->get_options();
 
