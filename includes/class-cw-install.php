@@ -1,4 +1,5 @@
 <?php
+
 use CodesWholesaleFramework\Postback\RegisterHandlers;
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
@@ -26,7 +27,7 @@ if (!class_exists('CW_Install')) :
         {
             register_activation_hook(CW_PLUGIN_FILE, array($this, 'install'));
             add_action('woocommerce_email', array($this, 'unhook_those_pesky_emails'));
-            
+
             add_action('admin_post_codeswholesale_notifications', array($this, 'codeswholesale_notifications'));
             add_action('admin_post_nopriv_codeswholesale_notifications', array($this, 'codeswholesale_notifications'));
         }
@@ -45,16 +46,16 @@ if (!class_exists('CW_Install')) :
         {
             remove_action('woocommerce_order_status_completed_notification', array(&$email_class->emails['WC_Email_Customer_Completed_Order'], 'trigger'));
         }
-        
-        public function codeswholesale_notifications() {
+
+        public function codeswholesale_notifications()
+        {
             $options = get_option(CodesWholesaleConst::OPTIONS_NAME);
-            $signature = empty($options['api_client_singature']) ? "" : $options['api_client_singature'];
-           
-            $action = new RegisterHandlers(CW()->get_codes_wholesale_client(), $signature,  $options['environment']);
-            
+
+            $action = new RegisterHandlers(CW()->get_codes_wholesale_client(), $options['environment']);
+
             $action->setProductUpdater(new WP_Update_Products());
             $action->setOrderUpdater(new WP_Update_Orders());
-            
+
             $action->process();
         }
     }

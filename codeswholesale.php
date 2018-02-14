@@ -48,6 +48,8 @@ final class CodesWholesaleConst
     const DOUBLE_CHECK_PRICE_PROP_NAME                      = "_codeswholesale_double_check_price";
     const ALLOW_PRE_ORDER_PROP_NAME                         = "_codeswholesale_allow_pre_order";
 
+    const TEST_SIGNATURE = "b4cded07-e13e-4021-8b9f-a3cee994109b";
+
     /**
      * Format money with euro.
      *
@@ -354,6 +356,7 @@ final class CodesWholesale
                 'client_headers' => 'Codeswholesale-WooCommerce/2.0',
                 'db' => new PDO('mysql:host=' . $wpdb->dbhost . ';dbname=' . $wpdb->dbname, $wpdb->dbuser, $wpdb->dbpassword),
                 'prefix' => sprintf('%s%s', $wpdb->prefix, WP_Repository::CW_PREFIX),
+                'signature' => empty($options['api_client_singature']) ? CodesWholesaleConst::TEST_SIGNATURE : $options['api_client_singature']
             );
 
             try {
@@ -411,7 +414,7 @@ final class CodesWholesale
         try {
             CW()->get_codes_wholesale_client()->getAccount();
             return true;
-        } catch (\Error $e) {
+        } catch (\Exception $e) {
             return false;
         }
     }

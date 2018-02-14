@@ -4,24 +4,25 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "f71c242e2ad95ac782f8efb70e7854b9",
+    "hash": "0109bea2e61f607bd25c7832fd339061",
+    "content-hash": "281ef21210df28c6b137d2fc3baa5137",
     "packages": [
         {
             "name": "codeswholesale/cw-extension-framework",
-            "version": "2.1",
+            "version": "2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/codeswholesale/codeswholesale-extension-framework.git",
-                "reference": "7f15fe7dfdb5499312aff45b5d643953dbc6788c"
+                "reference": "1654e452ef86e2fd648a816c7ef341298e948858"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codeswholesale/codeswholesale-extension-framework/zipball/7f15fe7dfdb5499312aff45b5d643953dbc6788c",
-                "reference": "7f15fe7dfdb5499312aff45b5d643953dbc6788c",
+                "url": "https://api.github.com/repos/codeswholesale/codeswholesale-extension-framework/zipball/1654e452ef86e2fd648a816c7ef341298e948858",
+                "reference": "1654e452ef86e2fd648a816c7ef341298e948858",
                 "shasum": ""
             },
             "require": {
-                "codeswholesale/sdk": "2.0",
+                "codeswholesale/sdk": "2.1",
                 "php": ">=7.0.0"
             },
             "require-dev": {
@@ -54,20 +55,20 @@
                 "games",
                 "plugin"
             ],
-            "time": "2018-01-24T16:37:36+00:00"
+            "time": "2018-02-14 11:43:11"
         },
         {
             "name": "codeswholesale/sdk",
-            "version": "2.0",
+            "version": "2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/codeswholesale/codeswholesale-sdk-php.git",
-                "reference": "3fdd5441c178150cabda554284f6e42ac12c3549"
+                "reference": "d3b0a9afe2b0ea95ff67c00b4479afbfc8daf644"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codeswholesale/codeswholesale-sdk-php/zipball/3fdd5441c178150cabda554284f6e42ac12c3549",
-                "reference": "3fdd5441c178150cabda554284f6e42ac12c3549",
+                "url": "https://api.github.com/repos/codeswholesale/codeswholesale-sdk-php/zipball/d3b0a9afe2b0ea95ff67c00b4479afbfc8daf644",
+                "reference": "d3b0a9afe2b0ea95ff67c00b4479afbfc8daf644",
                 "shasum": ""
             },
             "require": {
@@ -105,7 +106,7 @@
                 "games",
                 "security"
             ],
-            "time": "2018-01-24T13:37:43+00:00"
+            "time": "2018-02-14 10:48:40"
         },
         {
             "name": "firebase/php-jwt",
@@ -151,7 +152,7 @@
             ],
             "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
             "homepage": "https://github.com/firebase/php-jwt",
-            "time": "2017-06-27T22:17:23+00:00"
+            "time": "2017-06-27 22:17:23"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -216,7 +217,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2017-06-22T18:50:49+00:00"
+            "time": "2017-06-22 18:50:49"
         },
         {
             "name": "guzzlehttp/promises",
@@ -267,7 +268,7 @@
             "keywords": [
                 "promise"
             ],
-            "time": "2017-12-07T21:04:15+00:00"
+            "time": "2017-12-07 21:04:15"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -332,7 +333,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2017-10-07T03:19:56+00:00"
+            "time": "2017-10-07 03:19:56"
         },
         {
             "name": "psr/http-message",
@@ -382,7 +383,7 @@
                 "request",
                 "response"
             ],
-            "time": "2016-08-06T14:39:51+00:00"
+            "time": "2016-08-06 14:39:51"
         },
         {
             "name": "sainsburys/guzzle-oauth2-plugin",
@@ -431,7 +432,7 @@
                 }
             ],
             "description": "An OAuth2 middleware for Guzzle",
-            "time": "2017-11-07T13:08:06+00:00"
+            "time": "2017-11-07 13:08:06"
         }
     ],
     "packages-dev": [],

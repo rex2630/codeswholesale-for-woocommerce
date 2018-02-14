@@ -184,7 +184,7 @@ if (!class_exists('CW_Controller_Settings')) :
             try {
                 CW()->refresh_codes_wholesale_client();
                 $account = CW()->get_codes_wholesale_client()->getAccount();
-            } catch (\Error $e) {
+            } catch (\Exception $e) {
                 if (!CW()->get_codes_wholesale_client() instanceof Client) {
                     $error = new \Exception('Unauthorized!');
                 } else {
