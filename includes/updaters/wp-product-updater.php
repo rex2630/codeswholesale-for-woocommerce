@@ -137,8 +137,14 @@ class WP_Product_Updater
      */
     public function updateProductThumbnail($post_id, $url) {        
         try{
-            $attach_id = $this->attachmentUpdater->setAttachment($post_id, $url);
-            set_post_thumbnail( $post_id, $attach_id );
+            $photo_data = explode("/",$url);
+            $count = count ($photo_data);
+
+            if(is_array($photo_data) && $photo_data[$count-2]) {
+                $attach_id = $this->attachmentUpdater->setAttachment($post_id, $url, $photo_data[$count-2]);
+                set_post_thumbnail( $post_id, $attach_id );
+            }
+
         } catch (Exception $ex) {
             // log error
         }

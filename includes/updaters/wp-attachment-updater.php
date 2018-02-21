@@ -4,20 +4,17 @@ if( !class_exists( 'WP_Http' ) )
 
 class WP_Attachment_Updater
 {
-    public function setAttachment(int $postid, string $url) {
+    public function setAttachment(int $postid, string $url, string $name) {
         $http = new WP_Http();
         $photo = $http->request($url); 
 
-        $photo_data = explode("/",$url);
-        $count = count ($photo_data);
-
-        $attachment = wp_upload_bits( wc_clean($photo_data[$count-2]).'.jpg', null, $photo['body'], date("Y-m", strtotime( $photo['headers']['last-modified'] ) ) );
+        $attachment = wp_upload_bits( wc_clean($name).'.jpg', null, $photo['body'], date("Y-m", strtotime( $photo['headers']['last-modified'] ) ) );
 
         $filetype = wp_check_filetype( basename( $attachment['file'] ), null );
 
         $postinfo = array(
             'post_mime_type'=> $filetype['type'],
-            'post_title'	=> wc_clean($photo_data[$count-2]),
+            'post_title'	=> wc_clean($name),
             'post_content'	=> '',
             'post_status'	=> 'inherit',
         );
