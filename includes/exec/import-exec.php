@@ -164,12 +164,8 @@ class ImportExec
             'ID',
             'Status',
             'Name',
-            'Platforms',
-            'Regions',
-            'Languages',
             'Price',
             'Stock',
-            'Description',
             'Cover',
         ];
     }
@@ -185,12 +181,8 @@ class ImportExec
             (string) '"' . $externalProduct->getProduct()->getProductId() .'"',
             (string) '"' . 'Imported' .'"',
             (string) '"' . $externalProduct->getProduct()->getName() .'"',
-            (string) '"' . $this->implodeArray($externalProduct->getProduct()->getPlatform()) .'"',
-            (string) '"' . $this->implodeArray($externalProduct->getProduct()->getRegions()) .'"',
-            (string) '"' . $this->implodeArray($externalProduct->getProduct()->getLanguages()) .'"',
             (string) '"' . $externalProduct->getProduct()->getLowestPrice() .'"',
             (string) '"' . $externalProduct->getProduct()->getStockQuantity() .'"',
-            (string) '"' . $externalProduct->getDescription() .'"',
             (string) '"' . $externalProduct->getProduct()->getImageUrl('MEDIUM') .'"',
         ];
     }

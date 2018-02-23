@@ -9,7 +9,7 @@
     "packages": [
         {
             "name": "codeswholesale/cw-extension-framework",
-            "version": "2.2",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/codeswholesale/codeswholesale-extension-framework.git",
