@@ -4,8 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0109bea2e61f607bd25c7832fd339061",
-    "content-hash": "281ef21210df28c6b137d2fc3baa5137",
+    "content-hash": "9475e7846f718af49ec26ca9d798084b",
     "packages": [
         {
             "name": "codeswholesale/cw-extension-framework",
@@ -13,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/codeswholesale/codeswholesale-extension-framework.git",
-                "reference": "1654e452ef86e2fd648a816c7ef341298e948858"
+                "reference": "dcbe6ae14bec301acad1864cfca219f6a7f51b0c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codeswholesale/codeswholesale-extension-framework/zipball/1654e452ef86e2fd648a816c7ef341298e948858",
-                "reference": "1654e452ef86e2fd648a816c7ef341298e948858",
+                "url": "https://api.github.com/repos/codeswholesale/codeswholesale-extension-framework/zipball/dcbe6ae14bec301acad1864cfca219f6a7f51b0c",
+                "reference": "dcbe6ae14bec301acad1864cfca219f6a7f51b0c",
                 "shasum": ""
             },
             "require": {
@@ -55,7 +54,7 @@
                 "games",
                 "plugin"
             ],
-            "time": "2018-02-14 11:43:11"
+            "time": "2018-02-23T08:36:18+00:00"
         },
         {
             "name": "codeswholesale/sdk",
@@ -106,7 +105,7 @@
                 "games",
                 "security"
             ],
-            "time": "2018-02-14 10:48:40"
+            "time": "2018-02-14T10:48:40+00:00"
         },
         {
             "name": "firebase/php-jwt",
@@ -152,7 +151,7 @@
             ],
             "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
             "homepage": "https://github.com/firebase/php-jwt",
-            "time": "2017-06-27 22:17:23"
+            "time": "2017-06-27T22:17:23+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -217,7 +216,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2017-06-22 18:50:49"
+            "time": "2017-06-22T18:50:49+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -268,7 +267,7 @@
             "keywords": [
                 "promise"
             ],
-            "time": "2017-12-07 21:04:15"
+            "time": "2017-12-07T21:04:15+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -333,7 +332,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2017-10-07 03:19:56"
+            "time": "2017-10-07T03:19:56+00:00"
         },
         {
             "name": "psr/http-message",
@@ -383,7 +382,7 @@
                 "request",
                 "response"
             ],
-            "time": "2016-08-06 14:39:51"
+            "time": "2016-08-06T14:39:51+00:00"
         },
         {
             "name": "sainsburys/guzzle-oauth2-plugin",
@@ -432,7 +431,7 @@
                 }
             ],
             "description": "An OAuth2 middleware for Guzzle",
-            "time": "2017-11-07 13:08:06"
+            "time": "2017-11-07T13:08:06+00:00"
         }
     ],
     "packages-dev": [],
