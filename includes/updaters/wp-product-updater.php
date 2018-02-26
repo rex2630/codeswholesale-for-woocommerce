@@ -18,12 +18,17 @@ class WP_Product_Updater
      * @var WP_Attachment_Updater
      */
     private $attachmentUpdater;
-
+    
     /**
      * @var WP_Category_Updater
      */
     private $categoryUpdater;
-
+    
+    /**
+     * @var WP_Attribute_Updater
+     */
+    private $attributUpdater;
+    
     /**
      * @var array|mixed|void
      */
@@ -36,6 +41,7 @@ class WP_Product_Updater
     {
         $this->attachmentUpdater = new WP_Attachment_Updater();
         $this->categoryUpdater  = new WP_Category_Updater();
+        $this->attributUpdater  = new WP_Attribute_Updater();
         $this->optionsArray = CW()->get_options();
     }
 
@@ -106,7 +112,6 @@ class WP_Product_Updater
         $this->updateProductAttributes($post_id, $externalProduct->getProduct());
         $this->updateProductThumbnail($post_id, $externalProduct->getProduct()->getImageUrl('MEDIUM'));
     }
-
     /**
      * 
      * @param type $post_id
@@ -114,19 +119,21 @@ class WP_Product_Updater
      */
     public function updateProductAttributes($post_id, Product $product) {
         $attributes = [];
-        $attributes['Extension packs'] = $product->getProductDescription()->getExtensionPacks();
+        
+        
+        $attributes[WP_Attribute_Updater::getSlug(WP_Attribute_Updater::ATTR_EXTENSION_PACK)] = $product->getProductDescription()->getExtensionPacks();
         
         $releases =  $product->getProductDescription()->getReleases();
         
         if($releases) {
-            $attributes['Releases'] = [];
+            $attributes[WP_Attribute_Updater::getSlug(WP_Attribute_Updater::ATTR_RELEASES)] = [];
                 
             foreach($releases as $rel) {
-                $attributes['Releases'][] = $rel->getTerritory() . ' - ' .  $rel->getStatus() . ' - ' . $rel->getDate();
+                $attributes[WP_Attribute_Updater::getSlug(WP_Attribute_Updater::ATTR_RELEASES)][] = $rel->getTerritory() . ' - ' .  $rel->getStatus() . ' - ' . $rel->getDate();
             }
         }
         
-        $attributes['Eans'] =  $product->getProductDescription()->getEanCodes();
+        $attributes[WP_Attribute_Updater::getSlug(WP_Attribute_Updater::ATTR_EANS)] =  $product->getProductDescription()->getEanCodes();
         
         $product_attributes_data = array();
         
@@ -150,11 +157,6 @@ class WP_Product_Updater
         update_post_meta($post_id, '_product_attributes', $product_attributes_data);
     }
     
-    /**
-     * 
-     * @param type $post_id
-     * @param Product $product
-     */
     public function updateProductTags($post_id, Product $product) {
         $keywords = $product->getProductDescription()->getKeywords();
         
@@ -162,12 +164,7 @@ class WP_Product_Updater
             wp_set_object_terms($post_id, $keywords, 'product_tag');
         }
     }
-
-    /**
-     * 
-     * @param type $post_id
-     * @param Product $product
-     */
+    
     public function updateProductCategory($post_id, Product $product) {
         $platforms = $product->getPlatform();
         
@@ -192,13 +189,6 @@ class WP_Product_Updater
         $this->setProductCategory($post_id, $pegi,  WP_Category_Updater::CATEGORY_SLUG_PEGI);
     }
     
-    /**
-     * 
-     * @param int $post_id
-     * @param string $category
-     * @param string $parent
-     * @param string $description
-     */
     public function setProductCategory($post_id, $category, $parent, $description = '') {
         if(is_array($category)) {
             foreach($category as $cat) {
@@ -212,12 +202,7 @@ class WP_Product_Updater
             }
         }
     }
-
-    /**
-     * 
-     * @param type $post_id
-     * @param Product $product
-     */  
+    
     public function updateProductGallery($post_id, Product $product) {
         $photos = $product->getProductDescription()->getPhotos();
         
@@ -241,11 +226,6 @@ class WP_Product_Updater
         $this-> setProductGallery($post_id, $urls);
     }
     
-    /**
-     * 
-     * @param int $post_id
-     * @param Array $urls
-     */
     public function setProductGallery(int $post_id, Array $urls = []) {
         $ids = [];
         
@@ -261,7 +241,6 @@ class WP_Product_Updater
         
         add_post_meta($post_id, '_product_image_gallery', implode(',', $ids));  
     }
-
     /**
      * 
      * @param type $post_id
