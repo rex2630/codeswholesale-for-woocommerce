@@ -119,8 +119,7 @@ class WP_Product_Updater
      */
     public function updateProductAttributes($post_id, Product $product) {
         $attributes = [];
-        
-        
+         
         $attributes[WP_Attribute_Updater::getSlug(WP_Attribute_Updater::ATTR_EXTENSION_PACK)] = $product->getProductDescription()->getExtensionPacks();
         
         $releases =  $product->getProductDescription()->getReleases();
@@ -139,21 +138,31 @@ class WP_Product_Updater
         
         foreach ($attributes as $key => $value) // Loop round each attribute
         {
+            
             if(is_array($value)) {
-                $value = implode("|", $value);
-            } 
+                foreach($value as $term) {
+                    wp_insert_term($term, wc_clean($key));
+                }
+                
+                wp_set_object_terms( $post_id, $value, wc_clean($key ));
+               // $value = implode("|", $value);
+            } else {
+                wp_insert_term($value, wc_clean($key));
+                wp_set_object_terms( $post_id, $value, wc_clean($key ));
+            }
 
             if($value) {
+                
                $product_attributes_data[sanitize_title($key)] = array( // Set this attributes array to a key to using the prefix 'pa'
                    'name' => wc_clean($key),
                    'value' => $value,
                    'is_visible' =>  true,
                    'is_variation' => false,
-                   'is_taxonomy' => false
+                   'is_taxonomy' => true
                ); 
            }
         }
-
+        
         update_post_meta($post_id, '_product_attributes', $product_attributes_data);
     }
     

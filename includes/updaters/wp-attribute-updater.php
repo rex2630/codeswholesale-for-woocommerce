@@ -19,7 +19,7 @@ class WP_Attribute_Updater
     public function addAttribute($name) {
         $args = array(
                 'name'         => $name,
-                'type'         => 'text',
+                'type'         => 'select',
                 'order_by'     => '',
                 'has_archives' => 1,
         );
