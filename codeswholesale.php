@@ -235,6 +235,8 @@ final class CodesWholesale
 
         //Updaters
         include_once('includes/updaters/wp-attachment-updater.php');
+        include_once('includes/updaters/wp-attribute-updater.php');
+        include_once('includes/updaters/wp-category-updater.php');
         include_once('includes/updaters/wp-product-updater.php');
         
         // Retrievers

@@ -18,7 +18,17 @@ class WP_Product_Updater
      * @var WP_Attachment_Updater
      */
     private $attachmentUpdater;
-
+    
+    /**
+     * @var WP_Category_Updater
+     */
+    private $categoryUpdater;
+    
+    /**
+     * @var WP_Attribute_Updater
+     */
+    private $attributUpdater;
+    
     /**
      * @var array|mixed|void
      */
@@ -30,6 +40,8 @@ class WP_Product_Updater
     private function __construct()
     {
         $this->attachmentUpdater = new WP_Attachment_Updater();
+        $this->categoryUpdater  = new WP_Category_Updater();
+        $this->attributUpdater  = new WP_Attribute_Updater();
         $this->optionsArray = CW()->get_options();
     }
 
@@ -72,7 +84,10 @@ class WP_Product_Updater
         $this->updateRegularPrice($post_id, $externalProduct->getProduct()->getLowestPrice());
         $this->updateStock($post_id, $externalProduct->getProduct()->getStockQuantity());
         
+        $this->updateProductCategory($post_id, $externalProduct->getProduct());
+        $this->updateProductTags($post_id, $externalProduct->getProduct());
         $this->updateProductAttributes($post_id, $externalProduct->getProduct());
+        $this->updateProductGallery($post_id, $externalProduct->getProduct());
         $this->updateProductThumbnail($post_id, $externalProduct->getProduct()->getImageUrl('MEDIUM'));
         
         return $post_id;
@@ -104,32 +119,137 @@ class WP_Product_Updater
      */
     public function updateProductAttributes($post_id, Product $product) {
         $attributes = [];
-        $attributes['Platforms'] = $product->getPlatform();
-        $attributes['Regions'] =  $product->getRegions();
-        $attributes['Languages'] =  $product->getLanguages();
+         
+        $attributes[WP_Attribute_Updater::getSlug(WP_Attribute_Updater::ATTR_EXTENSION_PACK)] = $product->getProductDescription()->getExtensionPacks();
+        
+        $releases =  $product->getProductDescription()->getReleases();
+        
+        if($releases) {
+            $attributes[WP_Attribute_Updater::getSlug(WP_Attribute_Updater::ATTR_RELEASES)] = [];
+                
+            foreach($releases as $rel) {
+                $attributes[WP_Attribute_Updater::getSlug(WP_Attribute_Updater::ATTR_RELEASES)][] = $rel->getTerritory() . ' - ' .  $rel->getStatus() . ' - ' . $rel->getDate();
+            }
+        }
+        
+        $attributes[WP_Attribute_Updater::getSlug(WP_Attribute_Updater::ATTR_EANS)] =  $product->getProductDescription()->getEanCodes();
         
         $product_attributes_data = array();
         
         foreach ($attributes as $key => $value) // Loop round each attribute
         {
+            
             if(is_array($value)) {
-                $value = implode("|", $value);
-            } 
+                foreach($value as $term) {
+                    wp_insert_term($term, wc_clean($key));
+                }
+                
+                wp_set_object_terms( $post_id, $value, wc_clean($key ));
+               // $value = implode("|", $value);
+            } else {
+                wp_insert_term($value, wc_clean($key));
+                wp_set_object_terms( $post_id, $value, wc_clean($key ));
+            }
 
             if($value) {
+                
                $product_attributes_data[sanitize_title($key)] = array( // Set this attributes array to a key to using the prefix 'pa'
                    'name' => wc_clean($key),
                    'value' => $value,
                    'is_visible' =>  true,
                    'is_variation' => false,
-                   'is_taxonomy' => false
+                   'is_taxonomy' => true
                ); 
            }
         }
-
+        
         update_post_meta($post_id, '_product_attributes', $product_attributes_data);
     }
     
+    public function updateProductTags($post_id, Product $product) {
+        $keywords = $product->getProductDescription()->getKeywords();
+        
+        if ($keywords) {
+            wp_set_object_terms($post_id, $keywords, 'product_tag');
+        }
+    }
+    
+    public function updateProductCategory($post_id, Product $product) {
+        $platforms = $product->getPlatform();
+        
+        $this->setProductCategory($post_id, $platforms,  WP_Category_Updater::CATEGORY_SLUG_PLATFORM);
+
+        $developer = $product->getProductDescription()->getDeveloperName();
+        
+        $developer_description = $product->getProductDescription()->getDeveloperHomepage();
+        
+        if($developer_description) {
+            $developer_description = 'Developer homepage: ' . $developer_description;
+        }
+        
+        $this->setProductCategory($post_id, $developer,  WP_Category_Updater::CATEGORY_SLUG_DEVELOPER, $developer_description);
+  
+        $category = $product->getProductDescription()->getCategory();
+        
+        $this->setProductCategory($post_id, $category,  WP_Category_Updater::CATEGORY_SLUG_CATEGORY);
+        
+        $pegi = $product->getProductDescription()->getPegiRating();
+        
+        $this->setProductCategory($post_id, $pegi,  WP_Category_Updater::CATEGORY_SLUG_PEGI);
+    }
+    
+    public function setProductCategory($post_id, $category, $parent, $description = '') {
+        if(is_array($category)) {
+            foreach($category as $cat) {
+                $id = $this->categoryUpdater->getTermIdForce($cat,$parent, $description);
+                wp_set_post_terms( $post_id, $id, WP_Category_Updater::TAXONOMY_SLUG, true );
+            }
+        } else {
+            if($category) {
+                $id = $this->categoryUpdater->getTermIdForce($category, $parent, $description);
+                wp_set_post_terms( $post_id, $id, WP_Category_Updater::TAXONOMY_SLUG, true );  
+            }
+        }
+    }
+    
+    public function updateProductGallery($post_id, Product $product) {
+        $photos = $product->getProductDescription()->getPhotos();
+        
+        $default     = [];
+        $preferred   = [];
+        
+        /** @var \CodesWholesale\Resource\Photo $photo */
+        foreach($photos as $photo) {
+            if('SCREEN_SHOT_LARGE' == $photo->getType()) {
+                if("" == $photo->getTerritory() || $this->optionsArray[CodesWholesaleConst::PREFERRED_LANGUAGE_FOR_PRODUCT_OPTION_NAME] == $photo->getTerritory()) {
+                    $preferred[] = $photo->getUrl();
+                }
+                if("" == $photo->getTerritory() || 'uk' == $photo->getTerritory()) {
+                    $default[] = $photo->getUrl();
+                }    
+            } 
+        }
+        
+        $urls = empty($preferred) ? $default : $preferred;
+        
+        $this-> setProductGallery($post_id, $urls);
+    }
+    
+    public function setProductGallery(int $post_id, Array $urls = []) {
+        $ids = [];
+        
+        foreach($urls as $url) {
+            $photo_data = explode("/",$url);
+            $count = count ($photo_data);
+            $attach_id = $this->attachmentUpdater->setAttachment($post_id, $url, $photo_data[$count-2]);
+            
+            if($attach_id) {
+                $ids[] = $attach_id;
+            }
+        }
+        
+        add_post_meta($post_id, '_product_image_gallery', implode(',', $ids));  
+    }
     /**
      * 
      * @param type $post_id
