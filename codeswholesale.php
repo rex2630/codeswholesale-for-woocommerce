@@ -4,7 +4,7 @@
  * Plugin URI: http://docs.codeshowlesale.com
  * Depends: WooCommerce
  * Description: Integration with CodesWholesale API. PHP >= 7.0
- * Version: 2.1
+ * Version: 2.3
  * Author: DevTeam devteam@codeswholesale.com
  * Author URI: http://docs.codeswholesale.com
  * License: GPL2

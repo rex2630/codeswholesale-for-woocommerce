@@ -30,6 +30,7 @@ class ApiClient
 
     /**
      * @return ApiClient
+     * @throws \CodesWholesale\Exceptions\ClientConfigException
      */
     public static function getInstance(): ApiClient
     {
@@ -44,7 +45,7 @@ class ApiClient
                 'environment' => $defaultOptions['environment'],
                 'client_id' => empty($defaultOptions['api_client_id']) ? '0' : $defaultOptions['api_client_id'] ,
                 'client_secret' => empty($defaultOptions['api_client_secret']) ? '0' : $defaultOptions['api_client_secret'],
-                'client_headers' => 'Codeswholesale-WooCommerce/2.0',
+                'client_headers' => 'Codeswholesale-WooCommerce/2.3',
                 'db' => new PDO('mysql:host=' . $wpdb->dbhost . ';dbname=' . $wpdb->dbname, $wpdb->dbuser, $wpdb->dbpassword),
                 'prefix' => sprintf('%s%s', $wpdb->prefix, WP_Repository::CW_PREFIX),
             ];
