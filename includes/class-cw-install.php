@@ -51,9 +51,7 @@ if (!class_exists('CW_Install')) :
         {
             $options = get_option(CodesWholesaleConst::OPTIONS_NAME);
 
-            $signature = empty($options['api_client_singature']) ? "" : $options['api_client_singature'];
-            
-            $action = new RegisterHandlers(CW()->get_codes_wholesale_client(), $signature,  $options['environment']);
+            $action = new RegisterHandlers(CW()->get_codes_wholesale_client(),  $options['environment']);
 
             $action->setProductUpdater(new WP_Update_Products());
             $action->setOrderUpdater(new WP_Update_Orders());
