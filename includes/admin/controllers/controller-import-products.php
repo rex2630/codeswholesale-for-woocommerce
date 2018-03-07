@@ -100,6 +100,8 @@ if (!class_exists('CW_Controller_Import_products')) :
 
                         $this->import_repository->save($importModel);
 
+                        (new WP_Attribute_Updater())->init();
+                        
                         ExecManager::exec(ExecManager::getPhpPath(), 'import-exec.php');
 
                         $result->status = true;
