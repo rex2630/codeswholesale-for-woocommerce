@@ -95,44 +95,17 @@ class ImportExec
             $filters['inStockDaysAgo'] = $this->importModel->getInStockDaysAgo();
         }
 
-        $externalProducts = $this->client->getProducts($filters);
-
-        $this->importModel->setStatus(WP_ImportPropertyModel::STATUS_IN_PROGRESS);
-        $this->importModel->setTotalCount(count($externalProducts));
-        $this->importRepository->update($this->importModel);
-
 //        $wpdb->query('START TRANSACTION');
-
         try {
+            $externalProducts = $this->client->getProducts($filters);
+
+            $this->importModel->setStatus(WP_ImportPropertyModel::STATUS_IN_PROGRESS);
+            $this->importModel->setTotalCount(count($externalProducts));
+            $this->importRepository->update($this->importModel);
+
             /** @var \CodesWholesale\Resource\Product $product */
             foreach ($externalProducts as $product) {
-
-                $externalProduct = (new ExternalProduct())
-                    ->setProduct($product)
-                    ->updateDescription($this->optionsArray[CodesWholesaleConst::PREFERRED_LANGUAGE_FOR_PRODUCT_OPTION_NAME])
-                ;
-
-                $relatedInternalProducts = CW()->get_related_wp_products($externalProduct->getProduct()->getProductId());
-             
-                if (0 === count($relatedInternalProducts)) {
-                    $this->updater->createWooCommerceProduct($this->importModel->getUserId(), $externalProduct);
-                    $this->importModel->increaseInsertCount();
-                    $this->csvGenerator->append($this->generateInsertLine($externalProduct));
-                } elseif (0 < count($relatedInternalProducts)) {
-                    
-                     foreach ($relatedInternalProducts as $post) {
-                        $diff = $this->diffGenerator->getDiff($externalProduct, $post);
-
-                        if (0 !== count($diff)) {
-                            $this->updater->updateWooCommerceProduct($post->ID, $externalProduct);
-                            $this->importModel->increaseUpdateCount();
-                            $this->csvGenerator->append($this->generateUpdateLine($externalProduct, $diff));
-                        }
-                     }
-                }
-                $this->importModel->increaseDoneCount();
-
-                $this->importRepository->update($this->importModel);
+                $this->importProduct($product);
             }
 
             $this->importModel->setStatus(WP_ImportPropertyModel::STATUS_DONE);
@@ -155,6 +128,38 @@ class ImportExec
 //        $wpdb->query('COMMIT');
     }
 
+    private function importProduct($product) {
+        try {
+            $externalProduct = (new ExternalProduct())
+                 ->setProduct($product)
+                 ->updateDescription($this->optionsArray[CodesWholesaleConst::PREFERRED_LANGUAGE_FOR_PRODUCT_OPTION_NAME])
+             ;
+
+             $relatedInternalProducts = CW()->get_related_wp_products($externalProduct->getProduct()->getProductId());
+
+             if (0 === count($relatedInternalProducts)) {
+                 $this->updater->createWooCommerceProduct($this->importModel->getUserId(), $externalProduct);
+                 $this->importModel->increaseInsertCount();
+                 $this->csvGenerator->append($this->generateInsertLine($externalProduct));
+             } elseif (0 < count($relatedInternalProducts)) {
+
+                  foreach ($relatedInternalProducts as $post) {
+                     $diff = $this->diffGenerator->getDiff($externalProduct, $post);
+
+                     if (0 !== count($diff)) {
+                         $this->updater->updateWooCommerceProduct($post->ID, $externalProduct);
+                         $this->importModel->increaseUpdateCount();
+                         $this->csvGenerator->append($this->generateUpdateLine($externalProduct, $diff));
+                     }
+                  }
+             }
+             $this->importModel->increaseDoneCount();
+
+             $this->importRepository->update($this->importModel); 
+        } catch (\Exception $e) {
+        }
+    }
+
     /**
      * @return array
      */
@@ -164,12 +169,8 @@ class ImportExec
             'ID',
             'Status',
             'Name',
-            'Platforms',
-            'Regions',
-            'Languages',
             'Price',
             'Stock',
-            'Description',
             'Cover',
         ];
     }
@@ -185,12 +186,8 @@ class ImportExec
             (string) '"' . $externalProduct->getProduct()->getProductId() .'"',
             (string) '"' . 'Imported' .'"',
             (string) '"' . $externalProduct->getProduct()->getName() .'"',
-            (string) '"' . $this->implodeArray($externalProduct->getProduct()->getPlatform()) .'"',
-            (string) '"' . $this->implodeArray($externalProduct->getProduct()->getRegions()) .'"',
-            (string) '"' . $this->implodeArray($externalProduct->getProduct()->getLanguages()) .'"',
             (string) '"' . $externalProduct->getProduct()->getLowestPrice() .'"',
             (string) '"' . $externalProduct->getProduct()->getStockQuantity() .'"',
-            (string) '"' . $externalProduct->getDescription() .'"',
             (string) '"' . $externalProduct->getProduct()->getImageUrl('MEDIUM') .'"',
         ];
     }

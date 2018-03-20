@@ -1,0 +1,99 @@
+<?php
+use CodesWholesale\Resource\Product;
+
+/**
+ * Class WP_Attribute_Updater
+ */
+class WP_Attribute_Updater
+{
+    const ATTR_PLATFORM   = 'Platform';
+    const ATTR_REGION     = 'Region';
+    const ATTR_LANGUAGE   = 'Language';
+
+    public function __construct() {
+    }
+    
+    public function init() {
+        $this->addAttribute(self::ATTR_PLATFORM);
+        $this->addAttribute(self::ATTR_REGION);
+        $this->addAttribute(self::ATTR_LANGUAGE);   
+    }
+
+    public function addAttribute($name) {
+        $args = array(
+                'name'         => $name,
+                'type'         => 'select',
+                'order_by'     => '',
+                'has_archives' => 1,
+        );
+
+        $id = wc_create_attribute( $args ); 
+        
+        if ( is_wp_error( $id ) ) {
+                return false;
+        }
+
+        return $id;
+    }    
+    
+    public static function getSlug($name) {
+        return 'pa_' . wc_sanitize_taxonomy_name($name);
+    }
+    
+    public function insertAttributeTerm($value, $key) {
+        if(is_array($value)) {
+            foreach($value as $term) {
+                wp_insert_term($term, wc_clean($key));
+            }     
+        } else {                
+            wp_insert_term($value, wc_clean($key));
+
+        }
+    }
+    
+    public function localAttributes(Product $product) {
+        $attributes = [];
+        
+        $attributes['Extension packs'] = $product->getProductDescription()->getExtensionPacks();
+        $attributes['Eans'] =  $product->getProductDescription()->getEanCodes();
+        
+        $releases = $product->getProductDescription()->getReleases();
+         if($releases) {
+            $attributes['Releases'] = [];
+                
+            foreach($releases as $rel) {
+                $attributes['Releases'][] = $rel->getTerritory() . ' - ' .  $rel->getStatus() . ' - ' . $rel->getDate();
+            }
+        }
+        
+        return $attributes;
+    }
+    
+    public function globalAttributes(Product $product) {
+        $attributes = [];
+
+        $attributes[WP_Attribute_Updater::getSlug(WP_Attribute_Updater::ATTR_PLATFORM)] = $product->getPlatform();
+        
+        $regions =  $product->getRegions();
+        
+        if($regions) {
+            $attributes[WP_Attribute_Updater::getSlug(WP_Attribute_Updater::ATTR_REGION)] = [];
+                
+            foreach($regions as $reg) {
+                $attributes[WP_Attribute_Updater::getSlug(WP_Attribute_Updater::ATTR_REGION)][] = $reg;
+            }
+        }
+        
+        $languages =  $product->getLanguages();
+
+        if($languages) {
+            $attributes[WP_Attribute_Updater::getSlug(WP_Attribute_Updater::ATTR_LANGUAGE)] = [];
+                
+            foreach($languages as $lang) {
+                $attributes[WP_Attribute_Updater::getSlug(WP_Attribute_Updater::ATTR_LANGUAGE)][] = $lang;
+            }
+        }
+        
+        return $attributes;
+    }
+}

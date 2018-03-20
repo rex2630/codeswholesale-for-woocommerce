@@ -1,6 +1,6 @@
 {
     "minimum-stability": "dev",
     "require": {
-        "codeswholesale/cw-extension-framework": "2.2"
+        "codeswholesale/cw-extension-framework": "2.2.1"
     }
 }

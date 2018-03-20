@@ -40,30 +40,13 @@ class ImportProductDiffGenerator
     {
         $this->diff = [];
 
-        $productAttributes = get_post_meta($wpProduct->ID, '_product_attributes', true);
         $price = get_post_meta($wpProduct->ID, CodesWholesaleConst::PRODUCT_STOCK_PRICE_PROP_NAME, true);
         $stock = get_post_meta($wpProduct->ID, '_stock', true);
 
         $product = $externalProduct->getProduct();
 
-        $platform = $this->implodeArray($product->getPlatform());
-        $regions = $this->implodeArray($product->getRegions());
-        $languages = $this->implodeArray($product->getLanguages());
-
         if (trim($product->getName()) !== trim($wpProduct->post_title)) {
             $this->generateDiff(self::FIELD_NAME, $wpProduct->post_title, $product->getName());
-        }
-
-        if (trim($platform) !== trim($productAttributes[self::FIELD_PLATFORMS]['value'])) {
-            $this->generateDiff(self::FIELD_PLATFORMS, $productAttributes[self::FIELD_PLATFORMS]['value'], $platform);
-        }
-
-        if (trim($regions) !== trim($productAttributes[self::FIELD_REGIONS]['value'])) {
-            $this->generateDiff(self::FIELD_REGIONS, $productAttributes[self::FIELD_REGIONS]['value'], $regions);
-        }
-
-        if (trim($languages) !== trim($productAttributes[self::FIELD_LANGUAGES]['value'])) {
-            $this->generateDiff(self::FIELD_LANGUAGES, $productAttributes[self::FIELD_LANGUAGES]['value'], $languages);
         }
 
         if ((string) trim($product->getLowestPrice()) !== trim($price)) {
@@ -72,10 +55,6 @@ class ImportProductDiffGenerator
 
         if ((string) trim($product->getStockQuantity()) !== trim($stock)) {
             $this->generateDiff(self::FIELD_STOCK, $stock, $product->getStockQuantity());
-        }
-
-        if (trim($externalProduct->getDescription()) !== trim($wpProduct->post_content)) {
-            $this->generateDiff(self::FIELD_DESCRIPTION, $wpProduct->post_content, $externalProduct->getDescription());
         }
 
         return $this->diff;
