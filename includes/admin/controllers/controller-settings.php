@@ -181,15 +181,12 @@ if (!class_exists('CW_Controller_Settings')) :
             $account = null;
             $error = null;
 
-            try {
-                CW()->refresh_codes_wholesale_client();
+            CW()->refresh_codes_wholesale_client();
+            
+            if(CW()->isClientCorrect()) {
                 $account = CW()->get_codes_wholesale_client()->getAccount();
-            } catch (\Exception $e) {
-                if (!CW()->get_codes_wholesale_client() instanceof Client) {
-                    $error = new \Exception('Unauthorized!');
-                } else {
-                    $error = $e;
-                }
+            } else {
+                $error = new \Exception('Unauthorized!');
             }
     
             include_once(plugin_dir_path( __FILE__ ).'../views/view-settings.php');

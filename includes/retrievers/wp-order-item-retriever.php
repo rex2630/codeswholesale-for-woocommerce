@@ -15,10 +15,23 @@ class WP_Order_Item_Retriever implements ItemRetriever
             'quantity' => $qty
         );
         
-        if (1 == CW()->get_options()[CodesWholesaleConst::DOUBLE_CHECK_PRICE_PROP_NAME]) {
+        if ($this->isDoubleCheckPrice()) {
             $item['price'] = get_post_meta($mergedValues['item']['product_id'], CodesWholesaleConst::PRODUCT_STOCK_PRICE_PROP_NAME , true);
         }
 
         return $item;
+    }
+
+    private function isDoubleCheckPrice() 
+    {
+        $options = CW()->get_options();
+        
+        if (array_key_exists(CodesWholesaleConst::DOUBLE_CHECK_PRICE_PROP_NAME, $options)) {
+            if (1 == $options[CodesWholesaleConst::DOUBLE_CHECK_PRICE_PROP_NAME]) {
+                return true;
+            }
+        }
+        
+        return false;
     }
 }
