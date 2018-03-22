@@ -3,7 +3,7 @@ Contributors: Devteam CodesWholesale
 Tags: woocommerce, api , codeswholesale api, digital games, digital games to sell, cd-keys, automated game delivery, digital game catalogue, digital product catalogue, automated game supply chain, digital products, digital products to sell
 Requires at least: 4.4.0
 Tested up to: 4.9.2
-Stable tag: 2.3
+Stable tag: 2.4.1
 License: Apache License Version 2.0, January 2004
 License URI: http://www.apache.org/licenses/
 
@@ -169,3 +169,12 @@ What you get with API 2.0:
 - Attachment issues while image for product not found (fixed)
 - Attributes and Categories as global (added)
 - Segregation between attributes global/local (added)
+
+= 2.4 =
+
+- Attributes improvement
+
+= 2.4.1 =
+
+- Website crash due to wrong production credentials (fixed)
+- Issue related to database column - undefined index: _codeswholesale_double_check_price after installation (fixed)
