@@ -416,7 +416,7 @@ final class CodesWholesale
         try {
             CW()->get_codes_wholesale_client()->getAccount();
             return true;
-        } catch (\Exception $e) {
+        } catch (\Error $e) {
             return false;
         }
     }
