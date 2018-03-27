@@ -217,7 +217,7 @@ class WP_Product_Updater
 
             $this->setProductCategory($post_id, $developer,  WP_Category_Updater::CATEGORY_SLUG_DEVELOPER, $developer_description);
 
-            $category = $product->getProductDescription()->getCategory();
+            $category = $product->getProductDescription()->getCategories();
 
             $this->setProductCategory($post_id, $category,  WP_Category_Updater::CATEGORY_SLUG_CATEGORY);
 
