@@ -178,3 +178,7 @@ What you get with API 2.0:
 
 - Website crash due to wrong production credentials (fixed)
 - Issue related to database column - undefined index: _codeswholesale_double_check_price after installation (fixed)
+
+= 2.4.2 =
+
+- Switch from one product category to multiple (added)
