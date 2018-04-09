@@ -51,68 +51,6 @@ if (!class_exists('CW_Controller_Settings')) :
                     'renderer' => 'render_options_text',
                     'class' => 'cst-label'
                 ),
-            
-            CodesWholesaleConst::AUTOMATICALLY_COMPLETE_ORDER_OPTION_NAME =>
-
-                array(
-                    'label' => 'Complete orders',
-                    'description' => 'Complete order automatically upon payment.',
-                    'renderer' => 'render_orders_checkbox',
-                    'class' => 'cst-label'
-                ),
-            CodesWholesaleConst::DOUBLE_CHECK_PRICE_PROP_NAME =>
-
-                array(
-                    'label' => 'Double-check price',
-                    'description' => 'Compare your stock price with that of CodesWholesale before purchase.',
-                    'renderer' => 'render_orders_checkbox',
-                    'class' => 'cst-label'
-                ),
-
-            CodesWholesaleConst::ALLOW_PRE_ORDER_PROP_NAME =>
-
-                array(
-                    'label' => 'Pre-order products',
-                    'description' => 'Enable or disable purchasing pre-order products.',
-                    'renderer' => 'render_orders_checkbox',
-                    'class' => 'cst-label'
-                ),
-            
-            CodesWholesaleConst::RISK_SCORE_PROP_NAME =>
-
-                array(
-                    'label' => 'Risk score value',
-                    'description' => 'If your client’s risk score is too high, the order will not be completed.',
-                    'renderer' => 'render_options_number_field',
-                    'class' => 'cst-label'
-                ),
-
-            CodesWholesaleConst::AUTOMATICALLY_IMPORT_NEWLY_PRODUCT_OPTION_NAME =>
-
-                array(
-                    'label' => 'Import on autopilot',
-                    'description' => 'Import newly added products automatically.',
-                    'renderer' => 'render_orders_checkbox',
-                    'class' => 'cst-label'
-                ),
-            
-            CodesWholesaleConst::HIDE_PRODUCT_WHEN_DISABLED_OPTION_NAME =>
-                
-                array(
-                    'label' => 'Hide products',
-                    'description' => 'Hide products that are disabled on the platform.',
-                    'renderer' => 'render_orders_checkbox',
-                    'class' => 'cst-label'
-                ),
-            
-            CodesWholesaleConst::NOTIFY_LOW_BALANCE_VALUE_OPTION_NAME =>
-
-                array(
-                    'label' => 'Balance value',
-                    'description' => 'If your balance reaches below the entered value, you will receive an email notification.',
-                    'renderer' => 'render_options_number_field',
-                    'class' => 'cst-input cst-label'
-                ),
 
             'spread_type' =>
 
@@ -128,39 +66,105 @@ if (!class_exists('CW_Controller_Settings')) :
 
                 array(
                     'label' => 'Profit margin value',
-                    'description' => 'Enter the profit margin value. It can be set either as the percentage or amount value. The profit margin will be added to the product price.',
+                    'description' => 'Enter a value depending on the margin type chosen.  The value will be added to CodesWholesale price and will apply to all products.',
                     'renderer' => 'render_options_number_field',
                     'class' => 'cst-label'
                 ),
-            'product_price_charmer' =>
 
-                  array(
-                    'label' => 'Enable Price Charmer',
-                    'description' => 'The feature based on charm pricing strategy makes your prices look more attractive to your customers. The price will change as follows:'.
-                        '<ul>
-                          <li><p class="description">from .01 to .29 = .29</p></li>
-                          <li><p class="description">from .30 to .49 = .49</p></li>
-                          <li><p class="description">from .50 to .79 = .79</p></li>
-                          <li><p class="description">from .80 to .99 = .99</p></li>
-                          <li><p class="description">from .00 to .00 = .99</p></li>
-                        </ul>',
-                    'renderer' => 'render_orders_checkbox',
-                    'class' => 'cst-label'
-                ),
             'currency' =>
                 array(
                     'label' => 'Currency',
-                    'description' => 'Currency to sell codes with',
+                    'description' => 'Select a currency that corresponds to your store.',
                     'renderer' => 'render_currency_select',
                     'class' => 'cst-select cst-label'
                 ),
             
+            CodesWholesaleConst::AUTOMATICALLY_COMPLETE_ORDER_OPTION_NAME =>
+
+                array(
+                    'label' => 'Auto-complete orders',
+                    'description' => 'Get orders automatically completed upon payment. This option only works with IPN payments (eg. PayPal).',
+                    'renderer' => 'render_orders_checkbox',
+                    'class' => 'cst-label'
+                ),
+
+            CodesWholesaleConst::ALLOW_PRE_ORDER_PROP_NAME =>
+
+                array(
+                    'label' => 'Pre-order products',
+                    'description' => 'Enable or disable purchasing pre-order products.',
+                    'renderer' => 'render_orders_checkbox',
+                    'class' => 'cst-label'
+                ),
+
+            CodesWholesaleConst::AUTOMATICALLY_IMPORT_NEWLY_PRODUCT_OPTION_NAME =>
+
+                array(
+                    'label' => 'Automatic product import',
+                    'description' => 'Import newly added products automatically.',
+                    'renderer' => 'render_orders_checkbox',
+                    'class' => 'cst-label'
+                ),
+
+            CodesWholesaleConst::NOTIFY_LOW_BALANCE_VALUE_OPTION_NAME =>
+
+                array(
+                    'label' => 'Low-balance notification',
+                    'description' => 'If your account balance on CodesWholesale reaches below the value entered, you will receive an email notification.',
+                    'renderer' => 'render_options_number_field',
+                    'class' => 'cst-input cst-label'
+                ),
+
+            CodesWholesaleConst::RISK_SCORE_PROP_NAME =>
+
+                array(
+                    'label' => 'Risk score value',
+                    'description' => 'The order will be suspended if the client’s risk score is equal or higher than the value entered. The recommended value is 1.5.',
+                    'renderer' => 'render_options_number_field',
+                    'class' => 'cst-label'
+                ),
+
+            CodesWholesaleConst::DOUBLE_CHECK_PRICE_PROP_NAME =>
+
+                array(
+                    'label' => 'Double-check price',
+                    'description' => 'Compare your stock price with that of CodesWholesale.',
+                    'renderer' => 'render_orders_checkbox',
+                    'class' => 'cst-label'
+                ),
+
+
+            CodesWholesaleConst::HIDE_PRODUCT_WHEN_DISABLED_OPTION_NAME =>
+                
+                array(
+                    'label' => 'Hide products',
+                    'description' => 'Hide products that are disabled on CodesWholesale.',
+                    'renderer' => 'render_orders_checkbox',
+                    'class' => 'cst-label'
+                ),
+
             CodesWholesaleConst::PREFERRED_LANGUAGE_FOR_PRODUCT_OPTION_NAME =>
                 array(
-                    'label' => 'Preferred language',
-                    'description' => 'Preferred language for product descriptions.',
+                    'label' => 'Product description language',
+                    'description' => 'Select a language of product descriptions.',
                     'renderer' => 'render_preferred_language_select',
                     'class' => 'cst-select cst-label'
+                ),
+
+            'product_price_charmer' =>
+
+                  array(
+                    'label' => 'Charm pricing',
+                    'description' => 'Make all your prices more attractive to your customers. See the examples below:'.
+                        '<ul>
+                          <li><p class="description">10.01 - 10.29 range => 10.29</p></li>
+                          <li><p class="description">10.30 to 10.49 range => 10.49</p></li>
+                          <li><p class="description">10.50 to 10.79 range => 10.79</p></li>
+                          <li><p class="description">10.80 to 10.99 range => 10.99</p></li>
+                          <li><p class="description">10.00 => 9.99</p></li>
+                        </ul>',
+                    'renderer' => 'render_orders_checkbox',
+                    'class' => 'cst-label'
                 ),
         );
         

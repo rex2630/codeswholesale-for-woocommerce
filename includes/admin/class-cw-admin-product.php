@@ -83,13 +83,13 @@ if (!class_exists('CW_Admin_Product')) :
             woocommerce_wp_select(
                 array(
                     'id' => CodesWholesaleConst::PRODUCT_CODESWHOLESALE_ID_PROP_NAME,
-                    'label' => __('Select product on CodesWholesale:', 'woocommerce'),
+                    'label' => __('Select a product from CodesWholesale', 'woocommerce'),
                     'options' => $product_item_options
                 )
             );
  
             $calculate_price_methods = array(
-                 __('Use global CodesWholesale price and stock', 'woocommerce'),
+                 __('Global profit margin', 'woocommerce'),
                  __('Custom profit margin', 'woocommerce'),
                  __('Custom price and stock', 'woocommerce')
             );
@@ -107,7 +107,7 @@ if (!class_exists('CW_Admin_Product')) :
                     'label' => __('Price and stock settings:', 'woocommerce'),
                     'options' => $calculate_price_methods,
                     'value' => $product_calculate_price_method,
-                    'description' => __('Choose how you want to set prices in your store. If you want your prices to be identical with CodesWholesale, submit the form in the settings.', 'woocommerce')
+                    'description' => __('Choose how you want to set price for this product.', 'woocommerce')
                 )
             );
             

@@ -1,11 +1,7 @@
 <div>
     <p>
         <?php 
-            _e("This function allows you to import all products from CodesWholesale." , "woocommerce"); 
-
-            echo '<br>';
-
-            _e("You will get only the current products with up-to-date prices. Import them in bulk instead of adding every product manually!" , "woocommerce"); 
+            _e("Import all products in bulk instead of adding every product manually. It takes between 20-40 minutes to import all products to your store." , "woocommerce");
         ?>
     </p>
 </div>
