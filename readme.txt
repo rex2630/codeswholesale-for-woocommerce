@@ -3,7 +3,7 @@ Contributors: Devteam CodesWholesale
 Tags: woocommerce, api , codeswholesale api, digital games, digital games to sell, cd-keys, automated game delivery, digital game catalogue, digital product catalogue, automated game supply chain, digital products, digital products to sell
 Requires at least: 4.4.0
 Tested up to: 4.9.2
-Stable tag: 2.4.3
+Stable tag: 2.4.4
 License: Apache License Version 2.0, January 2004
 License URI: http://www.apache.org/licenses/
 
@@ -186,3 +186,7 @@ What you get with API 2.0:
 = 2.4.3 =
 
 - Settings reorganization (edit)
+
+= 2.4.4 =
+
+- Server check for PHP declared variable (added)
