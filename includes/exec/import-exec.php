@@ -3,10 +3,6 @@
 require_once( dirname(__FILE__) . '/../../../../../wp-load.php' );
 require_once( dirname(__FILE__) . '/../../codeswholesale.php' );
 
-require_once( dirname(__FILE__) . '/../../vendor\codeswholesale\cw-extension-framework\src\Import\csv-generator.php' );
-require_once( dirname(__FILE__) . '/../../vendor\codeswholesale\cw-extension-framework\src\Import\product-diff-generator.php' );
-require_once( dirname(__FILE__) . '/../../vendor\codeswholesale\cw-extension-framework\src\Import\csv-import-generator.php' );
-
 use CodesWholesale\Client;
 use CodesWholesaleFramework\Model\ExternalProduct;
 use CodesWholesaleFramework\Import\CsvImportGenerator;

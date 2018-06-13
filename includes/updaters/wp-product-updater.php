@@ -112,7 +112,7 @@ class WP_Product_Updater
         $this->updateProductCategory($post_id, $externalProduct->getProduct());
         $this->updateProductTags($post_id, $externalProduct->getProduct());
         $this->updateProductAttributes($post_id, $externalProduct->getProduct());
-     //   $this->updateProductGallery($post_id, $externalProduct->getProduct());
+        $this->updateProductGallery($post_id, $externalProduct->getProduct());
         $this->updateProductThumbnail($post_id, $externalProduct->getProduct()->getImageUrl('MEDIUM'));
     }
 
