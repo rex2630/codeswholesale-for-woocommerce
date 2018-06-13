@@ -10,12 +10,15 @@ class ExecManager
      */
     public static function getPhpPath(): string
     {
-        if (self::phpTest() === $_SERVER['PATH']){
-            return self::PHP_PATH;
-        }
-        else {
-            return PHP_BINDIR . '/php';
-        }
+        
+        return  self::PHP_PATH;
+        
+//        if (self::phpTest() === $_SERVER['PATH']){
+//            return self::PHP_PATH;
+//        }
+//        else {
+//            return PHP_BINDIR . '/php';
+//        }
     }
 
     private static function phpTest() {

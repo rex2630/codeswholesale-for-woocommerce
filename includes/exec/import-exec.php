@@ -3,9 +3,15 @@
 require_once( dirname(__FILE__) . '/../../../../../wp-load.php' );
 require_once( dirname(__FILE__) . '/../../codeswholesale.php' );
 
+require_once( dirname(__FILE__) . '/../../vendor\codeswholesale\cw-extension-framework\src\Import\csv-generator.php' );
+require_once( dirname(__FILE__) . '/../../vendor\codeswholesale\cw-extension-framework\src\Import\product-diff-generator.php' );
+require_once( dirname(__FILE__) . '/../../vendor\codeswholesale\cw-extension-framework\src\Import\csv-import-generator.php' );
+
 use CodesWholesale\Client;
-use CodesWholesale\Resource\Product;
 use CodesWholesaleFramework\Model\ExternalProduct;
+use CodesWholesaleFramework\Import\CsvImportGenerator;
+use CodesWholesaleFramework\Import\ProductDiffGenerator;
+
 
 /**
  * Class ImportExec
@@ -33,20 +39,15 @@ class ImportExec
     protected $importModel;
 
     /**
-     * @var ImportProductDiffGenerator
+     * @var ProductDiffGenerator
      */
     protected $diffGenerator;
 
 
     /**
-     * @var CsvGenerator
+     * @var CsvImportGenerator
      */
-    protected $csvGenerator;
-
-    /**
-     * @var array
-     */
-    protected $changeLines = [];
+    protected $csvImportGenerator;
 
     /**
      * @var array|mixed|void
@@ -62,42 +63,20 @@ class ImportExec
         $this->client = CW()->get_codes_wholesale_client();
         $this->updater = WP_Product_Updater::getInstance();
         $this->importModel = $this->importRepository->findActive();
-        $this->diffGenerator = new ImportProductDiffGenerator();
-        $this->csvGenerator = new CsvGenerator();
-        $this->csvGenerator->setHeader($this->generateImportCsvHeader());
-        $this->createImportFolder();
-        $this->optionsArray = CW()->get_options();
-    }
+        $this->diffGenerator = new ProductDiffGenerator();
+        $this->csvImportGenerator = new CsvImportGenerator();
 
+        $this->optionsArray = CW()->get_options();
+        $this->createImportFolder();
+    }
+    
     /**
      * execute
      */
     public function execute()
     {
-        /** @var $wpdb wpdb */
-        global $wpdb;
-
-        $filters = [];
-
-        if (0 !== count($this->importModel->getFilters()['platform'])) {
-            $filters['platform'] = $this->importModel->getFilters()['platform'];
-        }
-
-        if (0 !== count($this->importModel->getFilters()['region'])) {
-            $filters['region'] = $this->importModel->getFilters()['region'];
-        }
-
-        if (0 !== count($this->importModel->getFilters()['language'])) {
-            $filters['language'] = $this->importModel->getFilters()['language'];
-        }
-
-        if (null != $this->importModel->getInStockDaysAgo()) {
-            $filters['inStockDaysAgo'] = $this->importModel->getInStockDaysAgo();
-        }
-
-//        $wpdb->query('START TRANSACTION');
         try {
-            $externalProducts = $this->client->getProducts($filters);
+            $externalProducts = $this->client->getProducts($this->importModel->serializeFilters());
 
             $this->importModel->setStatus(WP_ImportPropertyModel::STATUS_IN_PROGRESS);
             $this->importModel->setTotalCount(count($externalProducts));
@@ -112,23 +91,21 @@ class ImportExec
             $this->importRepository->update($this->importModel);
 
         } catch (\Exception $e) {
-//            $wpdb->query('ROLLBACK');
-
             $this->importModel->setStatus(WP_ImportPropertyModel::STATUS_REJECT);
             $this->importModel->setDescription($e->getMessage());
             $this->importRepository->update($this->importModel);
             throw $e;
         }
 
-        $csv = $this->csvGenerator->generate();
+        $csv = $this->csvImportGenerator->finish();
 
-        file_put_contents($this->getImportFilePath(), $csv);
-
-        (new WP_Admin_Notify_Import_Finished())->sendMail([$this->getImportFilePath()], $this->importModel);
-//        $wpdb->query('COMMIT');
+        FileManager::setImportFile($csv, $this->importModel->getId());
+        
+        $this->sendImportFinishedMail();
     }
-
-    private function importProduct($product) {
+    
+    private function importProduct($product) 
+    {
         try {
             $externalProduct = (new ExternalProduct())
                  ->setProduct($product)
@@ -138,211 +115,113 @@ class ImportExec
              $relatedInternalProducts = CW()->get_related_wp_products($externalProduct->getProduct()->getProductId());
 
              if (0 === count($relatedInternalProducts)) {
-                 $this->updater->createWooCommerceProduct($this->importModel->getUserId(), $externalProduct);
-                 $this->importModel->increaseInsertCount();
-                 $this->csvGenerator->append($this->generateInsertLine($externalProduct));
+                 $this->createNewProduct($externalProduct);
              } elseif (0 < count($relatedInternalProducts)) {
-
-                  foreach ($relatedInternalProducts as $post) {
-                     $diff = $this->diffGenerator->getDiff($externalProduct, $post);
-
-                     if (0 !== count($diff)) {
-                         $this->updater->updateWooCommerceProduct($post->ID, $externalProduct);
-                         $this->importModel->increaseUpdateCount();
-                         $this->csvGenerator->append($this->generateUpdateLine($externalProduct, $diff));
-                     }
-                  }
+                $this->updateExistProducts($externalProduct, $relatedInternalProducts);
              }
+             
              $this->importModel->increaseDoneCount();
 
              $this->importRepository->update($this->importModel); 
         } catch (\Exception $e) {
         }
     }
-
-    /**
-     * @return array
-     */
-    private function generateImportCsvHeader(): array
+    
+    private function createNewProduct(ExternalProduct $externalProduct) 
     {
-        return [
-            'ID',
-            'Status',
-            'Name',
-            'Price',
-            'Stock',
-            'Cover',
-        ];
+        $this->updater->createWooCommerceProduct($this->importModel->getUserId(), $externalProduct);
+        $this->importModel->increaseInsertCount();
+        $this->csvImportGenerator->appendNewProduct($externalProduct);
     }
-
-    /**
-     * @param ExternalProduct $externalProduct
-     *
-     * @return array
-     */
-    private function generateInsertLine(ExternalProduct $externalProduct): array
+    
+    private function updateExistProducts(ExternalProduct $externalProduct, $relatedInternalProducts) 
     {
-        return [
-            (string) '"' . $externalProduct->getProduct()->getProductId() .'"',
-            (string) '"' . 'Imported' .'"',
-            (string) '"' . $externalProduct->getProduct()->getName() .'"',
-            (string) '"' . $externalProduct->getProduct()->getLowestPrice() .'"',
-            (string) '"' . $externalProduct->getProduct()->getStockQuantity() .'"',
-            (string) '"' . $externalProduct->getProduct()->getImageUrl('MEDIUM') .'"',
-        ];
-    }
+        foreach ($relatedInternalProducts as $post) {
+             $diff = $this->getDiff($externalProduct, $post);
 
-    /**
-     * @param $value
-     * @return string
-     */
-    private function implodeArray($value): string
-    {
-        if(is_array($value)) {
-            $value = implode("|", $value);
-        }
-
-        return $value;
-    }
-
-    private function getDiffLineByKey(string $key, $default): string
-    {
-        if (array_key_exists($key, $this->changeLines)) {
-            return $this->changeLines[$key];
-        } else {
-            return $default;
+             if (0 !== count($diff)) {
+                 $this->updater->updateWooCommerceProduct($post->ID, $externalProduct);
+                 $this->importModel->increaseUpdateCount();
+                 $this->csvImportGenerator->appendUpdatedProduct($externalProduct, $diff);
+             }
         }
     }
 
-    /**
-     * @param ExternalProduct $externalProduct
-     *
-     * @return array
-     */
-    private function generateUpdateLine(ExternalProduct $externalProduct, array $diffs): array
+    private function sendImportFinishedMail() 
     {
-        $this->changeLines = [];
-
-        foreach ($diffs as $key => $diff) {
-            $this->changeLines[$key] = 'Old: ' . join("\nNew: ", $diff);
-        }
-
-        $name = $this->getDiffLineByKey(
-            ImportProductDiffGenerator::FIELD_NAME,
-            $externalProduct->getProduct()->getName()
-        );
-
-        $platform = $this->getDiffLineByKey(
-            ImportProductDiffGenerator::FIELD_PLATFORMS,
-            $this->implodeArray($externalProduct->getProduct()->getPlatform())
-        );
-
-        $regions = $this->getDiffLineByKey(
-            ImportProductDiffGenerator::FIELD_REGIONS,
-            $this->implodeArray($externalProduct->getProduct()->getRegions())
-        );
-
-        $languages = $this->getDiffLineByKey(
-            ImportProductDiffGenerator::FIELD_LANGUAGES,
-            $this->implodeArray($externalProduct->getProduct()->getLanguages())
-        );
-
-        $price = $this->getDiffLineByKey(
-            ImportProductDiffGenerator::FIELD_PRICE,
-            $externalProduct->getProduct()->getLowestPrice()
-        );
-
-        $stock = $this->getDiffLineByKey(
-            ImportProductDiffGenerator::FIELD_STOCK,
-            $externalProduct->getProduct()->getStockQuantity()
-        );
-
-        $description = $this->getDiffLineByKey(
-            ImportProductDiffGenerator::FIELD_DESCRIPTION,
-            $externalProduct->getDescription()
-        );
-
-        $cover = $this->getDiffLineByKey(
-            ImportProductDiffGenerator::FIELD_COVER,
-            $externalProduct->getProduct()->getImageUrl('MEDIUM')
-        );
-
-        return [
-            (string) '"' . $externalProduct->getProduct()->getProductId() . '"',
-            (string) '"' . 'Updated' . '"',
-            (string) '"' . $name . '"',
-            (string) '"' . $platform . '"',
-            (string) '"' . $regions . '"',
-            (string) '"' . $languages . '"',
-            (string) '"' . $price . '"',
-            (string) '"' . $stock . '"',
-            (string) '"' . $description . '"',
-            (string) '"' . $cover . '"',
-        ];
+        (new WP_Admin_Notify_Import_Finished())
+                ->sendMail([ FileManager::getImportFilePath($this->importModel->getId())], $this->importModel);
     }
-
-    /**
-     * @return string
-     */
-    private function getUploadPath(): string
+    
+    private function createImportFolder() 
     {
-        return wp_upload_dir()['basedir'];
-    }
-
-    /**
-     * @return string
-     */
-    private function getImportPath(): string
-    {
-        return $this->getUploadPath() . '/cw-import-products/';
-    }
-
-    /**
-     * @return string
-     */
-    private function getImportFilePath(): string
-    {
-        return $this->getImportPath() . $this->importModel->getId() . '-import.csv';
-    }
-
-    /**
-     * createImportFolder
-     */
-    private function createImportFolder()
-    {
-        $old = umask(0);
-
         try {
+            FileManager::createImportFolder($this->importModel->getId()); 
+        } catch (Exception $ex) {
+            $this->importModel->setStatus(WP_ImportPropertyModel::STATUS_REJECT);
+            $this->importModel->setDescription($ex->getMessage());
+            $this->importRepository->update($this->importModel);
+        }
+    }
+    
+    /**
+     * @param ExternalProduct $externalProduct
+     * @param WP_Post         $wpProduct
+     *
+     * @return array
+     */
+    private function getDiff(ExternalProduct $externalProduct, WP_Post $wpProduct): array
+    {
+        $this->diffGenerator->diff = [];
+        
+        $price = get_post_meta($wpProduct->ID, CodesWholesaleConst::PRODUCT_STOCK_PRICE_PROP_NAME, true);
+        $stock = get_post_meta($wpProduct->ID, '_stock', true);
 
-            $path = $this->getUploadPath();
+        $product = $externalProduct->getProduct();
 
-            if (!is_readable($path) || !is_writable($path)) {
-                $this->importModel->setStatus(WP_ImportPropertyModel::STATUS_REJECT);
-                $this->importModel->setDescription(sprintf('Bad permissions for uploads folder: "%s"', $path));
-                $this->importRepository->update($this->importModel);
-                throw new \Exception();
-            }
-
-            $path = $this->getImportPath();
-
-            if (!is_dir($path)) {
-                mkdir($path, 0777);
-            }
-
-            $id = $this->importModel->getId();
-
-            if (file_exists($path . sprintf('%s-import.csv', $id))) {
-                unlink($path . sprintf('%s-import.csv', $id));
-            }
-        } catch (\Exception $e) {
-            umask($old);
-            throw $e;
+        $ex_platform    = ProductDiffGenerator::implodeArray($product->getPlatform());
+        $ex_regions     = ProductDiffGenerator::implodeArray($product->getRegions());
+        $ex_languages   = ProductDiffGenerator::implodeArray($product->getLanguages());
+        
+        $in_platform    = ProductDiffGenerator::implodeArray(WP_Attribute_Updater::getInternalProductAttributes($wpProduct, WP_Attribute_Updater::ATTR_PLATFORM));
+        $in_regions     = ProductDiffGenerator::implodeArray(WP_Attribute_Updater::getInternalProductAttributes($wpProduct, WP_Attribute_Updater::ATTR_REGION));
+        $in_languages   = ProductDiffGenerator::implodeArray(WP_Attribute_Updater::getInternalProductAttributes($wpProduct, WP_Attribute_Updater::ATTR_LANGUAGE));
+          
+        if (trim($product->getName()) !== trim($wpProduct->post_title)) {
+            $this->diffGenerator->generateDiff(ProductDiffGenerator::FIELD_NAME, $wpProduct->post_title, $product->getName());
         }
 
-        umask($old);
+        if ((string) trim($product->getLowestPrice()) !== trim($price)) {
+            $this->diffGenerator->generateDiff(ProductDiffGenerator::FIELD_PRICE, $price, $product->getLowestPrice());
+        }
+
+        if ((string) trim($product->getStockQuantity()) !== trim($stock)) {
+            $this->diffGenerator->generateDiff(ProductDiffGenerator::FIELD_STOCK, $stock, $product->getStockQuantity());
+        }
+
+        if (trim(strip_tags($externalProduct->getDescription())) !== trim(strip_tags($wpProduct->post_content))) {
+            $this->diffGenerator->generateDiff(ProductDiffGenerator::FIELD_DESCRIPTION, strip_tags($wpProduct->post_content), strip_tags($externalProduct->getDescription()));
+        }
+        
+        if ((string) trim($product->getStockQuantity()) !== trim($stock)) {
+            $this->diffGenerator->generateDiff(ProductDiffGenerator::FIELD_STOCK, $stock, $product->getStockQuantity());
+        }
+        
+        if ((string) trim($ex_platform) !== trim( $in_platform)) {
+            $this->diffGenerator->generateDiff(ProductDiffGenerator::FIELD_PLATFORMS, $in_platform,  $ex_platform);
+        }
+     
+        if ((string) trim($ex_regions) !== trim( $in_regions)) {
+            $this->diffGenerator->generateDiff(ProductDiffGenerator::FIELD_REGIONS, $in_regions,  $ex_regions);
+        }
+        
+        if ((string) trim($ex_languages) !== trim($in_languages)) {
+            $this->diffGenerator->generateDiff(ProductDiffGenerator::FIELD_LANGUAGES, $in_languages, $ex_languages);
+        }  
+        
+        return $this->diffGenerator->diff;
     }
 }
-
 
 $import = new ImportExec();
 

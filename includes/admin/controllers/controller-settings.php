@@ -353,10 +353,15 @@ if (!class_exists('CW_Controller_Settings')) :
         
         public function render_preferred_language_select($args = array())
         {
+            $regions = CW()->get_codes_wholesale_client()->getTerritories();
             ?>
             <select id="currency" name="cw_options[<?php echo $args['name'] ?>]">
-                <option currency-value="1" value="uk" <?php if ($args['options'][CodesWholesaleConst::PREFERRED_LANGUAGE_FOR_PRODUCT_OPTION_NAME] == 'uk') { ?> selected="selected" <?php } ?>>English</option>
-                <option currency-value="2" value="pl" <?php if ($args['options'][CodesWholesaleConst::PREFERRED_LANGUAGE_FOR_PRODUCT_OPTION_NAME] == 'pl') { ?> selected="selected" <?php } ?>>Polski</option>
+                <?php foreach ($regions as $item): ?>
+                    <option value="<?php echo $item->getTerritory(); ?>"<?php if ($args['options'][CodesWholesaleConst::PREFERRED_LANGUAGE_FOR_PRODUCT_OPTION_NAME] == $item->getTerritory()) { ?> selected="selected" <?php } ?>>
+                        <?php echo $item->getTerritory(); ?>
+                    </option>
+                <?php endforeach; ?>
+                    
             </select>
             <p class="description cst-desc"><?php echo $this->admin_options[$args['name']]['description'] ?></p>
             <?php  
