@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/codeswholesale/codeswholesale-extension-framework.git",
-                "reference": "13cbca6bde9430b1b40b1f43e3cccc43527d551b"
+                "reference": "8d5344b194cbf413d8658c1f40d4cdf1d7d04d4a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codeswholesale/codeswholesale-extension-framework/zipball/13cbca6bde9430b1b40b1f43e3cccc43527d551b",
-                "reference": "13cbca6bde9430b1b40b1f43e3cccc43527d551b",
+                "url": "https://api.github.com/repos/codeswholesale/codeswholesale-extension-framework/zipball/8d5344b194cbf413d8658c1f40d4cdf1d7d04d4a",
+                "reference": "8d5344b194cbf413d8658c1f40d4cdf1d7d04d4a",
                 "shasum": ""
             },
             "require": {
@@ -54,7 +54,7 @@
                 "games",
                 "plugin"
             ],
-            "time": "2018-06-13T18:09:47+00:00"
+            "time": "2018-06-14T14:08:52+00:00"
         },
         {
             "name": "codeswholesale/sdk",

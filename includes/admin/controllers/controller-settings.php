@@ -178,7 +178,21 @@ if (!class_exists('CW_Controller_Settings')) :
             if (is_admin()) {
                 // General plugin setup
                 add_action('admin_init', array($this, 'admin_settings_construct'));
+                
+                // ajax actions
+                add_action( 'wp_ajax_get_currency_rate', array($this, 'get_currency_rate'));
             }
+        }
+        
+        public function get_currency_rate() 
+        {
+            $id = $_POST['id'];
+            
+            $result = CurrencyProvider::getRate($id);
+
+            echo json_encode($result);
+
+            wp_die();
         }
 
         public function init_view() {
@@ -196,12 +210,6 @@ if (!class_exists('CW_Controller_Settings')) :
             include_once(plugin_dir_path( __FILE__ ).'../views/view-settings.php');
         }
                 
-        private function getCurrencies()
-        {
-            $currency = new CurrencyProvider();
-            return $currency->import();
-        }
-
         public function updateCwOptions($options)
         {
             session_start();
@@ -343,9 +351,8 @@ if (!class_exists('CW_Controller_Settings')) :
         {
             ?>
             <select id="currency" name="cw_options[<?php echo $args['name'] ?>]">
-                <option currency-value="1" value="EUR" <?php if ($args['options']['currency'] == 'EUR') { ?> selected="selected" <?php } ?>>EUR</option>
-                <?php foreach ($this->getCurrencies() as $rate): ?>
-                    <option currency-value="<?php echo $rate->attributes()->rate; ?>" value="<?php echo $rate->attributes()->currency; ?>"<?php if ($args['options']['currency'] == $rate->attributes()->currency) { ?> selected="selected" <?php } ?>><?php echo $rate->attributes()->currency . ' - ' . $rate->attributes()->rate; ?></option>
+                <?php foreach (CurrencyProvider::getAllCurrencies() as $currency): ?>
+                    <option  value="<?php echo $currency->id; ?>"<?php if ($args['options']['currency'] == $currency->id) { ?> selected="selected" <?php } ?>><?php echo $currency->currencyName . ' - ' . $currency->id; ?></option>
                 <?php endforeach; ?>
             </select>
             <?php
