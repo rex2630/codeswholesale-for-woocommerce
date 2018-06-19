@@ -9,7 +9,7 @@ class ExecManager
      * @return string
      */
     public static function getPhpPath(): string
-    {
+    {        
         if (self::phpTest() === $_SERVER['PATH']){
             return self::PHP_PATH;
         }

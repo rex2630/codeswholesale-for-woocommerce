@@ -408,4 +408,26 @@ class WP_ImportPropertyModel
     {
         return $this->getImportPath() . $this->getId() . '-import.csv';
     }
+    
+    public function serializeFilters() {
+        $filters = [];
+        
+        if (0 !== count($this->getFilters()['platform'])) {
+            $filters['platform'] = $this->getFilters()['platform'];
+        }
+
+        if (0 !== count($this->getFilters()['region'])) {
+            $filters['region'] = $this->getFilters()['region'];
+        }
+
+        if (0 !== count($this->getFilters()['language'])) {
+            $filters['language'] = $this->getFilters()['language'];
+        }
+
+        if (null != $this->getInStockDaysAgo()) {
+            $filters['inStockDaysAgo'] = $this->getInStockDaysAgo();
+        }
+        
+        return $filters;
+    }
 }

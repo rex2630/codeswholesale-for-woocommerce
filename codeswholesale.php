@@ -122,7 +122,7 @@ final class CodesWholesale
 
     public static function codeswholesale_install()
     {
-		if ( !is_plugin_active('woocommerce/woocommerce.php')) {
+        if ( !is_plugin_active('woocommerce/woocommerce.php')) {
             // Deactivate the plugin
             deactivate_plugins(FILE);
 
@@ -261,11 +261,9 @@ final class CodesWholesale
         include_once('includes/repositories/class-wp-access-token-repository.php');
         include_once('includes/repositories/class-wp-refresh-token-repository.php');
 
-        // Generator
-        include_once('includes/generator/import-product-diff-generator.php');
-        include_once('includes/generator/csv-generator.php');
-
-
+        // Managers
+        include_once('includes/managers/wp-file-manager.php');
+        
         //WooCommerce
         include_once('includes/woocommerce/class-cw-woocommerce-order.php');
         include_once('includes/woocommerce/class-cw-checkout.php');

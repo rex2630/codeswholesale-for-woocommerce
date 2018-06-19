@@ -96,4 +96,16 @@ class WP_Attribute_Updater
         
         return $attributes;
     }
+    
+    public static function getInternalProductAttributes($post, $type) {
+        $attr = [];
+      
+        $terms = get_the_terms( $post, self::getSlug($type));
+      
+        foreach ( $terms as $term ) {
+            $attr[] = $term->name;
+        }
+        
+        return $attr;
+    }
 }

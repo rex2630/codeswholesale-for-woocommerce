@@ -126,6 +126,11 @@
     });
     jQuery( document ).ready(function() {
         setStepToSpreadValue(jQuery(spreadType+":checked").val());
+        initCurrencyDescription();
+    });
+    
+    jQuery('#currency').change(function() {
+        initCurrencyDescription();
     });
     
     function setStepToSpreadValue(selected) {
@@ -134,5 +139,29 @@
         } else {
             jQuery(spreadValue).attr( "step", "1" );
         }      
+    }
+    
+    
+    function initCurrencyDescription() {
+        var container = jQuery('#currency').parent('td');
+        var currency = jQuery('#currency').val();
+        
+        if (currency === 'EUR') {
+            container.find(".description").remove();
+        } else {
+            jQuery.post(ajaxurl, {
+                'action': 'get_currency_rate',
+                'id': currency,
+            }, function(response) {
+                
+                var html = 'EUR - ' + currency + '\u0020 ('+ JSON.parse(response) +')';
+                
+                if ((container.find(".description").length > 0)){
+                    container.find(".description").html(html);
+                } else {
+                    container.append('<p class="description cst-desc">'+html+'</p>');
+                }                
+            }); 
+        }
     }
 </script>
