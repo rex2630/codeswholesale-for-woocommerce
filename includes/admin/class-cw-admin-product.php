@@ -261,6 +261,7 @@ if (!class_exists('CW_Admin_Product')) :
                     
                         switch(selected_method) {
                             case '0':
+							case '1':
                                 jQuery("#_stock").val(product.stock);
                                 
                                 if (product.stock > 0) {
@@ -270,7 +271,7 @@ if (!class_exists('CW_Admin_Product')) :
                                 }
                         
                                 break;
-                            case '1':
+                            case '2':
                                 jQuery("#_stock").val(1); 
                                 jQuery("#_stock_status").val("instock");
                                 
