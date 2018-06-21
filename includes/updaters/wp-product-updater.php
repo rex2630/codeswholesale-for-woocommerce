@@ -311,11 +311,24 @@ class WP_Product_Updater
      */
     public function updateRegularPrice($post_id, $stock_price)
     {
-        $currency = $this->optionsArray['currency'];
-        $spread_type = $this->optionsArray['spread_type'];
-        $spread_value = $this->optionsArray['spread_value'];
-        $product_price_charmer = $this->optionsArray['product_price_charmer'];
+        $product_calculate_price_method = $this->get_custom_field($post_id, CodesWholesaleConst::PRODUCT_CALCULATE_PRICE_METHOD_PROP_NAME, 0);
+       
+        switch($product_calculate_price_method) {
+            case 0:
+                $spread_type  = $this->optionsArray['spread_type'];
+                $spread_value = $this->optionsArray['spread_value'];
+               break;
+           case 1:
+                $spread_type  = $this->get_custom_field($post_id, CodesWholesaleConst::PRODUCT_SPREAD_TYPE_PROP_NAME, 0);
+                $spread_value = $this->get_custom_field($post_id, CodesWholesaleConst::PRODUCT_SPREAD_VALUE_PROP_NAME, 0);
+               break;
+           default:
+               return;
+        }
 
+		$currency = $this->optionsArray['currency'];
+		$product_price_charmer = $this->optionsArray['product_price_charmer'];
+		 
         $priceProvider = new PriceProvider();
         $price = $priceProvider->getCalculatedPrice($spread_type, $spread_value, $stock_price, $product_price_charmer, $currency);
 
@@ -341,14 +354,40 @@ class WP_Product_Updater
      * @param type $quantity
      */
     public function updateStock($post_id, $quantity)
-    {
-        update_post_meta( $post_id, '_stock', $quantity);
+    {        
+        $product_calculate_price_method = $this->get_custom_field($post_id, CodesWholesaleConst::PRODUCT_CALCULATE_PRICE_METHOD_PROP_NAME, 0);
+       
+        if ($product_calculate_price_method != 2) {
+            update_post_meta( $post_id, '_stock', $quantity);
         
-        if ($quantity == 0) {
-            update_post_meta( $post_id, '_stock_status', 'outofstock');
+            if ($quantity == 0) {
+                update_post_meta( $post_id, '_stock_status', 'outofstock');
 
-        } else {
-            update_post_meta( $post_id, '_stock_status', 'instock');
+            } else {
+                update_post_meta( $post_id, '_stock_status', 'instock');
+            } 
         }
+    }
+    
+    /**
+     * 
+     * @param type $post_id
+     * @param type $field_name
+     * @param type $default
+     * @return type
+     */
+    private function get_custom_field($post_id, $field_name, $default)
+    {
+        $value = null;
+
+        if($post_id) {
+            $value = get_post_meta($post_id, $field_name, true);
+        }
+
+        if(empty($value) || null == $value) {
+            return $default;
+        }
+
+        return $value;
     }
 }
