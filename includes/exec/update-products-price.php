@@ -18,8 +18,17 @@ class UpdateProductsPrice
         $args = array(
             'posts_per_page' => -1,
             'post_type' => 'product',
-            'meta_key' => CodesWholesaleConst::PRODUCT_CALCULATE_PRICE_METHOD_PROP_NAME,
-            'meta_value' => 0
+            'meta_query' => array(
+                'relation' => 'OR',
+                array(
+                    'key' => CodesWholesaleConst::PRODUCT_CALCULATE_PRICE_METHOD_PROP_NAME,
+                    'value' => 0
+                ),
+                array(
+                    'key' => CodesWholesaleConst::PRODUCT_CALCULATE_PRICE_METHOD_PROP_NAME,
+                    'value' => 1
+                )
+            ),
         );
 
         $posts = get_posts($args);
