@@ -16,7 +16,7 @@
                         <p class="cw-padding-bottom">
                             <?php _e( 'We are always looking to improve our services. Let us know what you think about our plugin.', 'codeswholesale-for-woocommerce' ) ?>
                         </p>
-                        <button class="cw-btn cw-btn-success cw-full"><?php _e( 'Go to registry', 'codeswholesale-for-woocommerce' ); ?></button>
+                        <a target="_blank" href="https://app.codeswholesale.com/?utm_source=plugin&utm_medium=woocommerce&utm_campaign=plugin-registration-form#/sign-in" class="cw-btn cw-btn-success cw-full"><?php _e( 'Go to registry', 'codeswholesale-for-woocommerce' ); ?></a>
                     </div>
                 </div>
 
@@ -29,15 +29,20 @@
                         <p  class="cw-padding-bottom">
                             <?php _e( 'We are always looking to improve our services. Let us know what you think about our plugin.', 'codeswholesale-for-woocommerce' ) ?>
                         </p>
-                        <button class="cw-btn cw-btn-success cw-full"><?php _e( 'Leave feedback', 'codeswholesale-for-woocommerce' ); ?></button>
+                        <a target="_blank" href="https://podio.com/webforms/20883973/1437895" class="cw-btn cw-btn-success cw-full"><?php _e( 'Leave feedback', 'codeswholesale-for-woocommerce' ); ?></a>
+
                     </div>
                 </div>
             </aside>
             <div id="post-body-content" class="cw-content" style="position: relative;">
-                <h1 class="wp-heading-inline cw-title">
-                    <i class="fas fa-cog cw-icon-green"></i>
-                    <?php _e('Main settings', 'woocommerce') ?>
-                </h1>
+                <div class="cw-sp-header">
+                    <div class="cw-sp-title">
+                        <h1 class="wp-heading-inline cw-title">
+                            <i class="fas fa-cog cw-icon-green"></i>
+                            <?php _e('Main settings', 'woocommerce') ?></h1>
+                    </div>
+                </div>
+
                 <form id="cw-main-settings" class="cw-form" action="options.php" method="POST">
                     <?php
                         if ( isset( $_REQUEST['settings-updated'] ) ) {

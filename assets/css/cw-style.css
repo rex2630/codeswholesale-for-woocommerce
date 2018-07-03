@@ -107,6 +107,8 @@
     text-shadow: none;
     text-decoration: none;
     display: inline-block;
+    box-sizing: border-box;
+    text-align: center;
 }
 .cw-btn.cw-full {
   padding: 1em 1em;  
@@ -179,6 +181,7 @@
     background-color: #000000;
 }
 
+.cw-sp-header,
 .cw-ip-header,
 .cw-oh-header {
     margin-bottom: 30px;    
@@ -288,10 +291,10 @@
 .cw-radio-button label {
     -webkit-border-radius:.3rem;
     -moz-border-radius: .3rem;
-    border-radius: .3rem; 
+    border-radius: .3rem;
     padding: 1em 4em;
-    background: #23282d;
-    color: #fff;
+    background: #e5e5e5;
+    color: #555;
     display: inline-block;
     font-size: 14px;
     font-weight: 600;
@@ -300,6 +303,8 @@
     -webkit-box-shadow: 0px 3px 0px 0px rgba(29,193,152,1);
     -moz-box-shadow: 0px 3px 0px 0px rgba(29,193,152,1);
     box-shadow: 0px 3px 0px 0px rgba(29,193,152,1);
+    background: #23282d;
+    color: #fff;
 }
 
 .cw-ipt-select {
@@ -342,6 +347,10 @@
 
 .cw-oh-table th:last-child {
     width: 204px;
+}
+
+#cw-main-settings .description {
+    color: #8a8a8a;
 }
 
 @media screen and (max-width: 991px) {

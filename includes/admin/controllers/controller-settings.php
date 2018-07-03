@@ -268,7 +268,7 @@ if (!class_exists('CW_Controller_Settings')) :
                     $changed = true;
                 }
 
-                if($sessionOptions['product_price_charme'] != $options['product_price_charme']) {;
+                if($sessionOptions['product_price_charmer'] != $options['product_price_charmer']) {;
                     $changed = true;
                 }
 
