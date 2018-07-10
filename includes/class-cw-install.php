@@ -16,7 +16,7 @@ if (!class_exists('CW_Install')) :
             CodesWholesaleConst::AUTOMATICALLY_COMPLETE_ORDER_OPTION_NAME => 0,
             CodesWholesaleConst::RISK_SCORE_PROP_NAME => 2,
             CodesWholesaleConst::NOTIFY_LOW_BALANCE_VALUE_OPTION_NAME => 100,
-            CodesWholesaleConst::PREFERRED_LANGUAGE_FOR_PRODUCT_OPTION_NAME => 'uk',
+            CodesWholesaleConst::PREFERRED_LANGUAGE_FOR_PRODUCT_OPTION_NAME => 'english',
             'spread_type' => 1,
             'spread_value' => 50,
             'currency' => 'EUR',

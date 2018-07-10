@@ -157,11 +157,11 @@ if (!class_exists('CW_Controller_Settings')) :
                     'label' => 'Charm pricing',
                     'description' => 'Make all your prices more attractive to your customers. See the examples below:'.
                         '<ul>
-                          <li><p class="description">10.01 - 10.29 range => 10.29</p></li>
-                          <li><p class="description">10.30 to 10.49 range => 10.49</p></li>
-                          <li><p class="description">10.50 to 10.79 range => 10.79</p></li>
-                          <li><p class="description">10.80 to 10.99 range => 10.99</p></li>
-                          <li><p class="description">10.00 => 9.99</p></li>
+                          <li><p class="description">10.01 - 10.29 range &#10140; 10.29</p></li>
+                          <li><p class="description">10.30 to 10.49 range &#10140; 10.49</p></li>
+                          <li><p class="description">10.50 to 10.79 range &#10140; 10.79</p></li>
+                          <li><p class="description">10.80 to 10.99 range &#10140; 10.99</p></li>
+                          <li><p class="description">10.00 &#10140; 9.99</p></li>
                         </ul>',
                     'renderer' => 'render_orders_checkbox',
                     'class' => 'cst-label'
@@ -196,17 +196,10 @@ if (!class_exists('CW_Controller_Settings')) :
         }
 
         public function init_view() {
-            $account = null;
-            $error = null;
-
-            CW()->refresh_codes_wholesale_client();
+            $this->init_account();
             
-            if(CW()->isClientCorrect()) {
-                $account = CW()->get_codes_wholesale_client()->getAccount();
-            } else {
-                $error = new \Exception('Unauthorized!');
-            }
-    
+            include(plugin_dir_path( __FILE__ ).'../views/header.php');
+            
             include_once(plugin_dir_path( __FILE__ ).'../views/view-settings.php');
         }
                 
@@ -275,7 +268,7 @@ if (!class_exists('CW_Controller_Settings')) :
                     $changed = true;
                 }
 
-                if($sessionOptions['product_price_charme'] != $options['product_price_charme']) {;
+                if($sessionOptions['product_price_charmer'] != $options['product_price_charmer']) {;
                     $changed = true;
                 }
 
@@ -360,15 +353,24 @@ if (!class_exists('CW_Controller_Settings')) :
         
         public function render_preferred_language_select($args = array())
         {
-            $regions = CW()->get_codes_wholesale_client()->getTerritories();
+            try {
+                $regions = CW()->get_codes_wholesale_client()->getTerritories();  
+                $values = [];
+                
+                foreach ($regions as $item) {
+                    $values[$item->getTerritory()] = $item->getTerritory();
+                }
+            } catch (\Error $ex) {
+                $selected = $args['options'][CodesWholesaleConst::PREFERRED_LANGUAGE_FOR_PRODUCT_OPTION_NAME];
+                $values[$selected] = $selected;
+            }   
             ?>
             <select id="currency" name="cw_options[<?php echo $args['name'] ?>]">
-                <?php foreach ($regions as $item): ?>
-                    <option value="<?php echo $item->getTerritory(); ?>"<?php if ($args['options'][CodesWholesaleConst::PREFERRED_LANGUAGE_FOR_PRODUCT_OPTION_NAME] == $item->getTerritory()) { ?> selected="selected" <?php } ?>>
-                        <?php echo $item->getTerritory(); ?>
+                <?php foreach ($values as $key => $value): ?>
+                    <option value="<?php echo $key; ?>"<?php if ($args['options'][CodesWholesaleConst::PREFERRED_LANGUAGE_FOR_PRODUCT_OPTION_NAME] == $key) { ?> selected="selected" <?php } ?>>
+                        <?php echo $value; ?>
                     </option>
                 <?php endforeach; ?>
-                    
             </select>
             <p class="description cst-desc"><?php echo $this->admin_options[$args['name']]['description'] ?></p>
             <?php  

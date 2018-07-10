@@ -105,7 +105,7 @@ class ImportExec
         try {
             $externalProduct = (new ExternalProduct())
                  ->setProduct($product)
-                 ->updateDescription($this->optionsArray[CodesWholesaleConst::PREFERRED_LANGUAGE_FOR_PRODUCT_OPTION_NAME])
+                 ->updateInformations($this->optionsArray[CodesWholesaleConst::PREFERRED_LANGUAGE_FOR_PRODUCT_OPTION_NAME])
              ;
 
              $relatedInternalProducts = CW()->get_related_wp_products($externalProduct->getProduct()->getProductId());
@@ -183,9 +183,6 @@ class ImportExec
         $in_regions     = ProductDiffGenerator::implodeArray(WP_Attribute_Updater::getInternalProductAttributes($wpProduct, WP_Attribute_Updater::ATTR_REGION));
         $in_languages   = ProductDiffGenerator::implodeArray(WP_Attribute_Updater::getInternalProductAttributes($wpProduct, WP_Attribute_Updater::ATTR_LANGUAGE));
           
-        if (trim($product->getName()) !== trim($wpProduct->post_title)) {
-            $this->diffGenerator->generateDiff(ProductDiffGenerator::FIELD_NAME, $wpProduct->post_title, $product->getName());
-        }
 
         if ((string) trim($product->getLowestPrice()) !== trim($price)) {
             $this->diffGenerator->generateDiff(ProductDiffGenerator::FIELD_PRICE, $price, $product->getLowestPrice());
@@ -198,11 +195,7 @@ class ImportExec
         if (trim(strip_tags($externalProduct->getDescription())) !== trim(strip_tags($wpProduct->post_content))) {
             $this->diffGenerator->generateDiff(ProductDiffGenerator::FIELD_DESCRIPTION, strip_tags($wpProduct->post_content), strip_tags($externalProduct->getDescription()));
         }
-        
-        if ((string) trim($product->getStockQuantity()) !== trim($stock)) {
-            $this->diffGenerator->generateDiff(ProductDiffGenerator::FIELD_STOCK, $stock, $product->getStockQuantity());
-        }
-        
+
         if ((string) trim($ex_platform) !== trim( $in_platform)) {
             $this->diffGenerator->generateDiff(ProductDiffGenerator::FIELD_PLATFORMS, $in_platform,  $ex_platform);
         }

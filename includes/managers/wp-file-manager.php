@@ -34,13 +34,14 @@ class FileManager
         file_put_contents(self::getImportFilePath($id), $csv);
         
         return self::getImportPath() . $id . '-import.csv';        
-    } 
-    
-    
+    }
+
+
     /**
-     * createImportFolder
+     * @param $id
+     * @throws Exception
      */
-    public function createImportFolder($id)
+    public static function createImportFolder($id)
     {
         $old = umask(0);
 

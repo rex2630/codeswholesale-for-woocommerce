@@ -73,7 +73,7 @@ class WP_Update_Products implements UpdateProductInterface
 
             $externalProduct = (new ExternalProduct())
                 ->setProduct($product)
-                ->updateDescription(CW()->get_options()[CodesWholesaleConst::PREFERRED_LANGUAGE_FOR_PRODUCT_OPTION_NAME])
+                ->updateInformations(CW()->get_options()[CodesWholesaleConst::PREFERRED_LANGUAGE_FOR_PRODUCT_OPTION_NAME])
             ;
 
             $relatedInternalProducts = CW()->get_related_wp_products($externalProduct->getProduct()->getProductId());

@@ -30,6 +30,10 @@ if (!class_exists('CW_Controller_Check_orders')) :
         
         public function init_view()
         {
+            $this->init_account();
+            
+            include(plugin_dir_path( __FILE__ ).'../views/header.php');
+
             if (!CW()->get_codes_wholesale_client() instanceof \CodesWholesale\Client) {
                 include_once(plugin_dir_path( __FILE__ ).'../views/view-blocked.php');
                 return;
