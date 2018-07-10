@@ -4,6 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
+    "hash": "703c0022ff86aa17d1e4dcf22b8b0ef8",
     "content-hash": "e5772b8acfe21d312745a160846925d5",
     "packages": [
         {
@@ -12,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/codeswholesale/codeswholesale-extension-framework.git",
-                "reference": "8d5344b194cbf413d8658c1f40d4cdf1d7d04d4a"
+                "reference": "f4bcc1ecfdab5f2e466530afa655d2b937f11d0f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codeswholesale/codeswholesale-extension-framework/zipball/8d5344b194cbf413d8658c1f40d4cdf1d7d04d4a",
-                "reference": "8d5344b194cbf413d8658c1f40d4cdf1d7d04d4a",
+                "url": "https://api.github.com/repos/codeswholesale/codeswholesale-extension-framework/zipball/f4bcc1ecfdab5f2e466530afa655d2b937f11d0f",
+                "reference": "f4bcc1ecfdab5f2e466530afa655d2b937f11d0f",
                 "shasum": ""
             },
             "require": {
@@ -54,7 +55,7 @@
                 "games",
                 "plugin"
             ],
-            "time": "2018-06-14T14:08:52+00:00"
+            "time": "2018-06-20 10:43:38"
         },
         {
             "name": "codeswholesale/sdk",
@@ -105,7 +106,7 @@
                 "games",
                 "security"
             ],
-            "time": "2018-04-27T14:18:15+00:00"
+            "time": "2018-04-27 14:18:15"
         },
         {
             "name": "firebase/php-jwt",
@@ -151,7 +152,7 @@
             ],
             "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
             "homepage": "https://github.com/firebase/php-jwt",
-            "time": "2017-06-27T22:17:23+00:00"
+            "time": "2017-06-27 22:17:23"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -216,7 +217,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2017-06-22T18:50:49+00:00"
+            "time": "2017-06-22 18:50:49"
         },
         {
             "name": "guzzlehttp/promises",
@@ -267,7 +268,7 @@
             "keywords": [
                 "promise"
             ],
-            "time": "2018-03-25T01:26:01+00:00"
+            "time": "2018-03-25 01:26:01"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -333,7 +334,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2018-06-08T08:55:26+00:00"
+            "time": "2018-06-08 08:55:26"
         },
         {
             "name": "psr/http-message",
@@ -383,7 +384,7 @@
                 "request",
                 "response"
             ],
-            "time": "2016-08-06T14:39:51+00:00"
+            "time": "2016-08-06 14:39:51"
         },
         {
             "name": "ralouphie/getallheaders",
@@ -423,7 +424,7 @@
                 }
             ],
             "description": "A polyfill for getallheaders.",
-            "time": "2016-02-11T07:05:27+00:00"
+            "time": "2016-02-11 07:05:27"
         },
         {
             "name": "sainsburys/guzzle-oauth2-plugin",
@@ -472,7 +473,7 @@
                 }
             ],
             "description": "An OAuth2 middleware for Guzzle",
-            "time": "2017-11-07T13:08:06+00:00"
+            "time": "2017-11-07 13:08:06"
         }
     ],
     "packages-dev": [],
