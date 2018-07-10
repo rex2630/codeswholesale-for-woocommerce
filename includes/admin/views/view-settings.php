@@ -1,86 +1,93 @@
 <?php session_start(); ?>
+
 <div class="wrap codeswholesale">
-    <div id="cst-title"><img src="<?php  echo $this->plugin_img() ?>" id="nav-img"></div>
-    <h1 class="wp-heading-inline"><?php _e('Settings', 'woocommerce') ?></h1>
     
-    <form action="options.php" method="POST">
-        <div id="poststuff">
-            <div id="post-body" class="metabox-holder columns-2">
-                <div id="postbox-container-1" class="postbox-container">
+    <div id="poststuff">
+      
+        <div id="post-body" class="metabox-holder columns-2">
+            <aside id="postbox-container-1" class="postbox-container">
 
-                    <div id="postconnectionstatu" class="postbox">
-                        <h2 class="hndle ui-sortable-handle">
-                            <span><?php _e('Connection status', 'woocommerce')?></span>
-                        </h2>
-                        <div class="misc-pub-section">
-                            <ul id="status-ul">
-
-                                <?php if ($error) : ?>
-
-                                    <li class="updated">
-                                        <p class="failed"><?php _e('Connection failed.', 'woocommerce')?></p>
-                                    </li>
-
-                                    <li>
-                                        <b><?php _e('Error', 'woocommerce')?>:</b> <?php echo $error->getMessage(); ?>
-                                    </li>
-
-                                <?php endif; ?>
-
-                                <?php if ($account) : ?>
-
-                                    <li class="updated">
-                                        <p class="success"><?php _e('Successful', 'woocommerce')?></p>
-                                    </li>
-                                    <li>
-                                        <b>Account:</b>
-                                        <?php echo $account->getFullName(); ?>
-                                    </li>
-                                    <li>
-                                        <b><?php _e('Email address', 'woocommerce'); ?>:</b>
-                                        <?php echo $account->getEmail(); ?>
-                                    </li>
-                                    <li>
-                                        <strong><?php _e('Account balance', 'woocommerce'); ?>:</strong>
-                                        <?php echo "€" . number_format($account->getTotalToUse(), 2, '.', ''); ?>
-                                    </li>
-                                <?php endif; ?>
-                            </ul>
-                        </div>
+                <div id="cw-create-account" class="postbox cw-content">
+                    <h2 class="cw-title">
+                        <i class="fas fa-user cw-icon-green"></i>
+                        <?php _e( 'Create new account', 'codeswholesale-for-woocommerce' ); ?>
+                    </h2>
+                    <div class="misc-pub-section">
+                        <p class="cw-padding-bottom">
+                            <?php _e( 'We are always looking to improve our services. Let us know what you think about our plugin.', 'codeswholesale-for-woocommerce' ) ?>
+                        </p>
+                        <a target="_blank" href="https://app.codeswholesale.com/?utm_source=plugin&utm_medium=woocommerce&utm_campaign=plugin-registration-form#/sign-in" class="cw-btn cw-btn-success cw-full"><?php _e( 'Go to registry', 'codeswholesale-for-woocommerce' ); ?></a>
                     </div>
                 </div>
-                <div id="post-body-content" style="position: relative;">
+
+                <div id="cw-leave-your-feedback" class="postbox cw-content">
+                    <h2 class="cw-title">
+                        <i class="fas fa-clipboard-list cw-icon-green"></i>
+                        <?php _e( 'Your feedback', 'codeswholesale-for-woocommerce' ); ?>
+                    </h2>
+                    <div class="misc-pub-section">
+                        <p  class="cw-padding-bottom">
+                            <?php _e( 'We are always looking to improve our services. Let us know what you think about our plugin.', 'codeswholesale-for-woocommerce' ) ?>
+                        </p>
+                        <a target="_blank" href="https://podio.com/webforms/20883973/1437895" class="cw-btn cw-btn-success cw-full"><?php _e( 'Leave feedback', 'codeswholesale-for-woocommerce' ); ?></a>
+
+                    </div>
+                </div>
+            </aside>
+            <div id="post-body-content" class="cw-content" style="position: relative;">
+                <div class="cw-sp-header">
+                    <div class="cw-sp-title">
+                        <h1 class="wp-heading-inline cw-title">
+                            <i class="fas fa-cog cw-icon-green"></i>
+                            <?php _e('Main settings', 'woocommerce') ?></h1>
+                    </div>
+                </div>
+
+                <form id="cw-main-settings" class="cw-form" action="options.php" method="POST">
                     <?php
                         if ( isset( $_REQUEST['settings-updated'] ) ) {
                             $this->checkEnvironment();
 
                             echo '<div class="updated inline"><p>' . __( 'Your changes have been saved.', 'codeswholesale-for-woocommerce' ) . '</p></div>';
+                            
                             try {
-								if($this->isChangedPriceSettings()) {
-								   ExecManager::exec(ExecManager::getPhpPath(), 'update-products-price.php');
-									echo '<div class="updated inline"><p>' . __( 'Your products price have been updated.', 'codeswholesale-for-woocommerce' ) . '</p></div>';
-								}
+                                if($this->isChangedPriceSettings()) {
+                                    ExecManager::exec(ExecManager::getPhpPath(), 'update-products-price.php');
+                                    echo '<div class="updated inline"><p>' . __( 'Your products price have been updated.', 'codeswholesale-for-woocommerce' ) . '</p></div>';
+                                }
                               } catch (Exception $ex) {
                                 echo '<div class="error inline"><p><strong>' . __('Warning!') . '</strong> ' . $ex->getMessage() . '</p></div>';
                             }
-							
-							$this->clearSettingsSession();
+
+                            $this->clearSettingsSession();
                         }
 
                         settings_fields('cw-settings-group');
                         do_settings_sections('cw_options_page_slug');
-                        submit_button();
+                        
                     ?>
-                </div>
+                    
+                    <button type="submit" class="cw-btn cw-btn-success">
+                        <?php  _e( 'Save Changes' ); ?>
+                        <i class="fas fa-save cw-text-margin-left"></i>
+                    </button>
+                </form>
             </div>
-
         </div>
-    </form>
+    </div>
 </div>
 
 <script type="text/javascript">
 
     var firstGo = 0;
+    
+    jQuery( document ).ready(function() {
+        setStepToSpreadValue(jQuery(spreadType+":checked").val());
+        initCurrencyDescription();
+        initCwView();
+    });
+    
+    
     jQuery(".cw_env_type").change(function (val) {
 
         var envType = jQuery(".cw_env_type:checked").val();
@@ -124,14 +131,14 @@
     jQuery(spreadType).change(function() {
         setStepToSpreadValue(jQuery(this).val());
     });
-    jQuery( document ).ready(function() {
-        setStepToSpreadValue(jQuery(spreadType+":checked").val());
-        initCurrencyDescription();
-    });
-    
+
     jQuery('#currency').change(function() {
         initCurrencyDescription();
     });
+    
+    function initCwView() {
+        jQuery('#cw-main-settings br').remove();
+    }
     
     function setStepToSpreadValue(selected) {
         if("0" === selected) {
@@ -159,7 +166,7 @@
                 if ((container.find(".description").length > 0)){
                     container.find(".description").html(html);
                 } else {
-                    container.append('<p class="description cst-desc">'+html+'</p>');
+                    container.append('<span class="description cw-text-margin-left">'+html+'</span>');
                 }                
             }); 
         }

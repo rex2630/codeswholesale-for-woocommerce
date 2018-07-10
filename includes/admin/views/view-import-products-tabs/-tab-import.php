@@ -1,108 +1,112 @@
-<div>
+<div class="cw-ipt-title">
     <p>
-        <?php 
-            _e("Import all products in bulk instead of adding every product manually. It takes between 20-40 minutes to import all products to your store." , "woocommerce");
-        ?>
+        <strong>
+            <?php 
+                _e("Import all products in bulk instead of adding every product manually. It takes between 20-40 minutes to import all products to your store." , "woocommerce");
+            ?>
+        </strong>
     </p>
 </div>
 
 
 <?php
-    $afterStartImportStyle="display:none";
-    $beforeImportingProductsStyle="display:block";
-    
-    if($this->import_in_progress) {
-        $afterStartImportStyle="display:block";
-        $beforeImportingProductsStyle="display:none";
-    }
+$afterStartImportStyle="display:none";
+$beforeImportingProductsStyle="display:block";
+
+if($this->import_in_progress) {
+    $afterStartImportStyle="display:block";
+    $beforeImportingProductsStyle="display:none";
+}
 ?>
 
 <div id="beforeImportingProducts" style="<?php echo $beforeImportingProductsStyle ?>">
-    <h2><?php _e('Import products', 'woocommerce') ?>:</h2>
-    <div>
-        <div style="display: inline-block; padding:0 30px 20px 0;">
-            <h4>
-                <input checked type="radio" value="<?php echo WP_ImportPropertyRepository::FILTERS_TYPE_ALL ?>" name="import_products_type" id="import_type_all" />
-                <label for="import_type_all"><?php _e('All products available', 'woocommerce') ?></label>          
-            </h4>
- 
+    <div class="cw-ipt-select">
+        <div class="cw-radio-button">
+            <input checked type="radio" value="<?php echo WP_ImportPropertyRepository::FILTERS_TYPE_ALL ?>" name="import_products_type" id="import_type_all" />
+            <label for="import_type_all"><?php _e('All products available', 'woocommerce') ?></label>          
         </div>
-        <div style="display: inline-block; padding:0 30px 20px 0;">
-            <h4>
-                <input type="radio" value="<?php echo WP_ImportPropertyRepository::FILTERS_TYPE_BY_FILTERS ?>" name="import_products_type" id="import_type_by_filter" />
-                <label for="import_type_by_filter"><?php _e('Apply filters first', 'woocommerce') ?></label>      
-            </h4>
+        <div class="cw-radio-button">
+            <input type="radio" value="<?php echo WP_ImportPropertyRepository::FILTERS_TYPE_BY_FILTERS ?>" name="import_products_type" id="import_type_by_filter" />
+            <label for="import_type_by_filter"><?php _e('Apply filters first', 'woocommerce') ?></label>      
         </div>
     </div>
-    <form id="import_all_products_form">
+    <hr>
+    <form id="import_all_products_form" class="cw-form">
         <div id="import_filters" style="display:none">
-            <hr>
-            <div>
-                <h4><?php _e('Import products not older than', 'woocommerce') ?>:</h4>
-                    <?php 
-                       $in_stock_days_ago_options = array(
-                           '30'  =>  '30 days', 
-                           '60'  =>  '60 days',
-                           ''    =>  'Import all'
-                       );
-                       
-                       $this->form_element_generator->codeswholesale_wp_radio(
-                            array(
-                                'id' => 'cwh_import_propery_in_stock_days_ago',
-                                'options' => $in_stock_days_ago_options,
-                                'value' => '',
-                                'wrapper_class' => 'codeswholesale-inline-block'
-                            )
-                       );
-                    ?>
-            </div>
-            <hr>
-            <div>
-                <h4><?php _e('Import products by platform', 'woocommerce') ?>:</h4>
-                    <?php 
-                        $this->form_element_generator->codeswholesale_wp_checkboxes( 
-                            array (
-                                'name'    => 'cwh_import_propery_platform',
-                                'wrapper_class' => 'codeswholesale-inline-block',
-                                'options' => $this->getPlatformOptions(),
-                                'checked' => 'checked'
-                            )
+            <table class="form-table cw-ipt-table">
+                <tr class="cst-label">
+                    <th><?php _e('Import products not older than', 'woocommerce') ?>:</th>
+                    <td>
+                        <?php 
+                        $in_stock_days_ago_options = array(
+                            '30'  =>  '30 days', 
+                            '60'  =>  '60 days',
+                            ''    =>  'Import all'
                         );
-                    ?>
-            </div>
-            <hr>
-            <div>
-                <h4><?php _e('Import products by region', 'woocommerce') ?>:</h4> 
-                    <?php 
-                        $this->form_element_generator->codeswholesale_wp_checkboxes( 
-                            array (
-                                'name'    => 'cwh_import_propery_region',
-                                'wrapper_class' => 'codeswholesale-inline-block',
-                                'options' => $this->getRegionOptions(),
-                                'checked' => 'checked'
-                            )
+
+                        $this->form_element_generator->codeswholesale_wp_radio(
+                                array(
+                                    'id' => 'cwh_import_propery_in_stock_days_ago',
+                                    'options' => $in_stock_days_ago_options,
+                                    'value' => ''
+                                )
                         );
-                    ?>
-            </div>
-            <hr>
-            <div>
-                <h4><?php _e('Import products by language', 'woocommerce') ?>:</h4> 
-                    <?php 
-                        $this->form_element_generator->codeswholesale_wp_checkboxes( 
-                            array (
-                                'name'    => 'cwh_import_propery_language',
-                                'wrapper_class' => 'codeswholesale-inline-block',
-                                'options' => $this->getLanguageOptions(),
-                                'checked' => 'checked'
-                            )
-                        );
-                    ?>
-            </div>    
-            <hr>
+                        ?>
+                    </td> 
+                </tr>
+
+                <tr class="cst-label">
+                    <th><?php _e('Import products by platform', 'woocommerce') ?>:</th>
+                    <td>
+                        <?php 
+                            $this->form_element_generator->codeswholesale_wp_checkboxes( 
+                                array (
+                                    'name'    => 'cwh_import_propery_platform',
+                                    'options' => $this->getPlatformOptions(),
+                                    'checked' => 'checked'
+                                )
+                            );
+                        ?>
+                    </td>
+                </tr>
+
+                <tr class="cst-label">
+                    <th><?php _e('Import products by region', 'woocommerce') ?>:</th>
+                    <td>
+                        <?php 
+                            $this->form_element_generator->codeswholesale_wp_checkboxes( 
+                                array (
+                                    'name'    => 'cwh_import_propery_region',
+                                    'options' => $this->getRegionOptions(),
+                                    'checked' => 'checked'
+                                )
+                            );
+                        ?>
+                    </td>     
+                </tr>
+                <tr class="cst-label">
+                    <th><?php _e('Import products by language', 'woocommerce') ?>:</th>
+                    <td>
+                        <?php 
+                            $this->form_element_generator->codeswholesale_wp_checkboxes( 
+                                array (
+                                    'name'    => 'cwh_import_propery_language',
+                                    'options' => $this->getLanguageOptions(),
+                                    'checked' => 'checked'
+                                )
+                            );
+                        ?> 
+                    </td>
+                </tr>
+            </table>           
         </div>
 
         <br>
-        <input type="submit" name="submit" id="submit_import" class="button button-primary" value="<?php _e('Import products', 'woocommerce') ?>">
+        <br>
+        <button type="submit" id="submit_import" class="cw-btn cw-btn-success">
+            <?php _e('Import products', 'woocommerce') ?>
+            <i class="fas fa-download cw-text-margin-left"></i>
+        </button>
     </form>  
 </div>
 
@@ -117,7 +121,7 @@
 
 <script>
     var $ = jQuery.noConflict();
-    
+
     $(document).ready(function () {
         toggleFilters();
 
@@ -132,21 +136,21 @@
             var inStockDaysAgo = $('input[name="cwh_import_propery_in_stock_days_ago"]:checked').val();
 
             var filters = {
-                 'platform' : [],
-                 'region' : [],
-                 'language' : [],
-             };
+                'platform' : [],
+                'region' : [],
+                'language' : [],
+            };
             
             $('input:checkbox[name="cwh_import_propery_platform"]:checked').each(function(){
-                 filters.platform.push($(this).val());
+                filters.platform.push($(this).val());
             });
             
             $('input:checkbox[name="cwh_import_propery_region"]:checked').each(function(){
-                 filters.region.push($(this).val());
+                filters.region.push($(this).val());
             });
             
             $('input:checkbox[name="cwh_import_propery_language"]:checked').each(function(){
-                 filters.language.push($(this).val());
+                filters.language.push($(this).val());
             });     
             
             $.post(ajaxurl, {

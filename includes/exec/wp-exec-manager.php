@@ -10,10 +10,9 @@ class ExecManager
      */
     public static function getPhpPath(): string
     {        
-        if (self::phpTest() === $_SERVER['PATH']){
+        if (self::phpTest() === $_SERVER['PATH'] || substr(php_uname(), 0, 7) == "Windows"){
             return self::PHP_PATH;
-        }
-        else {
+        }else {
             return PHP_BINDIR . '/php';
         }
     }
