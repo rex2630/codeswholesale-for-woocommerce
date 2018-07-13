@@ -2,10 +2,11 @@
 <table class="cw-table cw-iph-table">
 <thead>
     <tr>
-       <th><?php _e('Import details', 'woocommerce'); ?></th>  
-       <th><?php _e('Product details', 'woocommerce'); ?></th>
-       <th><?php _e('Filter details', 'woocommerce'); ?></th>
-       <th><?php _e('Actions', 'woocommerce'); ?></th>
+        <th><?php _e('Import details', 'woocommerce'); ?></th>
+        <th><?php _e('Product details', 'woocommerce'); ?></th>
+        <th><?php _e('Filter details', 'woocommerce'); ?></th>
+        <th><?php _e('Description', 'woocommerce'); ?></th>
+        <th><?php _e('Actions', 'woocommerce'); ?></th>
     </tr>
 </thead>
 <tbody>
@@ -74,6 +75,9 @@
                     <?php echo $item->getInStockDaysAgo(); ?> <?php  _e('days ', 'woocommerce'); ?> <?php  _e('(60 days)', 'woocommerce'); ?>
                 <?php endif; ?>
                
+            </td>
+            <td>
+                <?php echo $item->getDescription(); ?>
             </td>
             <td>
                 <div>

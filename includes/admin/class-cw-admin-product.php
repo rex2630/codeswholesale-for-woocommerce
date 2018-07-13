@@ -30,7 +30,12 @@ if (!class_exists('CW_Admin_Product')) :
          */
         public function get_calculated_price() {
             $priceProvider = new PriceProvider();
-            $price = $priceProvider->getCalculatedPrice( $_POST['spread_type'], $_POST['spread_value'], $_POST['stock_price'], $_POST['product_price_charmer'], $_POST['currency']);
+
+            try {
+                $price = $priceProvider->getCalculatedPrice( $_POST['spread_type'], $_POST['spread_value'], $_POST['stock_price'], $_POST['product_price_charmer'], $_POST['currency']);
+            } catch (\Exception $ex) {
+                $price = null;
+            }
 
             // ajax return
             echo json_encode($price);
@@ -244,8 +249,13 @@ if (!class_exists('CW_Admin_Product')) :
                             'product_price_charmer': '<?php echo $options_array['product_price_charmer'];?>',
                             'currency': '<?php echo $options_array['currency'];?>'
                             }, function(response) {
-                            jQuery("#_regular_price").val(parseFloat(response).toFixed(2));
-                        });
+                                if(response && response !== 'null') {
+                                    jQuery("#_regular_price").val(parseFloat(response).toFixed(2));
+                                } else {
+                                    alert('The price can not be converted');
+                                }
+                            }
+                        );
 
 
                         jQuery("#<?php echo CodesWholesaleConst::PRODUCT_STOCK_PRICE_PROP_NAME; ?>").val(product.price.toFixed(2));

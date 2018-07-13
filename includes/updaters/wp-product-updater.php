@@ -83,7 +83,7 @@ class WP_Product_Updater
         $post_id = wp_insert_post( $post );
         
         if (! $post_id) {
-            throw new Exception('Error');
+            throw new \Exception('Error');
         }
 
         update_post_meta( $post_id, CodesWholesaleConst::PRODUCT_CODESWHOLESALE_ID_PROP_NAME, esc_attr($externalProduct->getProduct()->getProductId()));

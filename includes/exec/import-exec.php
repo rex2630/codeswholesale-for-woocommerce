@@ -7,7 +7,7 @@ use CodesWholesale\Client;
 use CodesWholesaleFramework\Model\ExternalProduct;
 use CodesWholesaleFramework\Import\CsvImportGenerator;
 use CodesWholesaleFramework\Import\ProductDiffGenerator;
-
+use CodesWholesaleFramework\Provider\CurrencyProvider;
 
 /**
  * Class ImportExec
@@ -72,6 +72,8 @@ class ImportExec
     public function execute()
     {
         try {
+            CurrencyProvider::setRate($this->optionsArray['currency']);
+
             $externalProducts = $this->client->getProducts($this->importModel->serializeFilters());
 
             $this->importModel->setStatus(WP_ImportPropertyModel::STATUS_IN_PROGRESS);

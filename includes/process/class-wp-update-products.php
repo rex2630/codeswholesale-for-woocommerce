@@ -1,5 +1,6 @@
 <?php
 
+use CodesWholesaleFramework\Provider\CurrencyProvider;
 use CodesWholesaleFramework\Postback\UpdateProduct\UpdateProductInterface;
 use CodesWholesaleFramework\Model\ExternalProduct;
 use CodesWholesale\Resource\Product;
@@ -10,11 +11,10 @@ use CodesWholesale\Resource\Product;
 class WP_Update_Products implements UpdateProductInterface
 {
     /**
-     * Endpoint for API Client
-     * 
      * @param $cwProductId
-     * @param $quantity
-     * @param $priceSpread
+     * @param null $quantity
+     * @param null $priceSpread
+     * @throws Exception
      */
     public function updateProduct($cwProductId, $quantity = null, $priceSpread = null)
     {
@@ -61,10 +61,10 @@ class WP_Update_Products implements UpdateProductInterface
             }
         }
     }
+
     /**
-     * Endpoint for API Client
-     * 
-     * @param string $cwProductId
+     * @param $cwProductId
+     * @throws Exception
      */
     public function newProduct($cwProductId)
     {
@@ -79,12 +79,38 @@ class WP_Update_Products implements UpdateProductInterface
             $relatedInternalProducts = CW()->get_related_wp_products($externalProduct->getProduct()->getProductId());
                         
             if (0 === count($relatedInternalProducts)) {
-                WP_Product_Updater::getInstance()->createWooCommerceProduct($this->getFirstAdminId(), $externalProduct);
+                $this->createWooProduct($externalProduct);
             } elseif (0 < count($relatedInternalProducts)) {
-                foreach ($relatedInternalProducts as $post) {
-                    WP_Product_Updater::getInstance()->updateWooCommerceProduct($post->ID, $externalProduct);
-                }
+                $this->updateWooProducts($externalProduct, $relatedInternalProducts);
             }
+        }
+    }
+
+    /**
+     * @param ExternalProduct $externalProduct
+     */
+    private function createWooProduct(ExternalProduct $externalProduct)
+    {
+        try {
+            CurrencyProvider::setRate(CW()->get_options()['currency']);
+            WP_Product_Updater::getInstance()->createWooCommerceProduct($this->getFirstAdminId(), $externalProduct);
+        } catch (\Exception $ex) {
+        }
+    }
+
+    /**
+     * @param ExternalProduct $externalProduct
+     * @param $relatedInternalProducts
+     */
+    private function updateWooProducts(ExternalProduct $externalProduct, $relatedInternalProducts)
+    {
+        try {
+            CurrencyProvider::setRate(CW()->get_options()['currency']);
+
+            foreach ($relatedInternalProducts as $post) {
+                WP_Product_Updater::getInstance()->updateWooCommerceProduct($post->ID, $externalProduct);
+            }
+        } catch (\Exception $ex) {
         }
     }
 

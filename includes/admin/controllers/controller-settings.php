@@ -187,8 +187,12 @@ if (!class_exists('CW_Controller_Settings')) :
         public function get_currency_rate() 
         {
             $id = $_POST['id'];
-            
-            $result = CurrencyProvider::getRate($id);
+
+            try {
+                $result = CurrencyProvider::getRate($id);
+            } catch (Exception $ex) {
+                $result = $ex->getMessage();
+            }
 
             echo json_encode($result);
 
@@ -342,9 +346,20 @@ if (!class_exists('CW_Controller_Settings')) :
 
         public function render_currency_select($args = array())
         {
+            try {
+                $currencies = CurrencyProvider::getAllCurrencies();
+            } catch (\Exception $ex) {
+                $currency = [
+                    'currencyName' => $args['options']['currency'],
+                    'id'  => $args['options']['currency']
+                ];
+
+                $currencies = [ (object) $currency ];
+            }
             ?>
+
             <select id="currency" name="cw_options[<?php echo $args['name'] ?>]">
-                <?php foreach (CurrencyProvider::getAllCurrencies() as $currency): ?>
+                <?php foreach ($currencies as $currency): ?>
                     <option  value="<?php echo $currency->id; ?>"<?php if ($args['options']['currency'] == $currency->id) { ?> selected="selected" <?php } ?>><?php echo $currency->currencyName . ' - ' . $currency->id; ?></option>
                 <?php endforeach; ?>
             </select>
