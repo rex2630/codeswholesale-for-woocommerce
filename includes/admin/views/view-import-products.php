@@ -5,7 +5,7 @@ if( isset( $_GET[ 'tab' ] ) ) {
 ?>
 
 <div class="wrap">
-    <div class="cw-content">
+    <div class="cw-content cw-ip-content">
         <div class="cw-ip-header">
             <div class="cw-ip-title">
                 <h1 class="wp-heading-inline cw-title">

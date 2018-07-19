@@ -346,16 +346,8 @@ if (!class_exists('CW_Controller_Settings')) :
 
         public function render_currency_select($args = array())
         {
-            try {
-                $currencies = CurrencyProvider::getAllCurrencies();
-            } catch (\Exception $ex) {
-                $currency = [
-                    'currencyName' => $args['options']['currency'],
-                    'id'  => $args['options']['currency']
-                ];
+            $currencies = CurrencyProvider::getAllCurrencies($args['options']['currency']);
 
-                $currencies = [ (object) $currency ];
-            }
             ?>
 
             <select id="currency" name="cw_options[<?php echo $args['name'] ?>]">

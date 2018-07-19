@@ -31,8 +31,14 @@ if($this->import_in_progress) {
         </div>
     </div>
     <hr>
+
+    <p id="import_all_products_copy"><?php _e('Tutaj copy o tym że to najprostsza i najlepsza opcja na import wszytskich produktów z CW', 'woocommerce') ?></p>
+
     <form id="import_all_products_form" class="cw-form">
         <div id="import_filters" style="display:none">
+
+            <p id="import_all_products_copy"><?php _e('Sed aliquam ultrices mauris. Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris. Praesent adipiscing imperdiet iaculis, ipsum', 'woocommerce') ?></p>
+
             <table class="form-table cw-ipt-table">
                 <tr class="cst-label">
                     <th><?php _e('Import products not older than', 'woocommerce') ?>:</th>
@@ -175,8 +181,10 @@ if($this->import_in_progress) {
         function toggleFilters() {
             if($('input#import_type_by_filter').is(':checked')) {
                 $('#import_filters').show();
+                $('#import_all_products_copy').hide();
             } else {
                 $('#import_filters').hide();
+                $('#import_all_products_copy').show();
             }
         }
 

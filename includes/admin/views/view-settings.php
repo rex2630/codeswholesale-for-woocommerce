@@ -70,7 +70,6 @@
                     
                     <button type="submit" class="cw-btn cw-btn-success">
                         <?php  _e( 'Save Changes' ); ?>
-                        <i class="fas fa-save cw-text-margin-left"></i>
                     </button>
                 </form>
             </div>

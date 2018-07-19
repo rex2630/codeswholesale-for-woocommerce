@@ -305,6 +305,10 @@ class WP_Product_Updater
     public function setProductCategory($post_id, $category, $parent, $description = '') {
         if(is_array($category)) {
             foreach($category as $cat) {
+                if(! $cat) {
+                    continue;
+                }
+
                 $id = $this->categoryUpdater->getTermIdForce($cat,$parent, $description);
                 wp_set_post_terms( $post_id, $id, WP_Category_Updater::TAXONOMY_SLUG, true );
             }
