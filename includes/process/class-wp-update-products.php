@@ -29,13 +29,16 @@ class WP_Update_Products implements UpdateProductInterface
         if ($posts) {
 
             try {
-
                 foreach ($posts as $post) {
+                    CurrencyProvider::setRate(CW()->get_options()['currency']);
+
                     $wpProductUpdater->updateStockPrice($post->ID, $priceSpread);
                     $wpProductUpdater->updateRegularPrice($post->ID, $priceSpread);
                     $wpProductUpdater->updateStock($post->ID, $quantity);
                 }
             } catch (\CodesWholesale\Resource\ResourceError $e) {
+                die("Received product id: " . $cwProductId . " Error: " . $e->getMessage());
+            } catch (\Exception $e) {
                 die("Received product id: " . $cwProductId . " Error: " . $e->getMessage());
             }
 
@@ -95,6 +98,7 @@ class WP_Update_Products implements UpdateProductInterface
             CurrencyProvider::setRate(CW()->get_options()['currency']);
             WP_Product_Updater::getInstance()->createWooCommerceProduct($this->getFirstAdminId(), $externalProduct);
         } catch (\Exception $ex) {
+            die("Received product id: " . $externalProduct->getProduct()->getProductId() . " Error: " . $ex->getMessage());
         }
     }
 
