@@ -101,11 +101,13 @@ class WP_Attribute_Updater
         $attr = [];
       
         $terms = get_the_terms( $post, self::getSlug($type));
-      
-        foreach ( $terms as $term ) {
-            $attr[] = $term->name;
-        }
         
+        if($terms) {
+          foreach ( $terms as $term ) {
+              $attr[] = $term->name;
+          }   
+        }
+
         return $attr;
     }
 }

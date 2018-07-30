@@ -382,7 +382,7 @@ class WP_Product_Updater
 		$currency = $this->optionsArray['currency'];
 		$product_price_charmer = $this->optionsArray['product_price_charmer'];
 		 
-        $priceProvider = new PriceProvider();
+        $priceProvider = new PriceProvider(new WP_DbManager());
         $price = $priceProvider->getCalculatedPrice($spread_type, $spread_value, $stock_price, $product_price_charmer, $currency);
 
         update_post_meta($post_id, '_regular_price', round($price, 2));

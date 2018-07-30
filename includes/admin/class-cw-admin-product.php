@@ -29,7 +29,7 @@ if (!class_exists('CW_Admin_Product')) :
          *
          */
         public function get_calculated_price() {
-            $priceProvider = new PriceProvider();
+            $priceProvider = new PriceProvider(new WP_DbManager());
 
             try {
                 $price = $priceProvider->getCalculatedPrice( $_POST['spread_type'], $_POST['spread_value'], $_POST['stock_price'], $_POST['product_price_charmer'], $_POST['currency']);
