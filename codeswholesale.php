@@ -118,10 +118,6 @@ final class CodesWholesale
         self::codeswholesale_activate();
 
         $this->configure_cw_client();
-
-        wp_enqueue_style( 'cw-style', plugins_url( 'vendor\codeswholesale\cw-extension-framework\src\Assets\css\style.css' , __FILE__ ) );
-        wp_enqueue_style( 'cw-custom-style', plugins_url( 'assets\style.css' , __FILE__ ) );
-        wp_enqueue_style( 'font-awesome', 'https://use.fontawesome.com/releases/v5.1.0/css/all.css' );
     }
 
     public static function codeswholesale_install()
