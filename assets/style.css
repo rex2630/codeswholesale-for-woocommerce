@@ -7,3 +7,43 @@
     background-repeat: no-repeat;
     background-position: 50% 50%;
 }
+
+.cst-desc {
+    font-weight: 300 !important;
+}
+
+.input-desc {
+    font-weight: 300 !important;
+}
+
+.cst-label th {
+    font-size: 16px !important;
+    font-weight: 400 !important;
+}
+
+.connection-status {
+    margin: 30px 20px !important;
+    padding: 0px 20px 3px 20px;
+    border-left: 1px solid #999;
+}
+
+#status-ul {
+    margin: 0px;
+    padding: 0px;
+}
+
+#nav-img {
+    height: 30px;
+}
+
+.woocommerce_options_panel label,
+.woocommerce_options_panel legend{
+    width: 200px !important;
+}
+
+#cst-post-body-content {
+    background-color: #fff;
+    padding: 0px 20px;
+    max-width: 1200px;
+    border: 1px solid #333;
+}
