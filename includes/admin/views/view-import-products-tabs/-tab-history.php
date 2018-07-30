@@ -10,7 +10,7 @@
     </tr>
 </thead>
 <tbody>
-    <?php /** @var $item WP_ImportPropertyModel */ ?>
+    <?php /** @var $item \CodesWholesaleFramework\Database\Models\ImportPropertyModel */ ?>
     <?php foreach ($this->import_history as $item) : ?>
         <tr id="import_row<?php echo $item->getId(); ?>">
             <td>
@@ -58,8 +58,8 @@
             </td>
             <td>
                 <strong><?php _e('Type: ', 'woocommerce'); ?></strong><?php echo $item->getType() ?>
-                <?php if(WP_ImportPropertyRepository::FILTERS_TYPE_BY_FILTERS === $item->getType()): ?>
-                   
+                <?php if(\CodesWholesaleFramework\Database\Repositories\ImportPropertyRepository::FILTERS_TYPE_BY_FILTERS === $item->getType()): ?>
+
                     <br>
                     <?php foreach ($item->getFilters() as $key => $filter): ?>
                         <?php echo '<strong>'.ucfirst($key).'</strong>' ?>: <?php echo join(', ', $filter); ?><br>
@@ -82,7 +82,7 @@
             <td>
                 <div>
                     <span>
-                        <a class="cw-btn cw-btn-md cw-btn-success"  href="<?php echo $item->getDetailsPath() ?>" download><?php _e('Get details', 'woocommerce'); ?></a>
+                        <a class="cw-btn cw-btn-md cw-btn-success"  href="<?php echo FileManager::getImportFileUrl($item->getId()) ?>" download><?php _e('Get details', 'woocommerce'); ?></a>
                     </span>
 
                     <span class="trash"> 

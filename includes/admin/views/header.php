@@ -1,6 +1,6 @@
 <div class="cw-header cw-row">
     <div class="cw-logo">
-        <div class="cw-logo-ct"><img src="<?php  echo $this->plugin_img() ?>"></div>
+        <div class="cw-logo-ct"></div>
     </div>
     <div class="cw-connection">
         <ul id="cw-connection-info">

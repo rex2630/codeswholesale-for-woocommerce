@@ -160,6 +160,7 @@
                 'action': 'get_currency_rate',
                 'id': currency,
             }, function(response) {
+                console.log(response);
                 isNaN(response) ?  jQuery('#currency-error').show() :  jQuery('#currency-error').hide();
 
                 var html = 'EUR - ' + currency + '\u0020 ('+ JSON.parse(response) +')';

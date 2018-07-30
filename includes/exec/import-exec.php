@@ -7,7 +7,8 @@ use CodesWholesale\Client;
 use CodesWholesaleFramework\Model\ExternalProduct;
 use CodesWholesaleFramework\Import\CsvImportGenerator;
 use CodesWholesaleFramework\Import\ProductDiffGenerator;
-use CodesWholesaleFramework\Provider\CurrencyProvider;
+use CodesWholesaleFramework\Database\Models\ImportPropertyModel;
+use CodesWholesaleFramework\Database\Repositories\ImportPropertyRepository;
 
 /**
  * Class ImportExec
@@ -15,7 +16,7 @@ use CodesWholesaleFramework\Provider\CurrencyProvider;
 class ImportExec
 {
     /**
-     * @var WP_ImportPropertyRepository
+     * @var ImportPropertyRepository
      */
     protected $importRepository;
 
@@ -30,7 +31,7 @@ class ImportExec
     protected $updater;
 
     /**
-     * @var WP_ImportPropertyModel
+     * @var ImportPropertyModel
      */
     protected $importModel;
 
@@ -55,7 +56,7 @@ class ImportExec
      */
     public function __construct()
     {
-        $this->importRepository = new WP_ImportPropertyRepository();
+        $this->importRepository = new ImportPropertyRepository(new WP_DbManager());
         $this->client = CW()->get_codes_wholesale_client();
         $this->updater = WP_Product_Updater::getInstance();
         $this->importModel = $this->importRepository->findActive();
@@ -72,26 +73,24 @@ class ImportExec
     public function execute()
     {
         try {
-            CurrencyProvider::setRate($this->optionsArray['currency']);
-
             $externalProducts = $this->client->getProducts($this->importModel->serializeFilters());
 
-            $this->importModel->setStatus(WP_ImportPropertyModel::STATUS_IN_PROGRESS);
+            $this->importModel->setStatus(ImportPropertyModel::STATUS_IN_PROGRESS);
             $this->importModel->setTotalCount(count($externalProducts));
-            $this->importRepository->update($this->importModel);
+            $this->importRepository->overwrite($this->importModel);
 
             /** @var \CodesWholesale\Resource\Product $product */
             foreach ($externalProducts as $product) {
                 $this->importProduct($product);
             }
 
-            $this->importModel->setStatus(WP_ImportPropertyModel::STATUS_DONE);
-            $this->importRepository->update($this->importModel);
+            $this->importModel->setStatus(ImportPropertyModel::STATUS_DONE);
+            $this->importRepository->overwrite($this->importModel);
 
         } catch (\Exception $e) {
-            $this->importModel->setStatus(WP_ImportPropertyModel::STATUS_REJECT);
+            $this->importModel->setStatus(ImportPropertyModel::STATUS_REJECT);
             $this->importModel->setDescription($e->getMessage());
-            $this->importRepository->update($this->importModel);
+            $this->importRepository->overwrite($this->importModel);
             throw $e;
         }
 
@@ -120,7 +119,7 @@ class ImportExec
              
              $this->importModel->increaseDoneCount();
 
-             $this->importRepository->update($this->importModel); 
+             $this->importRepository->overwrite($this->importModel);
         } catch (\Exception $e) {
         }
     }
@@ -156,9 +155,9 @@ class ImportExec
         try {
             FileManager::createImportFolder($this->importModel->getId()); 
         } catch (Exception $ex) {
-            $this->importModel->setStatus(WP_ImportPropertyModel::STATUS_REJECT);
+            $this->importModel->setStatus(ImportPropertyModel::STATUS_REJECT);
             $this->importModel->setDescription($ex->getMessage());
-            $this->importRepository->update($this->importModel);
+            $this->importRepository->overwrite($this->importModel);
         }
     }
     

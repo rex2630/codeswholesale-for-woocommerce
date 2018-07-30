@@ -1,6 +1,8 @@
 <?php
 
 use CodesWholesale\Client;
+use CodesWholesaleFramework\Database\Repositories\ImportPropertyRepository;
+use CodesWholesaleFramework\Database\Models\ImportPropertyModel;
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
@@ -13,8 +15,8 @@ if (!class_exists('CW_Controller_Import_products')) :
     class CW_Controller_Import_products extends CW_Controller
     {
         /**
-         * 
-         * @var WP_ImportPropertyModel[] 
+         *
+         * @var ImportPropertyModel[]
          */
         public $import_history;
         
@@ -26,7 +28,7 @@ if (!class_exists('CW_Controller_Import_products')) :
         
         /**
          *
-         * @var WP_ImportPropertyRepository 
+         * @var ImportPropertyRepository
          */
         public $import_repository;
         
@@ -40,8 +42,8 @@ if (!class_exists('CW_Controller_Import_products')) :
             // ajax actions
             add_action( 'wp_ajax_import_products_async', array($this, 'import_products_async'));
             add_action( 'wp_ajax_remove_import_details_async', array($this, 'remove_import_details_async'));
-            
-            $this->import_repository = new WP_ImportPropertyRepository();
+
+            $this->import_repository = new ImportPropertyRepository(new WP_DbManager());
             $this->import_history   = $this->import_repository->findAll();
             $this->import_in_progress = $this->import_repository->isActive();
         }
@@ -100,7 +102,8 @@ if (!class_exists('CW_Controller_Import_products')) :
                     $result->message = __("The import is in progress", "woocommerce");
                 } else {
                     try {
-                        $importModel = WP_ImportPropertyModelFactory::createInstanceToSave($_POST);
+                        $_POST['user_id'] = get_current_user_id();
+                        $importModel = \CodesWholesaleFramework\Database\Factories\ImportPropertyModelFactory::createInstanceToSave($_POST);
 
                         $this->import_repository->save($importModel);
 

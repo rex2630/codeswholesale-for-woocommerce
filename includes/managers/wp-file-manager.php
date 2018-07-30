@@ -13,20 +13,48 @@ class FileManager
     /**
      * @return string
      */
+    public static function getUploadUrl(): string
+    {
+        return get_site_url().'/wp-content/uploads';
+    }
+
+    /**
+     * @return string
+     */
     public static function getImportPath(): string
     {
         return self::getUploadPath() . '/cw-import-products/';
     }
-    
+
     /**
+     * @return string
+     */
+    public static function getImportUrl(): string
+    {
+        return self::getUploadUrl() . '/cw-import-products/';
+    }
+
+    /**
+     * @param $id
      * @return string
      */
     public static function getImportFilePath($id): string
     {
         return self::getImportPath() . $id . '-import.csv';
     }
-    
+
     /**
+     * @param $id
+     * @return string
+     */
+    public static function getImportFileUrl($id): string
+    {
+        return self::getImportUrl() . $id . '-import.csv';
+    }
+
+    /**
+     * @param $csv
+     * @param $id
      * @return string
      */
     public static function setImportFile($csv, $id): string

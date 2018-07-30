@@ -47,7 +47,7 @@ class ApiClient
                 'client_secret' => empty($defaultOptions['api_client_secret']) ? '0' : $defaultOptions['api_client_secret'],
                 'client_headers' => 'Codeswholesale-WooCommerce/2.3',
                 'db' => new PDO('mysql:host=' . $wpdb->dbhost . ';dbname=' . $wpdb->dbname, $wpdb->dbuser, $wpdb->dbpassword),
-                'prefix' => sprintf('%s%s', $wpdb->prefix, WP_Repository::CW_PREFIX),
+                'prefix' => sprintf('%s%s', $wpdb->prefix, \CodesWholesaleFramework\Database\Interfaces\RepositoryInterface::CW_PREFIX),
             ];
 
             $parameters = [

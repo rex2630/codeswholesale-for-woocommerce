@@ -1,6 +1,5 @@
 <?php
 
-use CodesWholesaleFramework\Provider\CurrencyProvider;
 use CodesWholesaleFramework\Postback\UpdateProduct\UpdateProductInterface;
 use CodesWholesaleFramework\Model\ExternalProduct;
 use CodesWholesale\Resource\Product;
@@ -30,8 +29,6 @@ class WP_Update_Products implements UpdateProductInterface
 
             try {
                 foreach ($posts as $post) {
-                    CurrencyProvider::setRate(CW()->get_options()['currency']);
-
                     $wpProductUpdater->updateStockPrice($post->ID, $priceSpread);
                     $wpProductUpdater->updateRegularPrice($post->ID, $priceSpread);
                     $wpProductUpdater->updateStock($post->ID, $quantity);
@@ -95,7 +92,6 @@ class WP_Update_Products implements UpdateProductInterface
     private function createWooProduct(ExternalProduct $externalProduct)
     {
         try {
-            CurrencyProvider::setRate(CW()->get_options()['currency']);
             WP_Product_Updater::getInstance()->createWooCommerceProduct($this->getFirstAdminId(), $externalProduct);
         } catch (\Exception $ex) {
             die("Received product id: " . $externalProduct->getProduct()->getProductId() . " Error: " . $ex->getMessage());
@@ -109,8 +105,6 @@ class WP_Update_Products implements UpdateProductInterface
     private function updateWooProducts(ExternalProduct $externalProduct, $relatedInternalProducts)
     {
         try {
-            CurrencyProvider::setRate(CW()->get_options()['currency']);
-
             foreach ($relatedInternalProducts as $post) {
                 WP_Product_Updater::getInstance()->updateWooCommerceProduct($post->ID, $externalProduct);
             }

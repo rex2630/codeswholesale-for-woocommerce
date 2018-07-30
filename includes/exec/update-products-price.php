@@ -3,8 +3,6 @@
 require_once( dirname(__FILE__) . '/../../../../../wp-load.php' );
 require_once( dirname(__FILE__) . '/../../codeswholesale.php' );
 
-use CodesWholesaleFramework\Provider\CurrencyProvider;
-
 class UpdateProductsPrice
 {
     /**
@@ -47,7 +45,6 @@ $updateProductsPrice = new UpdateProductsPrice();
 
 try {
     $optionsArray = CW()->get_options();
-    CurrencyProvider::setRate($optionsArray['currency']);
 
     $updateProductsPrice ->execute();
 } catch (\Exception $ex) {

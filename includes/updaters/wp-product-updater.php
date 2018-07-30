@@ -3,6 +3,7 @@
 use CodesWholesale\Resource\Product;
 use CodesWholesaleFramework\Provider\PriceProvider;
 use CodesWholesaleFramework\Model\ExternalProduct;
+use CodesWholesaleFramework\Database\Factories\CodeswholesaleProductModelFactory;
 
 /**
  * Class WP_Product_Updater
@@ -30,7 +31,7 @@ class WP_Product_Updater
     private $attributeUpdater;
 
     /**
-     * @var WP_CodeswholesaleProductModelFactory
+     * @var CodeswholesaleProductModelFactory
      */
     private $codeswholesaleProductModelFactory;
 
@@ -50,7 +51,7 @@ class WP_Product_Updater
         $this->attributeUpdater  = new WP_Attribute_Updater();
         $this->optionsArray = CW()->get_options();
 
-        $this->codeswholesaleProductModelFactory = new WP_CodeswholesaleProductModelFactory();
+        $this->codeswholesaleProductModelFactory = new CodeswholesaleProductModelFactory(new WP_DbManager());
     }
 
     public static function getInstance()
