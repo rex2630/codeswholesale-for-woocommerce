@@ -15,7 +15,7 @@
 </style>
 
 <div class="wrap">
-    <div class="cw-content">
+    <div class="cw-content cw-oh-content">
         <div class="cw-row cw-oh-header">
             <div class="cw-oh-title">
                 <h1 class="wp-heading-inline cw-title">

@@ -3,11 +3,8 @@
 require_once( dirname(__FILE__) . '/../../../../../wp-load.php' );
 require_once( dirname(__FILE__) . '/../../codeswholesale.php' );
 
-
 class UpdateProductsPrice
 {
-
-
     /**
      * execute
      */
@@ -46,4 +43,9 @@ class UpdateProductsPrice
 
 $updateProductsPrice = new UpdateProductsPrice();
 
-$updateProductsPrice ->execute();
+try {
+    $optionsArray = CW()->get_options();
+
+    $updateProductsPrice ->execute();
+} catch (\Exception $ex) {
+}

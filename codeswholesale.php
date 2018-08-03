@@ -118,9 +118,6 @@ final class CodesWholesale
         self::codeswholesale_activate();
 
         $this->configure_cw_client();
-
-        wp_enqueue_style( 'cw-style', plugins_url( 'assets/css/cw-style.css' , __FILE__ ) );
-        wp_enqueue_style( 'font-awesome', 'https://use.fontawesome.com/releases/v5.1.0/css/all.css' );
     }
 
     public static function codeswholesale_install()
@@ -157,15 +154,18 @@ final class CodesWholesale
     }
 
     /**
-     * @return WP_Repository[]
+     * @return \CodesWholesaleFramework\Database\Interfaces\RepositoryInterface[]
      */
     private static function getRepositories(): array
     {
+        $db = new WP_DbManager();
+
         return [
-            new WP_AccessTokenRepository(),
-            new WP_RefreshTokenRepository(),
-            new WP_ImportPropertyRepository(),
-            new WP_CodeswholesaleProductRepository(),
+            new \CodesWholesaleFramework\Database\Repositories\ImportPropertyRepository($db),
+            new \CodesWholesaleFramework\Database\Repositories\AccessTokenRepository($db),
+            new \CodesWholesaleFramework\Database\Repositories\RefreshTokenRepository($db),
+            new \CodesWholesaleFramework\Database\Repositories\CodeswholesaleProductRepository($db),
+            new \CodesWholesaleFramework\Database\Repositories\CurrencyControlRepository($db),
         ];
     }
     
@@ -252,25 +252,10 @@ final class CodesWholesale
         include_once('includes/dispatchers/wp-send-codes-dispatcher.php');
         include_once('includes/dispatchers/wp-order-notification-dispatcher.php');
 
-        // Factories
-        include_once('includes/factories/class-wp-import-property-model-factory.php');
-        include_once('includes/factories/class-wp-codeswholesale-product-model-factory.php');
-
-        // Models
-        include_once('includes/models/class-wp-import-property-model.php');
-        include_once('includes/models/class-wp-codeswholesale-product-model.php');
-
-        // Repositories
-        include_once('includes/repositories/class-wp-repository-interface.php');
-        include_once('includes/repositories/class-wp-abstract-repository.php');
-        include_once('includes/repositories/class-wp-import-property-repository.php');
-        include_once('includes/repositories/class-wp-access-token-repository.php');
-        include_once('includes/repositories/class-wp-refresh-token-repository.php');
-        include_once('includes/repositories/class-wp-codeswholesale-product-repository.php');
-
         // Managers
         include_once('includes/managers/wp-file-manager.php');
-        
+        include_once('includes/managers/wp-db-manager.php');
+
         //WooCommerce
         include_once('includes/woocommerce/class-cw-woocommerce-order.php');
         include_once('includes/woocommerce/class-cw-checkout.php');
@@ -362,7 +347,7 @@ final class CodesWholesale
                 'client_secret' => empty($options['api_client_secret']) ? '0' : $options['api_client_secret'],
                 'client_headers' => 'Codeswholesale-WooCommerce/2.4.4',
                 'db' => new PDO('mysql:host=' . $wpdb->dbhost . ';dbname=' . $wpdb->dbname, $wpdb->dbuser, $wpdb->dbpassword),
-                'prefix' => sprintf('%s%s', $wpdb->prefix, WP_Repository::CW_PREFIX),
+                'prefix' => sprintf('%s%s', $wpdb->prefix, \CodesWholesaleFramework\Database\Interfaces\RepositoryInterface::CW_PREFIX),
                 'signature' => empty($options['api_client_singature']) ? CodesWholesaleConst::TEST_SIGNATURE : $options['api_client_singature']
             );
 

@@ -1,15 +1,11 @@
-.codeswholesale_no_vertical_padding {
-    padding-top: 0px !important;
-    padding-bottom: 0px !important;
+.cw-form input[type="checkbox"]:checked::before {
+    margin: 0px 0 0 1px;
 }
-.codeswholesale_no_wrap {
-    white-space: nowrap !important;
-}
-.codeswholesale input[type="text"] {
-    width: 400px;
-    margin: 0;
-    padding: 6px;
-    box-sizing: border-box;
+
+.dashicons-admin-codeswholesale {
+    background-image: url("../vendor/codeswholesale/cw-extension-framework/src/Assets/img/codeswholesale-icon.png");
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
 }
 
 .cst-desc {
@@ -38,13 +34,6 @@
 
 #nav-img {
     height: 30px;
-}
-
-
-.dashicons-admin-codeswholesale {
-    background-image: url("../images/codeswholesale-icon.png");
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
 }
 
 .woocommerce_options_panel label,

@@ -3,6 +3,7 @@
 use CodesWholesale\Resource\Product;
 use CodesWholesaleFramework\Provider\PriceProvider;
 use CodesWholesaleFramework\Model\ExternalProduct;
+use CodesWholesaleFramework\Database\Factories\CodeswholesaleProductModelFactory;
 
 /**
  * Class WP_Product_Updater
@@ -30,7 +31,7 @@ class WP_Product_Updater
     private $attributeUpdater;
 
     /**
-     * @var WP_CodeswholesaleProductModelFactory
+     * @var CodeswholesaleProductModelFactory
      */
     private $codeswholesaleProductModelFactory;
 
@@ -50,7 +51,7 @@ class WP_Product_Updater
         $this->attributeUpdater  = new WP_Attribute_Updater();
         $this->optionsArray = CW()->get_options();
 
-        $this->codeswholesaleProductModelFactory = new WP_CodeswholesaleProductModelFactory();
+        $this->codeswholesaleProductModelFactory = new CodeswholesaleProductModelFactory(new WP_DbManager());
     }
 
     public static function getInstance()
@@ -83,7 +84,7 @@ class WP_Product_Updater
         $post_id = wp_insert_post( $post );
         
         if (! $post_id) {
-            throw new Exception('Error');
+            throw new \Exception('Error');
         }
 
         update_post_meta( $post_id, CodesWholesaleConst::PRODUCT_CODESWHOLESALE_ID_PROP_NAME, esc_attr($externalProduct->getProduct()->getProductId()));
@@ -305,6 +306,10 @@ class WP_Product_Updater
     public function setProductCategory($post_id, $category, $parent, $description = '') {
         if(is_array($category)) {
             foreach($category as $cat) {
+                if(! $cat) {
+                    continue;
+                }
+
                 $id = $this->categoryUpdater->getTermIdForce($cat,$parent, $description);
                 wp_set_post_terms( $post_id, $id, WP_Category_Updater::TAXONOMY_SLUG, true );
             }
@@ -377,7 +382,7 @@ class WP_Product_Updater
 		$currency = $this->optionsArray['currency'];
 		$product_price_charmer = $this->optionsArray['product_price_charmer'];
 		 
-        $priceProvider = new PriceProvider();
+        $priceProvider = new PriceProvider(new WP_DbManager());
         $price = $priceProvider->getCalculatedPrice($spread_type, $spread_value, $stock_price, $product_price_charmer, $currency);
 
         update_post_meta($post_id, '_regular_price', round($price, 2));

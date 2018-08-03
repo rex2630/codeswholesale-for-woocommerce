@@ -167,11 +167,18 @@ if (!class_exists('CW_Controller_Settings')) :
                     'class' => 'cst-label'
                 ),
         );
-        
+
+        /**
+         * @var CurrencyProvider
+         */
+        private $currencyProvider;
+
         public function __construct()
         {
             parent::__construct();
-            
+
+            $this->currencyProvider = new CurrencyProvider(new WP_DbManager());
+
             /**
              * For admin only
              */
@@ -187,8 +194,12 @@ if (!class_exists('CW_Controller_Settings')) :
         public function get_currency_rate() 
         {
             $id = $_POST['id'];
-            
-            $result = CurrencyProvider::getRate($id);
+
+            try {
+                $result = $this->currencyProvider->getRate($id);
+            } catch (Exception $ex) {
+                $result = $ex->getMessage();
+            }
 
             echo json_encode($result);
 
@@ -207,7 +218,7 @@ if (!class_exists('CW_Controller_Settings')) :
         {
             session_start();
             $_SESSION['cw_options'] = $options;
-            (new WP_AccessTokenRepository())->deleteToken();
+            (new \CodesWholesaleFramework\Database\Repositories\AccessTokenRepository(new WP_DbManager()))->deleteToken();
 
             if (1 == $options['environment'] && 0 == $_REQUEST['cw_options']['environment']) {
                 if (CW()->isClientCorrect()) {
@@ -344,8 +355,10 @@ if (!class_exists('CW_Controller_Settings')) :
         {
             ?>
             <select id="currency" name="cw_options[<?php echo $args['name'] ?>]">
-                <?php foreach (CurrencyProvider::getAllCurrencies() as $currency): ?>
-                    <option  value="<?php echo $currency->id; ?>"<?php if ($args['options']['currency'] == $currency->id) { ?> selected="selected" <?php } ?>><?php echo $currency->currencyName . ' - ' . $currency->id; ?></option>
+                <?php foreach ($this->currencyProvider->getAllCurrencies($args['options']['currency']) as $currency): ?>
+                    <option  value="<?php echo $currency->getCurrency(); ?>"<?php if ($args['options']['currency'] == $currency->getCurrency()) {  echo ' selected="selected"'; } ?>>
+                        <?php echo $currency->getCurrency() . ' - ' . $currency->getCurrencyName(); ?>
+                    </option>
                 <?php endforeach; ?>
             </select>
             <?php

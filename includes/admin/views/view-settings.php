@@ -64,12 +64,12 @@
 
                         settings_fields('cw-settings-group');
                         do_settings_sections('cw_options_page_slug');
-                        
+
+                    echo '<div class="error inline" id="currency-error" style="display:none"><p><strong>' . __('Warning!') . '</strong> ' . __('Currency provider not responding, please do not save the settings!') . '</p></div>';
                     ?>
                     
                     <button type="submit" class="cw-btn cw-btn-success">
                         <?php  _e( 'Save Changes' ); ?>
-                        <i class="fas fa-save cw-text-margin-left"></i>
                     </button>
                 </form>
             </div>
@@ -160,7 +160,9 @@
                 'action': 'get_currency_rate',
                 'id': currency,
             }, function(response) {
-                
+                console.log(response);
+                isNaN(response) ?  jQuery('#currency-error').show() :  jQuery('#currency-error').hide();
+
                 var html = 'EUR - ' + currency + '\u0020 ('+ JSON.parse(response) +')';
                 
                 if ((container.find(".description").length > 0)){

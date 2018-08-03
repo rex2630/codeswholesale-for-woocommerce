@@ -10,11 +10,10 @@ use CodesWholesale\Resource\Product;
 class WP_Update_Products implements UpdateProductInterface
 {
     /**
-     * Endpoint for API Client
-     * 
      * @param $cwProductId
-     * @param $quantity
-     * @param $priceSpread
+     * @param null $quantity
+     * @param null $priceSpread
+     * @throws Exception
      */
     public function updateProduct($cwProductId, $quantity = null, $priceSpread = null)
     {
@@ -29,13 +28,14 @@ class WP_Update_Products implements UpdateProductInterface
         if ($posts) {
 
             try {
-
                 foreach ($posts as $post) {
                     $wpProductUpdater->updateStockPrice($post->ID, $priceSpread);
                     $wpProductUpdater->updateRegularPrice($post->ID, $priceSpread);
                     $wpProductUpdater->updateStock($post->ID, $quantity);
                 }
             } catch (\CodesWholesale\Resource\ResourceError $e) {
+                die("Received product id: " . $cwProductId . " Error: " . $e->getMessage());
+            } catch (\Exception $e) {
                 die("Received product id: " . $cwProductId . " Error: " . $e->getMessage());
             }
 
@@ -61,10 +61,10 @@ class WP_Update_Products implements UpdateProductInterface
             }
         }
     }
+
     /**
-     * Endpoint for API Client
-     * 
-     * @param string $cwProductId
+     * @param $cwProductId
+     * @throws Exception
      */
     public function newProduct($cwProductId)
     {
@@ -79,12 +79,36 @@ class WP_Update_Products implements UpdateProductInterface
             $relatedInternalProducts = CW()->get_related_wp_products($externalProduct->getProduct()->getProductId());
                         
             if (0 === count($relatedInternalProducts)) {
-                WP_Product_Updater::getInstance()->createWooCommerceProduct($this->getFirstAdminId(), $externalProduct);
+                $this->createWooProduct($externalProduct);
             } elseif (0 < count($relatedInternalProducts)) {
-                foreach ($relatedInternalProducts as $post) {
-                    WP_Product_Updater::getInstance()->updateWooCommerceProduct($post->ID, $externalProduct);
-                }
+                $this->updateWooProducts($externalProduct, $relatedInternalProducts);
             }
+        }
+    }
+
+    /**
+     * @param ExternalProduct $externalProduct
+     */
+    private function createWooProduct(ExternalProduct $externalProduct)
+    {
+        try {
+            WP_Product_Updater::getInstance()->createWooCommerceProduct($this->getFirstAdminId(), $externalProduct);
+        } catch (\Exception $ex) {
+            die("Received product id: " . $externalProduct->getProduct()->getProductId() . " Error: " . $ex->getMessage());
+        }
+    }
+
+    /**
+     * @param ExternalProduct $externalProduct
+     * @param $relatedInternalProducts
+     */
+    private function updateWooProducts(ExternalProduct $externalProduct, $relatedInternalProducts)
+    {
+        try {
+            foreach ($relatedInternalProducts as $post) {
+                WP_Product_Updater::getInstance()->updateWooCommerceProduct($post->ID, $externalProduct);
+            }
+        } catch (\Exception $ex) {
         }
     }
 

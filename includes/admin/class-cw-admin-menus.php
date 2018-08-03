@@ -33,6 +33,7 @@ if (!class_exists('CW_Admin_Menus')) :
         public function add_admin_menu()
         {
             add_menu_page('CodesWholesale', 'CodesWholesale', 'manage_options', 'codeswholesale', array($this, 'set_up_admin_page'), 'dashicons-admin-codeswholesale', 30);
+            add_submenu_page( 'codeswholesale', 'Settings', 'Settings', 'manage_options', 'codeswholesale', array($this, 'set_up_admin_page'));
             add_submenu_page( 'codeswholesale', 'Order History', 'Order History', 'manage_options', 'cw-check-orders', array($this, 'check_orders'));
             add_submenu_page( 'codeswholesale', 'Import', 'Import', 'manage_options', 'cw-import-products', array($this, 'import_products'));
             add_submenu_page( 'codeswholesale', 'Emails', 'Emails', 'manage_options', 'edit.php?post_type=codeswholesale_email');
