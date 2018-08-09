@@ -16,14 +16,22 @@ class UpdateProductsPrice
             'posts_per_page' => -1,
             'post_type' => 'product',
             'meta_query' => array(
-                'relation' => 'OR',
+                'relation' => 'AND',
                 array(
-                    'key' => CodesWholesaleConst::PRODUCT_CALCULATE_PRICE_METHOD_PROP_NAME,
-                    'value' => 0
+                    'key' => CodesWholesaleConst::PRODUCT_CODESWHOLESALE_ID_PROP_NAME,
+                    'value'   => array('', '0', null),
+                    'compare' => 'NOT IN',
                 ),
                 array(
-                    'key' => CodesWholesaleConst::PRODUCT_CALCULATE_PRICE_METHOD_PROP_NAME,
-                    'value' => 1
+                    'relation' => 'OR',
+                    array(
+                        'key' => CodesWholesaleConst::PRODUCT_CALCULATE_PRICE_METHOD_PROP_NAME,
+                        'value' => 0
+                    ),
+                    array(
+                        'key' => CodesWholesaleConst::PRODUCT_CALCULATE_PRICE_METHOD_PROP_NAME,
+                        'value' => 1
+                    )
                 )
             ),
         );

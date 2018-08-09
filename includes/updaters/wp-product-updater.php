@@ -379,8 +379,8 @@ class WP_Product_Updater
                return;
         }
 
-		$currency = $this->optionsArray['currency'];
-		$product_price_charmer = $this->optionsArray['product_price_charmer'];
+        $currency = $this->optionsArray['currency'];
+        $product_price_charmer = $this->optionsArray['product_price_charmer'];
 		 
         $priceProvider = new PriceProvider(new WP_DbManager());
         $price = $priceProvider->getCalculatedPrice($spread_type, $spread_value, $stock_price, $product_price_charmer, $currency);
