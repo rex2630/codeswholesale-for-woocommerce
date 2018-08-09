@@ -33,6 +33,18 @@
 
                     </div>
                 </div>
+                <div id="cw-leave-your-feedback" class="postbox cw-content">
+                    <h2 class="cw-title">
+                        <i class="fab fa-discord cw-icon-green"></i>
+                        <?php _e( 'Discord Server', 'codeswholesale-for-woocommerce' ); ?>
+                    </h2>
+                    <div class="misc-pub-section">
+                        <p  class="cw-padding-bottom">
+                            <?php _e( 'Join our API / Plugins Discord server. Feel free to ask questions or leave your feedback.' ) ?>
+                        </p>
+                        <a target="_blank" href="https://discord.gg/PRVpneB" class="cw-btn cw-btn-success cw-full"><?php _e( 'Join Discord', 'codeswholesale-for-woocommerce' ); ?></a>
+
+                    </div>
             </aside>
             <div id="post-body-content" class="cw-content" style="position: relative;">
                 <div class="cw-sp-header">
