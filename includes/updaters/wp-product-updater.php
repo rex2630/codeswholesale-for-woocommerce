@@ -107,7 +107,7 @@ class WP_Product_Updater
     public function updateWooCommerceProduct(int $post_id, ExternalProduct $externalProduct)
     {
         $wpProduct = get_post($post_id);
-        $cwProductModel = $this->codeswholesaleProductModelFactory->prepare($externalProduct->getProduct()->getProductId(), $this->optionsArray[CodesWholesaleConst::PREFERRED_LANGUAGE_FOR_PRODUCT_OPTION_NAME]);
+        $cwProductModel = $this->codeswholesaleProductModelFactory->prepare($externalProduct, $this->optionsArray[CodesWholesaleConst::PREFERRED_LANGUAGE_FOR_PRODUCT_OPTION_NAME]);
 
         $post = array( 'ID' => $post_id, 'post_status' => 'publish');
 

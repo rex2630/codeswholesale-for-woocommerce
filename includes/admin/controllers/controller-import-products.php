@@ -110,7 +110,7 @@ if (!class_exists('CW_Controller_Import_products')) :
                         (new WP_Attribute_Updater())->init();
                         
                         ExecManager::exec(ExecManager::getPhpPath(), 'import-exec.php');
-
+                        
                         $result->status = true;
                         $result->message = __("The import is in progress", "woocommerce");
                     } catch (Exception $ex) {
