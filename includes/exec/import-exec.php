@@ -116,10 +116,9 @@ class ImportExec
              } elseif (0 < count($relatedInternalProducts)) {
                 $this->updateExistProducts($externalProduct, $relatedInternalProducts);
              }
-             
-             $this->importModel->increaseDoneCount();
-
-             $this->importRepository->overwrite($this->importModel);
+            
+            $this->importModel->increaseDoneCount();
+            $this->importRepository->overwrite($this->importModel);
         } catch (\Exception $e) {
         }
     }
@@ -191,10 +190,6 @@ class ImportExec
 
         if ((string) trim($product->getStockQuantity()) !== trim($stock)) {
             $this->diffGenerator->generateDiff(ProductDiffGenerator::FIELD_STOCK, $stock, $product->getStockQuantity());
-        }
-
-        if (trim(strip_tags($externalProduct->getDescription())) !== trim(strip_tags($wpProduct->post_content))) {
-            $this->diffGenerator->generateDiff(ProductDiffGenerator::FIELD_DESCRIPTION, strip_tags($wpProduct->post_content), strip_tags($externalProduct->getDescription()));
         }
 
         if ((string) trim($ex_platform) !== trim( $in_platform)) {
