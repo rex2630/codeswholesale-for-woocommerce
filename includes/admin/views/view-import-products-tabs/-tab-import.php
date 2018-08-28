@@ -32,12 +32,12 @@ if($this->import_in_progress) {
     </div>
     <hr>
 
-    <p id="import_all_products_copy"><?php _e('Tutaj copy o tym że to najprostsza i najlepsza opcja na import wszytskich produktów z CW', 'woocommerce') ?></p>
+    <p id="import_all_products_copy"><?php _e('Import is best and easiest way to get products from CodesWholesale to your shop.') ?></p>
 
     <form id="import_all_products_form" class="cw-form">
         <div id="import_filters" style="display:none">
 
-            <p id="import_specific_products_copy"><?php _e('Sed aliquam ultrices mauris. Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris. Praesent adipiscing imperdiet iaculis, ipsum', 'woocommerce') ?></p>
+            <p id="import_specific_products_copy"><?php _e('Please select which filters you want to use for the import:', 'woocommerce') ?></p>
 
             <table class="form-table cw-ipt-table">
                 <tr class="cst-label">
