@@ -4,7 +4,7 @@
  * Plugin URI: http://docs.codeshowlesale.com
  * Depends: WooCommerce
  * Description: Integration with CodesWholesale API. PHP >= 7.0
- * Version: 2.4.4
+ * Version: 2.5.4
  * Author: DevTeam devteam@codeswholesale.com
  * Author URI: http://docs.codeswholesale.com
  * License: GPL2
@@ -89,7 +89,7 @@ final class CodesWholesale
      *
      * @var string
      */
-    private $version = "2.0";
+    private $version = "2.5.4";
 
     /**
      * @var array
@@ -345,7 +345,7 @@ final class CodesWholesale
                 'environment' => $options['environment'],
                 'client_id' => empty($options['api_client_id']) ? '0' : $options['api_client_id'] ,
                 'client_secret' => empty($options['api_client_secret']) ? '0' : $options['api_client_secret'],
-                'client_headers' => 'Codeswholesale-WooCommerce/2.4.4',
+                'client_headers' => 'Codeswholesale-WooCommerce/' . $this->version,
                 'db' => new PDO('mysql:host=' . $wpdb->dbhost . ';dbname=' . $wpdb->dbname, $wpdb->dbuser, $wpdb->dbpassword),
                 'prefix' => sprintf('%s%s', $wpdb->prefix, \CodesWholesaleFramework\Database\Interfaces\RepositoryInterface::CW_PREFIX),
                 'signature' => empty($options['api_client_singature']) ? CodesWholesaleConst::TEST_SIGNATURE : $options['api_client_singature']
