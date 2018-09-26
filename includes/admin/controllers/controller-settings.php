@@ -313,7 +313,7 @@ if (!class_exists('CW_Controller_Settings')) :
         public function render_options_text($args = array())
         {
             printf(
-                '<input type="text" id="%s" name="cw_options[%s]" value="%s" /><p class="description cst-desc">%s</p>',
+                '<input type="text" id="%s" name="cw_options[%s]" value="%s" pattern="[^\s]+" title="White spaces are not allowed, please double check the values." /><p class="description cst-desc">%s</p>',
                 $args['name'],
                 $args['name'],
                 $args['options'][$args['name']],
