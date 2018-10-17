@@ -1,5 +1,5 @@
 
-<table class="cw-table cw-iph-table">
+<table class="cw-table cw-piph-table">
 <thead>
     <tr>
         <th><?php _e('Import details', 'woocommerce'); ?></th>
@@ -10,7 +10,7 @@
     </tr>
 </thead>
 <tbody>
-    <?php /** @var $item \CodesWholesaleFramework\Database\Models\ImportPropertyModel */ ?>
+    <?php /** @var $item \CodesWholesaleFramework\Database\Models\PostbackImportModel */ ?>
     <?php foreach ($this->import_history as $item) : ?>
         <tr id="import_row<?php echo $item->getId(); ?>">
             <td>
@@ -18,6 +18,10 @@
                     <tr>
                         <th class="codeswholesale_no_vertical_padding codeswholesale_no_wrap"><?php _e('Import ID: ', 'woocommerce'); ?></th>
                         <td class="codeswholesale_no_vertical_padding codeswholesale_no_wrap"><?php echo $item->getId(); ?></td>
+                    </tr>
+                    <tr>
+                        <th class="codeswholesale_no_vertical_padding codeswholesale_no_wrap"><?php _e('CodesWholesale ID: ', 'woocommerce'); ?></th>
+                        <td class="codeswholesale_no_vertical_padding codeswholesale_no_wrap"><?php echo $item->getExternalId(); ?></td>
                     </tr>
                     <tr>
                         <th class="codeswholesale_no_vertical_padding codeswholesale_no_wrap"><?php _e('Status: ', 'woocommerce'); ?></th>
@@ -42,9 +46,13 @@
             </td>
             <td>
                 <table>
+<!--                    <tr>
+                        <th class="codeswholesale_no_vertical_padding codeswholesale_no_wrap"><?php // _e('Total: ', 'woocommerce'); ?></th>
+                        <td class="codeswholesale_no_vertical_padding"><?php // $item->getTotalCount(); ?></td>
+                    </tr>-->
                     <tr>
-                        <th class="codeswholesale_no_vertical_padding codeswholesale_no_wrap"><?php _e('Total: ', 'woocommerce'); ?></th>
-                        <td class="codeswholesale_no_vertical_padding"><?php echo $item->getDoneCount() . '/' . $item->getTotalCount(); ?></td>
+                        <th class="codeswholesale_no_vertical_padding codeswholesale_no_wrap"><?php _e('Handled: ', 'woocommerce'); ?></th>
+                        <td class="codeswholesale_no_vertical_padding"><?php echo $item->getDoneCount(); ?></td>
                     </tr>
                     <tr>
                         <th class="codeswholesale_no_vertical_padding codeswholesale_no_wrap"><?php _e('Created: ', 'woocommerce'); ?></th>
@@ -81,13 +89,21 @@
             </td>
             <td>
                 <div>
-                    <span>
-                        <a class="cw-btn cw-btn-md cw-btn-success"  href="<?php echo FileManager::getImportFileUrl($item->getId()) ?>" download><?php _e('Get details', 'woocommerce'); ?></a>
-                    </span>
 
-                    <span class="trash"> 
-                        <a class="cw_import_remove_action cw-btn cw-btn-md cw-btn-success" data-id="<?php echo $item->getId(); ?>" href="#"><?php _e('Remove', 'woocommerce'); ?></a>
-                    </span>
+                    <?php if($this->import_in_progress && $this->active_import->getId() === $item->getId()):?>
+                        <span> 
+                            <a class="cw_import_cancel_action cw-btn cw-btn-md cw-btn-success" data-id="<?php echo $item->getId(); ?>" href="#"><?php _e('Cancel', 'woocommerce'); ?></a>
+                        </span>
+                    <?php else:?>
+                        <span>
+                            <a class="cw-btn cw-btn-md cw-btn-success"  href="<?php  echo $this->getImportDetailsReport($item->getId()); ?>" download><?php _e('Get details', 'woocommerce'); ?></a>
+                        </span>
+                        <span class="trash"> 
+                            <a class="cw_import_remove_action cw-btn cw-btn-md cw-btn-success" data-id="<?php echo $item->getId(); ?>" href="#"><?php _e('Remove', 'woocommerce'); ?></a>
+                        </span>
+                    <?php endif;?>
+
+
                 </div>
             </td>
         </tr>
@@ -103,12 +119,11 @@ $(document).ready(function () {
         var id = $(this).data('id');
 
         $.post(ajaxurl, {
-            'action': 'remove_import_details_async',
+            'action': '<?php echo $this->getAjaxFunctionNameToRemoveHistory(); ?>',
             'id': id
         }, function(response) {
             var res = $.parseJSON(response);
 
-            console.log(res);
             if(res.status) {
                 $('#import_row'+id).remove();
             } else {
@@ -117,6 +132,14 @@ $(document).ready(function () {
         });
 
         return false;
+    });
+    
+    $('.cw_import_cancel_action').click(function() {         
+        $.post(ajaxurl, {
+            'action': '<?php echo $this->getAjaxFunctionNameToCancelImport(); ?>',
+        }, function(response) {
+           location.reload();
+        });
     });
 
 

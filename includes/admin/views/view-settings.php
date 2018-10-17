@@ -64,7 +64,7 @@
                             
                             try {
                                 if($this->isChangedPriceSettings()) {
-                                    ExecManager::exec(ExecManager::getPhpPath(), 'update-products-price.php');
+                                    ExecManager::startUpdateProductPrice();
                                     echo '<div class="updated inline"><p>' . __( 'Your products price have been updated.', 'codeswholesale-for-woocommerce' ) . '</p></div>';
                                 }
                               } catch (Exception $ex) {

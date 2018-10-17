@@ -28,6 +28,19 @@ class WP_DbManager implements \CodesWholesaleFramework\Database\Interfaces\DbMan
     }
 
     /**
+     * 
+     * @param string $sql
+     * @return bool
+     */
+    public function  sql(string $sql): bool
+    {
+        $result = $this->db->query($sql);
+
+        return false === $result ? false : true;
+    }
+
+    
+    /**
      * @param string $table
      * @return bool
      */
