@@ -122,6 +122,11 @@ if($this->import_in_progress) {
 
 <div id="afterStartImport" style="<?php echo $afterStartImportStyle ?>">
     <div class="content"><?php _e("The import is in progress", "woocommerce") ?></div>
+    
+    <?php if($this->getAjaxFunctionNameToCancelImport()):  ?>
+        <br>
+        <button id="cancelImport" type="button" class="cw-btn cw-btn-success"><?php _e("Cancel") ?></button>
+    <?php endif;  ?>
 </div>
 
 
@@ -130,6 +135,8 @@ if($this->import_in_progress) {
 
     $(document).ready(function () {
         toggleFilters();
+        
+        startImportObserver(<?php $this->import_in_progress ?>);
 
         $('input[name="import_products_type"]').change(function() {
             toggleFilters();
@@ -144,7 +151,7 @@ if($this->import_in_progress) {
             var filters = {
                 'platform' : [],
                 'region' : [],
-                'language' : [],
+                'language' : []
             };
             
             $('input:checkbox[name="cwh_import_propery_platform"]:checked').each(function(){
@@ -160,7 +167,7 @@ if($this->import_in_progress) {
             });     
             
             $.post(ajaxurl, {
-                'action': 'import_products_async',
+                'action': '<?php echo $this->getAjaxFunctionNameToStartImport(); ?>',
                 'type': type,
                 'filters': filters,
                 'in_stock_days_ago': inStockDaysAgo
@@ -172,12 +179,21 @@ if($this->import_in_progress) {
                 } else {
                     $('#afterStartImport .content').html('<div class="error inline"><p class="warning">'+res.message+'</p><div>');
                 }
+                startImportObserver(true);
+                
                 handleStopImporting();
-
             });
             return false;
         });
 
+        $('#cancelImport').click(function() {         
+            $.post(ajaxurl, {
+                'action': '<?php echo $this->getAjaxFunctionNameToCancelImport(); ?>',
+            }, function(response) {
+               location.reload();
+            });
+        });
+        
         function toggleFilters() {
             if($('input#import_type_by_filter').is(':checked')) {
                 $('#import_filters').show();
@@ -197,5 +213,22 @@ if($this->import_in_progress) {
             $('#preparingImport').hide();
             $('#afterStartImport').show();
         }
+        
+        function startImportObserver(inProgress) {
+            if(inProgress) {
+                var obInterval = setInterval(() => { 
+                $.post(ajaxurl, {
+                    'action': '<?php echo $this->getAjaxFunctionNameToCheckImportStatus(); ?>'
+                }, function(response) {
+                        var res = $.parseJSON(response);
+
+                        if(! res.inProgress) {
+                            clearInterval(obInterval);
+                            location.reload();    
+                        }
+                    });
+                }, 3000);
+            }
+        } 
     });
 </script>

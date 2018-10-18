@@ -261,11 +261,18 @@ if (!class_exists('CW_Controller_Settings')) :
             }
         }
 
-		public function clearSettingsSession() {
+        public function detectedChangeEnvironment() {
+            $options = $this->get_options();
+            $sessionOptions = $_SESSION['cw_options'];
+
+            return $sessionOptions['environment'] !== $options['environment'];
+        }
+
+        public function clearSettingsSession() {
             unset($_SESSION['cw_options']);
         }
 		
-		public function isChangedPriceSettings() {
+        public function isChangedPriceSettings() {
             $options        = $this->get_options();
             $sessionOptions = $_SESSION['cw_options'];
             $changed        = false;

@@ -43,7 +43,7 @@ class UpdateProductsPrice
             foreach ($posts as $post) {
                 $stock_price = get_post_meta($post->ID, CodesWholesaleConst::PRODUCT_STOCK_PRICE_PROP_NAME, true);
 
-                $wpProductUpdater->updateRegularPrice($post->ID, $stock_price);
+                $wpProductUpdater->updateProduct->updateRegularPrice($post->ID, $stock_price);
             }
         }
     }

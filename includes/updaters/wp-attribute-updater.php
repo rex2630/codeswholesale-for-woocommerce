@@ -51,13 +51,12 @@ class WP_Attribute_Updater
         }
     }
     
-    public function localAttributes(Product $product) {
+    public function localAttributes($extensionPacks, $eanCodes, $releases) {
         $attributes = [];
         
-        $attributes['Extension packs'] = $product->getProductDescription()->getExtensionPacks();
-        $attributes['Eans'] =  $product->getProductDescription()->getEanCodes();
-        
-        $releases = $product->getProductDescription()->getReleases();
+        $attributes['Extension packs'] = $extensionPacks;
+        $attributes['Eans'] =  $eanCodes;
+
          if($releases) {
             $attributes['Releases'] = [];
                 
@@ -68,13 +67,10 @@ class WP_Attribute_Updater
         
         return $attributes;
     }
-    
-    public function globalAttributes(Product $product) {
+    public function globalAttributes($platform, $regions, $languages) {
         $attributes = [];
 
-        $attributes[WP_Attribute_Updater::getSlug(WP_Attribute_Updater::ATTR_PLATFORM)] = $product->getPlatform();
-        
-        $regions =  $product->getRegions();
+        $attributes[WP_Attribute_Updater::getSlug(WP_Attribute_Updater::ATTR_PLATFORM)] = $platform;
         
         if($regions) {
             $attributes[WP_Attribute_Updater::getSlug(WP_Attribute_Updater::ATTR_REGION)] = [];
@@ -83,8 +79,6 @@ class WP_Attribute_Updater
                 $attributes[WP_Attribute_Updater::getSlug(WP_Attribute_Updater::ATTR_REGION)][] = $reg;
             }
         }
-        
-        $languages =  $product->getLanguages();
 
         if($languages) {
             $attributes[WP_Attribute_Updater::getSlug(WP_Attribute_Updater::ATTR_LANGUAGE)] = [];
@@ -94,7 +88,7 @@ class WP_Attribute_Updater
             }
         }
         
-        return $attributes;
+        return $attributes;  
     }
     
     public static function getInternalProductAttributes($post, $type) {

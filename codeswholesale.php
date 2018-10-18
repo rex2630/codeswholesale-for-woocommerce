@@ -166,6 +166,8 @@ final class CodesWholesale
             new \CodesWholesaleFramework\Database\Repositories\RefreshTokenRepository($db),
             new \CodesWholesaleFramework\Database\Repositories\CodeswholesaleProductRepository($db),
             new \CodesWholesaleFramework\Database\Repositories\CurrencyControlRepository($db),
+            new \CodesWholesaleFramework\Database\Repositories\PostbackImportRepository($db),
+            new \CodesWholesaleFramework\Database\Repositories\PostbackImportDetailsRepository($db),
         ];
     }
     
@@ -237,11 +239,17 @@ final class CodesWholesale
         //Exporters
         include_once('includes/exporters/wp-database-exporter.php');
 
+        //Imports
+        include_once('includes/import/postback-impot-products.php');
+        
         //Updaters
         include_once('includes/updaters/wp-attachment-updater.php');
         include_once('includes/updaters/wp-attribute-updater.php');
         include_once('includes/updaters/wp-category-updater.php');
         include_once('includes/updaters/wp-product-updater.php');
+        
+        include_once('includes/updaters/product/create-internal-product.php');
+        include_once('includes/updaters/product/update-internal-product.php');
         
         // Retrievers
         include_once('includes/retrievers/wp-links-retriever.php');

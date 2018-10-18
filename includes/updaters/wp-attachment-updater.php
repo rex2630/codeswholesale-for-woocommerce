@@ -8,7 +8,11 @@ class WP_Attachment_Updater
         $http = new WP_Http();
         $photo = $http->request($url); 
 
-        $attachment = wp_upload_bits( wc_clean($name).'.jpg', null, $photo['body'], date("Y-m", strtotime( $photo['headers']['last-modified'] ) ) );
+        if( is_wp_error( $photo )) {
+            throw new \Exception($photo->get_error_message());
+        }
+                
+        $attachment = wp_upload_bits( wc_clean($name), null, $photo['body'], date("Y-m", strtotime( $photo['headers']['last-modified'] ) ) );
 
         $filetype = wp_check_filetype( basename( $attachment['file'] ), null );
 

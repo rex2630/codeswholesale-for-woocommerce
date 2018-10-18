@@ -1,8 +1,10 @@
 <?php
 
-use CodesWholesaleFramework\Postback\UpdateProduct\UpdateProductInterface;
-use CodesWholesaleFramework\Model\ExternalProduct;
 use CodesWholesale\Resource\Product;
+use CodesWholesale\Resource\FullProduct;
+use CodesWholesaleFramework\Model\ProductModel;
+use CodesWholesaleFramework\Factories\ProductModelFactory;
+use CodesWholesaleFramework\Postback\UpdateProduct\UpdateProductInterface;
 
 /**
  * Class WP_Update_Products
@@ -25,20 +27,20 @@ class WP_Update_Products implements UpdateProductInterface
         $wpProductUpdater = WP_Product_Updater::getInstance();
         $posts = CW()->get_related_wp_products($cwProductId);
 
-        if ($posts) {
-
-            try {
-                foreach ($posts as $post) {
-                    $wpProductUpdater->updateStockPrice($post->ID, $priceSpread);
-                    $wpProductUpdater->updateRegularPrice($post->ID, $priceSpread);
-                    $wpProductUpdater->updateStock($post->ID, $quantity);
-                }
-            } catch (\CodesWholesale\Resource\ResourceError $e) {
-                die("Received product id: " . $cwProductId . " Error: " . $e->getMessage());
-            } catch (\Exception $e) {
-                die("Received product id: " . $cwProductId . " Error: " . $e->getMessage());
+        if (!$posts) {
+            return;
+        }
+        
+        try {
+            foreach ($posts as $post) {
+                $wpProductUpdater->updateProduct->updateStockPrice($post->ID, $priceSpread);
+                $wpProductUpdater->updateProduct->updateRegularPrice($post->ID, $priceSpread);
+                $wpProductUpdater->updateProduct->updateStock($post->ID, $quantity);
             }
-
+        } catch (\CodesWholesale\Resource\ResourceError $e) {
+            die("Received product id: " . $cwProductId . " Error: " . $e->getMessage());
+        } catch (\Exception $e) {
+            die("Received product id: " . $cwProductId . " Error: " . $e->getMessage());
         }
     }
 
@@ -49,7 +51,6 @@ class WP_Update_Products implements UpdateProductInterface
      */
     public function hideProduct($cwProductId)
     {
-
         if (1 == CW()->get_options()[CodesWholesaleConst::HIDE_PRODUCT_WHEN_DISABLED_OPTION_NAME]) {
             $posts = CW()->get_related_wp_products($cwProductId);
 
@@ -71,42 +72,51 @@ class WP_Update_Products implements UpdateProductInterface
         if (1 == CW()->get_options()[CodesWholesaleConst::AUTOMATICALLY_IMPORT_NEWLY_PRODUCT_OPTION_NAME]) {
             $product = Product::get($cwProductId);
 
-            $externalProduct = (new ExternalProduct())
-                ->setProduct($product)
-                ->updateInformations(CW()->get_options()[CodesWholesaleConst::PREFERRED_LANGUAGE_FOR_PRODUCT_OPTION_NAME])
-            ;
+            $producModel = ProductModelFactory::resolveProduct($product, CW()->get_options()[CodesWholesaleConst::PREFERRED_LANGUAGE_FOR_PRODUCT_OPTION_NAME]);
 
-            $relatedInternalProducts = CW()->get_related_wp_products($externalProduct->getProduct()->getProductId());
+            $relatedInternalProducts = CW()->get_related_wp_products($producModel->getProductId());
                         
             if (0 === count($relatedInternalProducts)) {
-                $this->createWooProduct($externalProduct);
+                $this->createWooProduct($producModel);
             } elseif (0 < count($relatedInternalProducts)) {
-                $this->updateWooProducts($externalProduct, $relatedInternalProducts);
+                $this->updateWooProducts($producModel, $relatedInternalProducts);
             }
         }
     }
-
+    
     /**
-     * @param ExternalProduct $externalProduct
+     * 
+     * @param FullProduct[]
      */
-    private function createWooProduct(ExternalProduct $externalProduct)
-    {
+    public function fullProducts(array $fullProducts) {
         try {
-            WP_Product_Updater::getInstance()->createWooCommerceProduct($this->getFirstAdminId(), $externalProduct);
+            (new PostbackImportProduct())->execute($fullProducts);
         } catch (\Exception $ex) {
-            die("Received product id: " . $externalProduct->getProduct()->getProductId() . " Error: " . $ex->getMessage());
+            die("Postback import error: " . $ex->getMessage());
         }
     }
 
     /**
-     * @param ExternalProduct $externalProduct
+     * @param ProductModel $producModel
+     */
+    private function createWooProduct(ProductModel $producModel)
+    {
+        try {
+            WP_Product_Updater::getInstance()->createProduct->create($producModel, $this->getFirstAdminId());
+        } catch (\Exception $ex) {
+            die("Received product id: " . $producModel->getProductId() . " Error: " . $ex->getMessage());
+        }
+    }
+
+    /**
+     * @param ProductModel $producModel
      * @param $relatedInternalProducts
      */
-    private function updateWooProducts(ExternalProduct $externalProduct, $relatedInternalProducts)
+    private function updateWooProducts(ProductModel $producModel, $relatedInternalProducts)
     {
         try {
             foreach ($relatedInternalProducts as $post) {
-                WP_Product_Updater::getInstance()->updateWooCommerceProduct($post->ID, $externalProduct);
+                WP_Product_Updater::getInstance()->updateProduct->update($producModel, $post->ID);
             }
         } catch (\Exception $ex) {
         }

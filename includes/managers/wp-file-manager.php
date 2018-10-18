@@ -64,6 +64,17 @@ class FileManager
         return self::getImportPath() . $id . '-import.csv';        
     }
 
+    /**
+     * 
+     * @param type $id
+     * @return bool
+     */
+    public static function importFileExist($id): bool
+    {
+        $filename = self::getImportPath() . $id . '-import.csv';
+        
+        return file_exists($filename);      
+    }
 
     /**
      * @param $id
