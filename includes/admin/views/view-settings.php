@@ -58,10 +58,14 @@
                 <form id="cw-main-settings" class="cw-form" action="options.php" method="POST">
                     <?php
                         if ( isset( $_REQUEST['settings-updated'] ) ) {
-                            $this->checkEnvironment();
+                           $this->checkEnvironment();
 
                             echo '<div class="updated inline"><p>' . __( 'Your changes have been saved.', 'codeswholesale-for-woocommerce' ) . '</p></div>';
-                            
+
+                            if ( $this->detectedChangeEnvironment()) {
+                              echo '<div class="error inline"><p>' . __( "We've detected change of your environment - please set the product description language again.", 'codeswholesale-for-woocommerce' ) . '</p></div>';
+                            }
+
                             try {
                                 if($this->isChangedPriceSettings()) {
                                     ExecManager::startUpdateProductPrice();
