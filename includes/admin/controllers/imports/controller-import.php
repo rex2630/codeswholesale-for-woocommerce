@@ -91,7 +91,7 @@ abstract class CW_Controller_Import extends CW_Controller
         $result =  new stdClass();
 
         try {
-            WP_ConfigurationChecker::checkPhpVersion();
+            // WP_ConfigurationChecker::checkPhpVersion();
             // WP_ConfigurationChecker::checkDbConnection();
 
             (new WP_Attribute_Updater())->init(); 
