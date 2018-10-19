@@ -92,7 +92,7 @@ abstract class CW_Controller_Import extends CW_Controller
 
         try {
             WP_ConfigurationChecker::checkPhpVersion();
-            WP_ConfigurationChecker::checkDbConnection();
+            // WP_ConfigurationChecker::checkDbConnection();
 
             (new WP_Attribute_Updater())->init(); 
             
