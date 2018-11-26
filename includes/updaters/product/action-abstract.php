@@ -96,8 +96,6 @@ abstract class CW_Product_Action_Abstract
         $product_calculate_price_method = $this->get_custom_field($post_id, CodesWholesaleConst::PRODUCT_CALCULATE_PRICE_METHOD_PROP_NAME, 0);
         $backordes = $this->get_custom_field($post_id, '_backorders', 0);
 
-
-
         if ($product_calculate_price_method != 2) {
             update_post_meta( $post_id, '_stock', $quantity);
         
