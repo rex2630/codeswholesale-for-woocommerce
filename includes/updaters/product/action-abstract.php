@@ -94,22 +94,25 @@ abstract class CW_Product_Action_Abstract
     public function updateStock($post_id, $quantity)
     {        
         $product_calculate_price_method = $this->get_custom_field($post_id, CodesWholesaleConst::PRODUCT_CALCULATE_PRICE_METHOD_PROP_NAME, 0);
-        $backordes = $this->get_custom_field($post_id, '_backorders', 0);
-
-        if ($product_calculate_price_method != 2) {
-            update_post_meta( $post_id, '_stock', $quantity);
         
-            if( $backordes &&  $backordes === 'yes') {
+        if ($product_calculate_price_method === 2) {
+            return;   
+        }
+        
+        update_post_meta( $post_id, '_stock', $quantity);
+
+        if ($quantity == 0) {
+            $backordes = $this->get_custom_field($post_id, '_backorders', 0);
+            $stockStatus = $this->get_custom_field($post_id, '_stock_status', 0);
+            
+            if ($backordes &&  $backordes === 'yes' && $stockStatus !== 'instock') {
                 return;
             }
-        
-            if ($quantity == 0) {
-                update_post_meta( $post_id, '_stock_status', 'outofstock');
 
-            } else {
-                update_post_meta( $post_id, '_stock_status', 'instock');
-            } 
-        }
+            update_post_meta( $post_id, '_stock_status', 'outofstock');
+        } else {
+            update_post_meta( $post_id, '_stock_status', 'instock');
+        } 
     }
     
     /**
