@@ -94,17 +94,25 @@ abstract class CW_Product_Action_Abstract
     public function updateStock($post_id, $quantity)
     {        
         $product_calculate_price_method = $this->get_custom_field($post_id, CodesWholesaleConst::PRODUCT_CALCULATE_PRICE_METHOD_PROP_NAME, 0);
-       
-        if ($product_calculate_price_method != 2) {
-            update_post_meta( $post_id, '_stock', $quantity);
         
-            if ($quantity == 0) {
-                update_post_meta( $post_id, '_stock_status', 'outofstock');
-
-            } else {
-                update_post_meta( $post_id, '_stock_status', 'instock');
-            } 
+        if ($product_calculate_price_method === 2) {
+            return;   
         }
+        
+        update_post_meta( $post_id, '_stock', $quantity);
+
+        if ($quantity == 0) {
+            $backordes = $this->get_custom_field($post_id, '_backorders', 0);
+            $stockStatus = $this->get_custom_field($post_id, '_stock_status', 0);
+            
+            if ($backordes &&  $backordes === 'yes' && $stockStatus !== 'instock') {
+                return;
+            }
+
+            update_post_meta( $post_id, '_stock_status', 'outofstock');
+        } else {
+            update_post_meta( $post_id, '_stock_status', 'instock');
+        } 
     }
     
     /**
@@ -306,10 +314,15 @@ abstract class CW_Product_Action_Abstract
      */
     protected function updateProductOptions(ProductModel $productModel, $post_id) 
     {
+        $backordes = $this->get_custom_field($post_id, '_backorders', 0);
+        
         update_post_meta( $post_id, '_virtual', 'yes' );
         update_post_meta( $post_id, '_manage_stock', "yes" );
         update_post_meta( $post_id, '_sku', $productModel->getIdentifier());
-        update_post_meta( $post_id, '_backorders', "no" );
+        
+        if(!$backordes) {
+            update_post_meta( $post_id, '_backorders', "no" );
+        }
         
         $this->updateStockPrice($post_id, $productModel->getPrice());
         $this->updateRegularPrice($post_id, $productModel->getPrice());
