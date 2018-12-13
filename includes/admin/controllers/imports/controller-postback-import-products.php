@@ -60,15 +60,11 @@ if (!class_exists('CW_Controller_Postback_Import_products')) :
         public function getActive() {
             try {
                 $this->active_import = $this->import_repository->findActive();
-
                 $import = PostbackImport::history($this->active_import->getExternalId());
 
-                if($this->active_import->getStatus() != $import->getImportStatus()) {
-                    $this->active_import->setStatus($import->getImportStatus());
+                $this->active_import->setStatus($import->getImportStatus());
+                $this->import_repository->updateStatusInformation($this->active_import->getId(), $import);
 
-                    $this->import_repository->updateStatusInformation($this->active_import->getId(), $import);
-                    $this->getActive();
-                }  
             } catch (\Exception $ex) {
                 $this->active_import = null;
                 $this->import_in_progress = false;
