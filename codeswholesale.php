@@ -270,6 +270,10 @@ final class CodesWholesale
         
         //E-mails
         include_once('includes/emails/class-cw-emails.php');
+
+        // Cron Job
+        include_once( 'includes/abstracts/class-cw-cron-job.php');
+        include_once( 'includes/class-cw-cron-update-stock.php');
         
         if (is_admin()) {
             include_once('includes/admin/class-cw-admin.php');
