@@ -1,6 +1,6 @@
 <?php
 use CodesWholesale\Resource\ImageType;
-use CodesWholesaleFramework\Postback\UpdatePriceAndStock\SpreadCalculator;
+use CodesWholesale\Resource\StockAndPriceChange;
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
@@ -8,20 +8,14 @@ if (!class_exists('CW_Update_Stock')) :
 
     class CW_Cron_Update_Stock extends CW_Cron_Job
     {
-        private $spreadParams;
-
-        private $spreadCalculator;
         
         /**
          *
          */
-        public function __construct($spreadParams)
+        public function __construct()
         {
             parent::__construct("codeswholesale_update_stock_action");
             
-            $this->spreadParams = $spreadParams;
-
-            $this->spreadCalculator = new SpreadCalculator();
         }
 
         /**
@@ -33,24 +27,20 @@ if (!class_exists('CW_Update_Stock')) :
 
             $cw_products = CW()->get_codes_wholesale_client()->getProducts();
 			
-			$cw_products_names_array = array();
-			
 			foreach ($cw_products as $cw_product) {
-				$cw_products_names_array[] =  htmlspecialchars_decode($cw_product->getIdentifier());
-			}
-			
-			sort($cw_products_names_array);
-			sort(get_woocommerce_product_list());
-			
-			$cw_products_not_set = array_diff($cw_products_names_array, get_woocommerce_product_list());
-			$cw_products_no_more = array_diff(get_woocommerce_product_list(), $cw_products_names_array);
-			
-			//print_r(array_diff(get_woocommerce_product_list(), $cw_products_names_array));
-			//print_r(array_diff($cw_products_names_array, get_woocommerce_product_list()));
-			//print_r(get_woocommerce_product_list()) . "\n";
-			
-			foreach ($cw_products as $cw_product) {
-				if (in_array(htmlspecialchars_decode($cw_product->getIdentifier()), $cw_products_not_set)) {
+				$args = get_posts(array(
+					'post_type' => 'product',
+					'meta_query' => array(
+						array(
+							'key' => CodesWholesaleConst::PRODUCT_CODESWHOLESALE_ID_PROP_NAME,
+							'value' => $cw_product->getProductId(),
+							'compare' => '='
+						)
+					),
+					'numberposts' => -1
+				));
+
+				if (count($args) == 0) {
 					echo "Adding Product... \n";
 					echo $cw_product->getName() . "\n";
 					$post = array(
@@ -97,6 +87,9 @@ if (!class_exists('CW_Update_Stock')) :
 					update_post_meta( $post_id, '_download_expiry', '');
 					update_post_meta( $post_id, '_download_type', '');
 					update_post_meta( $post_id, '_product_image_gallery', '');
+				} else {
+					echo "Product allready in DB... \n";
+					echo $cw_product->getName() . "\n";
 				}
 			
 				/*if (in_array( $cw_product->getIdentifier(), $cw_products_no_more )) {
@@ -131,7 +124,9 @@ if (!class_exists('CW_Update_Stock')) :
                     
                     $price = $cw_product->getDefaultPrice();
                     
-                    $priceSpread = $this->spreadCalculator->calculateSpread($this->spreadParams->getSpreadParams(), $price);
+					// $priceSpread = $this->spreadCalculator->calculateSpread($this->spreadParams->getSpreadParams(), $price);
+					
+					$priceSpread = $cw_product->getPrice();
                     
                     $product_spread_type =  get_post_meta($post_product->ID, "_codeswholesale_product_spread_type", true);
 					
@@ -321,4 +316,4 @@ if (!class_exists('CW_Update_Stock')) :
 
 endif;
 
-new CW_Cron_Update_Stock(new WP_Spread_Retriever());
+new CW_Cron_Update_Stock();

@@ -7,6 +7,8 @@ Stable tag: 2.5.4
 License: Apache License Version 2.0, January 2004
 License URI: http://www.apache.org/licenses/
 
+<img style="max-width: 100%;" src="https://i.ibb.co/7nzRMtT/8Y90G77.png" data-canonical-src="https://i.ibb.co/7nzRMtT/8Y90G77.png" />
+
 CodesWholesale.com integration plugin for WooCommerce.
 
 == Description ==
