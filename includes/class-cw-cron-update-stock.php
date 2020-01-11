@@ -139,38 +139,6 @@ if (!class_exists('CW_Update_Stock')) :
 					update_post_meta( $post_id, '_codeswholesale_product_spread_type', "0" );
 					update_post_meta( $post_id, '_codeswholesale_product_is_in_sale', "0" );
 
-					$cw_format_date = strtotime(str_replace( array('T',':00.000Z'), ' ', $cw_product->getReleaseDate() )); 
-					update_post_meta( $post_id, "_wc_pre_orders_availability_datetime", $cw_format_date );
-					$availability_timestamp_in_utc = (int) get_post_meta( $post_id, "_wc_pre_orders_availability_datetime", true );
-
-					// if the availability date has passed
-					if ( $availability_timestamp_in_utc > strtotime("now") ) {
-							update_post_meta($post_id, "_wc_pre_orders_enabled", "yes");
-							update_post_meta($post_id, "_wc_pre_orders_when_to_charge", "upfront");
-							if ($cw_product->getStockQuantity() == 0) {
-								update_post_meta( $post_id, "_stock_status", "instock");
-								update_post_meta( $post_id, "_backorders", "notify");								
-							}
-							wp_update_post(
-								array (
-									'ID'            => $post_id, // ID of the post to update
-									'post_status' 	=> "publish",
-									'post_date'     => date("Y-m-d h:i:sa", strtotime("now")),
-									'post_date_gmt' => get_gmt_from_date( date("Y-m-d h:i:sa", strtotime("now")) )
-								)
-							);
-					} else {
-							update_post_meta($post_id, "_wc_pre_orders_enabled", "no");
-							update_post_meta($post_id, "_wc_pre_orders_when_to_charge", "");
-							update_post_meta( $post_id, "_backorders", "no");	
-							if ($cw_product->getStockQuantity() == 0) {
-								update_post_meta($post_id, "_stock_status", "outofstock");
-								update_post_meta($post_id, "_stock", esc_attr(0));
-							}
-					}
-
-					echo $cw_product->getReleaseDate() . "\n";
-
 				} else {
 					echo "Updateing Product... \n";
 				}
@@ -213,24 +181,6 @@ if (!class_exists('CW_Update_Stock')) :
 				
 				}
 
-				if ( $cw_product->getReleaseDate() == '' ) {
-					wp_update_post(
-						array (
-							'ID'            => $post_product->ID, // ID of the post to update
-							'post_date'     => "1950-01-01T00:00:00.000Z",
-							'post_date_gmt' => get_gmt_from_date( "1950-01-01T00:00:00.000Z" )
-						)
-					);
-				} else {
-					wp_update_post(
-						array (
-							'ID'            => $post_product->ID, // ID of the post to update
-							'post_date'     => $cw_product->getReleaseDate(),
-							'post_date_gmt' => get_gmt_from_date( $cw_product->getReleaseDate() )
-						)
-					);
-				}
-
 				$cw_format_date = strtotime(str_replace( array('T',':00.000Z'), ' ', $cw_product->getReleaseDate() )); 
 				update_post_meta( $post_product->ID, "_wc_pre_orders_availability_datetime", $cw_format_date );
 				$availability_timestamp_in_utc = (int) get_post_meta( $post_product->ID, "_wc_pre_orders_availability_datetime", true );
@@ -259,14 +209,25 @@ if (!class_exists('CW_Update_Stock')) :
 						update_post_meta($post_product->ID, "_stock_status", "outofstock");
 						update_post_meta($post_product->ID, "_stock", esc_attr(0));
 					}
-					wp_update_post(
-						array (
-							'ID'            => $post_product->ID, // ID of the post to update
-							'post_status' 	=> "publish",
-							'post_date'     => $cw_product->getReleaseDate(),
-							'post_date_gmt' => get_gmt_from_date( $cw_product->getReleaseDate() )
-						)
-					);
+					if ( $cw_product->getReleaseDate() == '' ) {
+						wp_update_post(
+							array (
+								'ID'            => $post_product->ID, // ID of the post to update
+								'post_status' 	=> "publish",
+								'post_date'     => "1950-01-01T00:00:00.000Z",
+								'post_date_gmt' => get_gmt_from_date( "1950-01-01T00:00:00.000Z" )
+							)
+						);
+					} else {
+						wp_update_post(
+							array (
+								'ID'            => $post_product->ID, // ID of the post to update
+								'post_status' 	=> "publish",
+								'post_date'     => $cw_product->getReleaseDate(),
+								'post_date_gmt' => get_gmt_from_date( $cw_product->getReleaseDate() )
+							)
+						);
+					}
 				}
 
 			}
