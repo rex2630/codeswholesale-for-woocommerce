@@ -3,7 +3,7 @@
 class WP_Admin_Notify_Import_Finished
 {
 
-    public function sendMail($attachments, $import)
+    public function sendMail($attachments, \CodesWholesaleFramework\Database\Models\ImportPropertyModel $import)
     {
         WC()->mailer()->emails["CW_Email_Notify_Import_Finished"] = include(CW()->plugin_path() . "/includes/emails/class/class-cw-email-notify-import-finished.php");
 

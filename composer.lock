@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "e5772b8acfe21d312745a160846925d5",
@@ -12,16 +12,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/codeswholesale/codeswholesale-extension-framework.git",
-                "reference": "129ca5f686bb69b389a8d45d1eab2c3aacb5b7bb"
+                "reference": "bfd42008feebdcdd28fc1507d09afce645666d13"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codeswholesale/codeswholesale-extension-framework/zipball/129ca5f686bb69b389a8d45d1eab2c3aacb5b7bb",
-                "reference": "129ca5f686bb69b389a8d45d1eab2c3aacb5b7bb",
+                "url": "https://api.github.com/repos/codeswholesale/codeswholesale-extension-framework/zipball/bfd42008feebdcdd28fc1507d09afce645666d13",
+                "reference": "bfd42008feebdcdd28fc1507d09afce645666d13",
                 "shasum": ""
             },
             "require": {
-                "codeswholesale/sdk": "2.1.8",
+                "codeswholesale/sdk": "2.1.5",
                 "php": ">=7.0.0"
             },
             "require-dev": {
@@ -54,24 +54,24 @@
                 "games",
                 "plugin"
             ],
-            "time": "2018-09-01T07:04:31+00:00"
+            "time": "2018-08-24T13:05:54+00:00"
         },
         {
             "name": "codeswholesale/sdk",
-            "version": "2.1.8",
+            "version": "2.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/codeswholesale/codeswholesale-sdk-php.git",
-                "reference": "6a3901eb22e8baa5c5d71c39dde85d79689271bb"
+                "reference": "55833a7669552344a77ba54e44433bd203f9eac5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codeswholesale/codeswholesale-sdk-php/zipball/6a3901eb22e8baa5c5d71c39dde85d79689271bb",
-                "reference": "6a3901eb22e8baa5c5d71c39dde85d79689271bb",
+                "url": "https://api.github.com/repos/codeswholesale/codeswholesale-sdk-php/zipball/55833a7669552344a77ba54e44433bd203f9eac5",
+                "reference": "55833a7669552344a77ba54e44433bd203f9eac5",
                 "shasum": ""
             },
             "require": {
-                "guzzlehttp/guzzle": "^6.3",
+                "guzzlehttp/guzzle": "6.3.0",
                 "php": ">=7.0.0",
                 "sainsburys/guzzle-oauth2-plugin": "^3.0"
             },
@@ -105,7 +105,7 @@
                 "games",
                 "security"
             ],
-            "time": "2018-08-31T07:51:53+00:00"
+            "time": "2018-04-27T14:18:15+00:00"
         },
         {
             "name": "firebase/php-jwt",
@@ -155,16 +155,16 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "dev-master",
+            "version": "6.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "5c7a5c524e556113e7f8685e6880cbc4090c798d"
+                "reference": "f4db5a78a5ea468d4831de7f0bf9d9415e348699"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/5c7a5c524e556113e7f8685e6880cbc4090c798d",
-                "reference": "5c7a5c524e556113e7f8685e6880cbc4090c798d",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/f4db5a78a5ea468d4831de7f0bf9d9415e348699",
+                "reference": "f4db5a78a5ea468d4831de7f0bf9d9415e348699",
                 "shasum": ""
             },
             "require": {
@@ -174,7 +174,7 @@
             },
             "require-dev": {
                 "ext-curl": "*",
-                "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.4 || ^7.0",
+                "phpunit/phpunit": "^4.0 || ^5.0",
                 "psr/log": "^1.0"
             },
             "suggest": {
@@ -183,7 +183,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "6.3-dev"
+                    "dev-master": "6.2-dev"
                 }
             },
             "autoload": {
@@ -216,7 +216,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2018-08-08T04:37:00+00:00"
+            "time": "2017-06-22T18:50:49+00:00"
         },
         {
             "name": "guzzlehttp/promises",

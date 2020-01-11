@@ -41,11 +41,13 @@ if (!class_exists('CW_Checkout')) :
             $options_array = CW()->get_options();
 
             if($order && $options_array[CodesWholesaleConst::AUTOMATICALLY_COMPLETE_ORDER_OPTION_NAME] == CodesWholesaleAutoCompleteOrder::COMPLETE) {
+                $customer = new WC_Customer($order->get_customer_id());
+
                 $securityInformation = Security::check(
+                    $customer->get_email(),
+                    get_post_meta( $order_id, '_customer_user_agent',  true),
                     $order->get_billing_email(),
-                    $order->get_customer_user_agent(),
-                    $order->get_billing_email(),
-                    $order->get_customer_ip_address()
+                    get_post_meta( $order_id, '_customer_ip_address',  true)
                 );
 
                 $riskScore = $securityInformation->getRiskScore();

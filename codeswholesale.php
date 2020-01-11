@@ -3,7 +3,7 @@
  * Plugin Name: CodesWholesale for WooCommerce
  * Plugin URI: http://docs.codeshowlesale.com
  * Depends: WooCommerce
- * Description: Integration with CodesWholesale API. PHP >= 7.0
+ * Description: Integration with CodesWholesale API. PHP >= 7.1
  * Version: 2.5.4
  * Author: DevTeam devteam@codeswholesale.com
  * Author URI: http://docs.codeswholesale.com
@@ -166,8 +166,6 @@ final class CodesWholesale
             new \CodesWholesaleFramework\Database\Repositories\RefreshTokenRepository($db),
             new \CodesWholesaleFramework\Database\Repositories\CodeswholesaleProductRepository($db),
             new \CodesWholesaleFramework\Database\Repositories\CurrencyControlRepository($db),
-            new \CodesWholesaleFramework\Database\Repositories\PostbackImportRepository($db),
-            new \CodesWholesaleFramework\Database\Repositories\PostbackImportDetailsRepository($db),
         ];
     }
     
@@ -239,17 +237,11 @@ final class CodesWholesale
         //Exporters
         include_once('includes/exporters/wp-database-exporter.php');
 
-        //Imports
-        include_once('includes/import/postback-impot-products.php');
-        
         //Updaters
         include_once('includes/updaters/wp-attachment-updater.php');
         include_once('includes/updaters/wp-attribute-updater.php');
         include_once('includes/updaters/wp-category-updater.php');
         include_once('includes/updaters/wp-product-updater.php');
-        
-        include_once('includes/updaters/product/create-internal-product.php');
-        include_once('includes/updaters/product/update-internal-product.php');
         
         // Retrievers
         include_once('includes/retrievers/wp-links-retriever.php');
@@ -353,7 +345,7 @@ final class CodesWholesale
                 'environment' => $options['environment'],
                 'client_id' => empty($options['api_client_id']) ? '0' : $options['api_client_id'] ,
                 'client_secret' => empty($options['api_client_secret']) ? '0' : $options['api_client_secret'],
-                'client_headers' => 'Codeswholesale-WooCommerce/' . $this->version,
+                'client_headers' => 'Codeswholesale-WooCommerce/2.5.4',
                 'db' => new PDO('mysql:host=' . $wpdb->dbhost . ';dbname=' . $wpdb->dbname, $wpdb->dbuser, $wpdb->dbpassword),
                 'prefix' => sprintf('%s%s', $wpdb->prefix, \CodesWholesaleFramework\Database\Interfaces\RepositoryInterface::CW_PREFIX),
                 'signature' => empty($options['api_client_singature']) ? CodesWholesaleConst::TEST_SIGNATURE : $options['api_client_singature']

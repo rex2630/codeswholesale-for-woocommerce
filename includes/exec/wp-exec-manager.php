@@ -56,14 +56,4 @@ class ExecManager
             exec($cmd . " > /dev/null &");
         }
     }
-    
-    public static function startImportProducts() 
-    {
-        self::exec(self::getPhpPath(), 'ExecImpotProducts.php');
-    }
-    
-    public static function startUpdateProductPrice() 
-    {
-       self::exec(self::getPhpPath(), 'ExecUpdateProductPrice.php');
-    }
 }
