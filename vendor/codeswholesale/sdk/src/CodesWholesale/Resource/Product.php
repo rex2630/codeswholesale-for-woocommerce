@@ -19,6 +19,7 @@ class Product extends Resource
     const PLATFORM = "platform";
     const REGIONS = "regions";
     const LANGUAGES = "languages";
+    const PEGI_RATING = "pegirating";
     const PRICES = "prices";
     const BUY_HREF_REL_NAME = "buy";
     const DESCRIPTION_HREF_REL_NAME = "description";
@@ -93,6 +94,14 @@ class Product extends Resource
     public function getReleaseDate()
     {
         return $this->getProperty(self::RELEASE_DATE);
+    }
+
+    /**
+     * @return string
+     */
+    public function getPegiRating()
+    {
+        return $this->getProperty(self::PEGI_RATING);
     }
 
     /**

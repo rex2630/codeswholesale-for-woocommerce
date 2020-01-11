@@ -79,9 +79,13 @@ class WP_Product_Updater
             'post_title' => wc_clean($externalProduct->getProduct()->getName()),
             'post_parent' => '',
             'post_type' => "product",
+            'post_date'     => $externalProduct->getProduct()->getReleaseDate(),
+            'post_date_gmt' => get_gmt_from_date( $externalProduct->getProduct()->getReleaseDate() )
         );
-        
+
         $post_id = wp_insert_post( $post );
+
+        echo $externalProduct->getProduct()->getReleaseDate() . "\n";
         
         if (! $post_id) {
             throw new \Exception('Error');
@@ -288,9 +292,13 @@ class WP_Product_Updater
 
             $category = $product->getProductDescription()->getCategories();
 
+            echo print_r($category) . "\n";
+
             $this->setProductCategory($post_id, $category,  WP_Category_Updater::CATEGORY_SLUG_CATEGORY);
 
             $pegi = $product->getProductDescription()->getPegiRating();
+
+            echo $pegi . "\n";
 
             $this->setProductCategory($post_id, $pegi,  WP_Category_Updater::CATEGORY_SLUG_PEGI);  
         } catch (Exception $ex) {
@@ -350,7 +358,7 @@ class WP_Product_Updater
      * @param null $exist_thumb
      */
     public function updateProductThumbnail($post_id, $thumb, $exist_thumb = null) {
-        if (count($thumb) > 0 && $exist_thumb !== $thumb['name']) {
+        if (count($thumb) > 0 && $exist_thumb !== $thumb['name'] && strpos($thumb['url'], "no-image") == false) {
             $attach_id = $this->attachmentUpdater->setAttachment($post_id, $thumb['url'], $thumb['name']);
             set_post_thumbnail( $post_id, $attach_id );
         }
