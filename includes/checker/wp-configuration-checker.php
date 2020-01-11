@@ -40,8 +40,8 @@ class WP_ConfigurationChecker
         /** @var array $output */
         $output = ExecManager::exec(ExecManager::getPhpPath(), 'db-connection-exec.php', false);
 
-        if (count($output) > 0) {
-            throw new \Exception("Something is wrong with your database connection. Please check your wp-config.php and change localhost to 127.0.0.1.");
-        }
+        // if (count($output) > 0) {
+        //     throw new \Exception("Something is wrong with your database connection. Please check your wp-config.php and change localhost to 127.0.0.1.");
+        // }
     }
 }
