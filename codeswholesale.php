@@ -259,6 +259,10 @@ final class CodesWholesale
         //WooCommerce
         include_once('includes/woocommerce/class-cw-woocommerce-order.php');
         include_once('includes/woocommerce/class-cw-checkout.php');
+
+        // Cron Job
+        include_once( 'includes/abstracts/class-cw-cron-job.php');
+        include_once( 'includes/class-cw-cron-update-stock.php');
         
         //E-mails
         include_once('includes/emails/class-cw-emails.php');
