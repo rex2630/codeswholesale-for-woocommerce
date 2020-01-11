@@ -2,25 +2,46 @@
 use CodesWholesale\Resource\ImageType;
 use CodesWholesale\Resource\StockAndPriceChange;
 
-if (!defined('ABSPATH')) exit; // Exit if accessed directly
-
 if (!class_exists('CW_Update_Stock')) :
 
     class CW_Cron_Update_Stock extends CW_Cron_Job
     {
         
-        /**
-         *
-         */
         public function __construct()
         {
-            parent::__construct("codeswholesale_update_stock_action");
-            
-        }
+			parent::__construct("codeswholesale_update_stock_action");
+			            
+		}
+		
+		public function calculateSpread(array $spreadParams, $price)
+		{
+			if ($spreadParams['cwSpreadType'] == 0) {
+	
+				$priceSpread = $price + $spreadParams['cwSpread'];
+	
+			} else if ($spreadParams['cwSpreadType'] == 1) {
+	
+				$result = $price / 100 * $spreadParams['cwSpread'] + $price;
+				$priceSpread = round($result, 2);
+			}
+	
+			return $priceSpread;
+		}
 
-        /**
-         *
-         */
+		public function getSpreadParams() {
+
+			$options = CW()->instance()->get_options();
+			$spread_type = $options['spread_type'];
+			$spread_value = $options['spread_value'];
+	
+			$spread_params = array(
+				'cwSpreadType' => $spread_type,
+				'cwSpread' => $spread_value
+			);
+	
+			return $spread_params;
+		}
+
         public function cron_job()
         {
             $products_ids = array();
@@ -123,10 +144,8 @@ if (!class_exists('CW_Update_Stock')) :
                     $post_product = $products_ids[$cw_product->getProductId()];
                     
                     $price = $cw_product->getDefaultPrice();
-                    
-					// $priceSpread = $this->spreadCalculator->calculateSpread($this->spreadParams->getSpreadParams(), $price);
-					
-					$priceSpread = $cw_product->getPrice();
+				
+					$priceSpread = $this->calculateSpread($this->getSpreadParams(), $price);
                     
                     $product_spread_type =  get_post_meta($post_product->ID, "_codeswholesale_product_spread_type", true);
 					
