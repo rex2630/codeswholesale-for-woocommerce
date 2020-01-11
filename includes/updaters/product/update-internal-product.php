@@ -13,11 +13,11 @@ class CW_Update_Internal_Product extends CW_Product_Action_Abstract
           
         $cwProductModel = $this->codeswholesaleProductModelFactory->prepare($productModel, $this->optionsArray[CodesWholesaleConst::PREFERRED_LANGUAGE_FOR_PRODUCT_OPTION_NAME]);
 
-        if (! $cwProductModel->isContentDiff($wpProduct->post_content)) {
+        if ($cwProductModel->isContentDiff($wpProduct->post_content)) {
             $post['post_content'] = $productModel->getFactSheets();
         }
 
-        if (! $cwProductModel->isTitleDiff($wpProduct->post_title)) {
+        if ($cwProductModel->isTitleDiff($wpProduct->post_title)) {
             $post['post_title'] = $productModel->getName();
         }
 
@@ -27,13 +27,13 @@ class CW_Update_Internal_Product extends CW_Product_Action_Abstract
 
         $exist_thumb_title = get_the_title(get_post_thumbnail_id($post_id));
 
-        if (! $cwProductModel->isThumbDiff($exist_thumb_title)) {
+        if ($cwProductModel->isThumbDiff($exist_thumb_title)) {
             $this->updateProductThumbnail($productModel, $post_id, $exist_thumb_title);
         }
 
         $exist_gallery = $this->getExistGallery($post_id);
 
-        if (! $cwProductModel->isGalleryDiff($exist_gallery)) {
+        if ($cwProductModel->isGalleryDiff($exist_gallery)) {
             $this->updateProductGallery($productModel, $post_id, $exist_gallery);
         }
 
