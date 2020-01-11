@@ -32,7 +32,7 @@ if($this->import_in_progress) {
     </div>
     <hr>
 
-    <p id="import_all_products_copy"><?php _e('Tutaj copy o tym że to najprostsza i najlepsza opcja na import wszytskich produktów z CW', 'woocommerce') ?></p>
+    <p id="import_all_products_copy"><?php _e('Here is a copy about the simplest and best option for importing all CW products', 'woocommerce') ?></p>
 
     <form id="import_all_products_form" class="cw-form">
         <div id="import_filters" style="display:none">
