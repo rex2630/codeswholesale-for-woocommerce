@@ -1,0 +1,33 @@
+{
+    "name": "codeswholesale/cw-extension-framework",
+    "type": "library",
+    "description": "The CodesWholesale Extension Framework",
+    "keywords": [
+        "codeswholesale",
+        "extension",
+        "plugin",
+        "api",
+        "games",
+        "cd-keys"],
+    "homepage": "https://github.com/codeswholesale/codeswholesale-extension-framework",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "CodesWholesale.com",
+            "email": "devteam@codeswholesale.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.0",
+        "codeswholesale/sdk": "2.2.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "CodesWholesaleFramework\\": "src"
+        }
+    }
+}
