@@ -190,17 +190,10 @@ if (!class_exists('CW_Update_Stock')) :
 						update_post_meta($post_product->ID, "_wc_pre_orders_enabled", "yes");
 						update_post_meta($post_product->ID, "_wc_pre_orders_when_to_charge", "upfront");
 						if ($cw_product->getStockQuantity() == 0) {
-							update_post_meta( $post_product->ID, "_stock_status", "instock");
+							update_post_meta($post_product->ID, "_stock", esc_attr(0));
+							update_post_meta( $post_product->ID, "_stock_status", "onbackorder");
 							update_post_meta( $post_product->ID, "_backorders", "notify");								
 						}
-						wp_update_post(
-							array (
-								'ID'            => $post_product->ID, // ID of the post to update
-								'post_status' 	=> "publish",
-								'post_date'     => date("Y-m-d h:i:sa", strtotime("now")),
-								'post_date_gmt' => get_gmt_from_date( date("Y-m-d h:i:sa", strtotime("now")) )
-							)
-						);
 				} else {
 					update_post_meta($post_product->ID, "_wc_pre_orders_enabled", "no");
 					update_post_meta($post_product->ID, "_wc_pre_orders_when_to_charge", "");
