@@ -1,0 +1,3 @@
+[submodule "vendor/codeswholesale/sdk"]
+	path = vendor/codeswholesale/sdk
+	url = https://github.com/codeswholesale/codeswholesale-sdk-php
