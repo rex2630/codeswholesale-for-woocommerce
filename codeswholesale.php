@@ -462,5 +462,3 @@ function CW()
 }
 
 CW();
-
-
