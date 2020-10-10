@@ -280,7 +280,6 @@ final class CodesWholesale
         }
     }
 
-
     /**
      * Define WC Constants
      */
@@ -369,7 +368,6 @@ final class CodesWholesale
             }
         }
     }
-
 
     /**
      * @return \CodesWholesale\Client

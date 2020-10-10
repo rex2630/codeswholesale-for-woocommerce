@@ -4,10 +4,10 @@ include_once(plugin_dir_path( __FILE__ ).'../generators/wp-form-element-generato
 abstract class CW_Controller {
 
         public $form_element_generator;
-                
+
         public $account;
         public $acountError;
-        
+
         public  function __construct() {
             $this->form_element_generator = new WP_Form_Element_Generator();
         }        
@@ -37,9 +37,9 @@ abstract class CW_Controller {
         public function plugin_img() {
             return plugins_url().'/codeswholesale-for-woocommerce/assets/images/brand_logo.svg';
         }
-        
+
         public function init_account() {
-            
+
             CW()->refresh_codes_wholesale_client();
             
             if(CW()->isClientCorrect()) {
@@ -49,4 +49,3 @@ abstract class CW_Controller {
             }
         }
 }
-

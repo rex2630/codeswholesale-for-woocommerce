@@ -16,7 +16,6 @@ abstract class CW_Cron_Job
         register_deactivation_hook(CW_PLUGIN_FILE, array($this, 'remove_schedule'));
 
         add_action($this->type_name, array($this, 'cron_job'));
-
     }
 
     /**
@@ -50,5 +49,4 @@ abstract class CW_Cron_Job
 
         return $schedules;
     }
-
 }
