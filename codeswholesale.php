@@ -4,7 +4,7 @@
  * Plugin URI: http://docs.codeshowlesale.com
  * Depends: WooCommerce
  * Description: Integration with CodesWholesale API. PHP >= 7.0
- * Version: 2.6.6
+ * Version: 2.6.7
  * Author: DevTeam devteam@codeswholesale.com
  * Author URI: http://docs.codeswholesale.com
  * License: GPL2
@@ -391,7 +391,7 @@ final class CodesWholesale
      */
     public function get_options()
     {
-        if (count($this->plugin_options) == 0) {
+        if (empty($this->plugin_options)) {
             $this->plugin_options = get_option(CodesWholesaleConst::OPTIONS_NAME);
         }
 
