@@ -35,11 +35,11 @@ Our automated games supply chain is supported by the API-based technology.
 
 *Sync your product listing with CodesWholesale*
 
-Connect your store to CodesWholesale.com and import hundreds of digital products into your store. ItĂ˘ÂÂs fast and hassle-free!
+Connect your store to CodesWholesale.com and import hundreds of digital products into your store. It's fast and hassle-free!
 
 *Error and order notifications via email*
 
-You may want to keep an eye on whatĂ˘ÂÂs going on in your store, be it orders or errors. With CodesWholesale, youĂ˘ÂÂre always on the right side of things!
+You may want to keep an eye on what's going on in your store, be it orders or errors. With CodesWholesale, you are always on the right side of things!
 
 *Low balance notifications*
 
@@ -59,15 +59,15 @@ Want to check the details of your past orders? Get a full overview of your fulfi
 
 *New filter options*
 
-The next time you want to import products from CodesWholesale, youĂ˘ÂÂll see the inclusion of new filters. Narrow down your search by platform, region, language, and date.
+The next time you want to import products from CodesWholesale, you will see the inclusion of new filters. Narrow down your search by platform, region, language, and date.
 
 *Import products into CSV file*
 
-OK, so youĂ˘ÂÂve applied the right filter and need to export the products to an external management system? Download them as a CSV file and youĂ˘ÂÂre ready to go!
+OK, so you have applied the right filter and need to export the products to an external management system? Download them as a CSV file and youĂ˘ÂÂre ready to go!
 
-*Rate the risk of your clientsĂ˘ÂÂ orders*
+*Rate the risk of your clients orders*
 
-Not all orders submitted by your clients are fully secure. How do you know that? Use CodesWholesale risk score feature and have full control over your clientsĂ˘ÂÂ orders.
+Not all orders submitted by your clients are fully secure. How do you know that? Use CodesWholesale risk score feature and have full control over your clients orders.
 
 *Download invoice in pdf*
 
@@ -89,7 +89,7 @@ Or disable them if you want. With this option, you are free to test demand by se
 
 You must have heard that any price that ends in Ă˘ÂÂ9Ă˘ÂÂ compels customers to buy. From now on, the option of charm prices can be active in your Woocommerce store!
 
-Best of all, itĂ˘ÂÂs absolutely free!
+Best of all, it's absolutely free!
 
 
 == Installation ==
@@ -99,7 +99,7 @@ Best of all, itĂ˘ÂÂs absolutely free!
 3. Press the *button Active* in the upper right-hand corner.
 4. Go to the CodesWholesale.com panel to configure your plugin settings.
 
-Now, youĂ˘ÂÂre ready to go!
+Now, you are ready to go!
 
 == Frequently Asked Questions ==
 
@@ -138,83 +138,4 @@ You have questions, we have answers. Be sure to visit our recent post [here](htt
 Any properly written Wordpress theme will work perfectly with CodesWholesale. So choose any theme that you like!
 
 == Changelog ==
-
-= 2.0 =
-
-What you get with API 2.0:
-
-- syncing your product listing with CodesWholesale
-- game assets import
-- tracking past orders
-- new filter options and CSV download
-- rating the risk of incoming orders
-- invoice pdf download
-- brand-new notifications via postback URL
-- double-check price option
-- pre-order option
-- charm pricing at work
-
-= 2.1 =
-
-- PHP PATH issue when importing product (fixed)
-
-= 2.2 =
-
-- Problem with installation (fixed)
-- Problem with postback and signature (fixed)
-- Information about WooCommerce requirement (added)
-- Price update after field change which depends on prices (added)
-
-= 2.3 =
-
-- Attributes issue (fixed)
-- Attachment issues while image for product not found (fixed)
-- Attributes and Categories as global (added)
-- Segregation between attributes global/local (added)
-
-= 2.4 =
-
-- Attributes improvement
-
-= 2.4.1 =
-
-- Website crash due to wrong production credentials (fixed)
-- Issue related to database column - undefined index: _codeswholesale_double_check_price after installation (fixed)
-
-= 2.4.2 =
-
-- Switch from one product category to multiple (added)
-
-= 2.4.3 =
-
-- Settings reorganization (edit)
-
-= 2.4.4 =
-
-- Server check for PHP declared variable (added)
-
-= 2.5.4 =
-
-- Improved currency converter (added)
-- Bugfixes for import and product updates (fixed)
-
-= 2.6 =
-- New, improved import procedure independent from exec() function
-
-= 2.6.1 =
-- Database validation fix
-
-= 2.6.2 =
-- inStockDaysAgo import fix
-
-= 2.6.3 =
-- Fix to excess recursion during import
-
-= 2.6.4 =
-- Security endpoint bug fix
-
-= 2.6.5 =
-- Currency not importing bug fix
-
-= 2.6.6 =
-- Currency does not exchange bug fix
+https://github.com/rex2630/codeswholesale-for-woocommerce/blob/master/CHANGELOG.MD
