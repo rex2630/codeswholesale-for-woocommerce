@@ -416,15 +416,15 @@ class PostbackImportModel
     public function serializeFilters() {
         $filters = [];
 
-        if (0 !== count($this->getFilters()['platform'])) {
+        if (!empty($this->getFilters()['platform'])) {
             $filters['platforms'] = $this->getFilters()['platform'];
         }
 
-        if (0 !== count($this->getFilters()['region'])) {
+        if (!empty($this->getFilters()['region'])) {
             $filters['regions'] = $this->getFilters()['region'];
         }
 
-        if (0 !== count($this->getFilters()['language'])) {
+        if (!empty($this->getFilters()['language'])) {
             $filters['languages'] = $this->getFilters()['language'];
         }
 
