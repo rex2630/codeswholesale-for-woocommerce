@@ -1,7 +1,9 @@
 <?php
 if( isset( $_GET[ 'tab' ] ) ) {
     $active_tab = $_GET[ 'tab' ];
-} // end if
+} else {
+	$active_tab = 'tab-import';
+}
 ?>
 
 <div class="wrap">
@@ -16,7 +18,7 @@ if( isset( $_GET[ 'tab' ] ) ) {
         </div>
         <?php if($this->isLiveMode()): ?>
             <nav class="nav-tab-wrapper cw-nav-tab-wrapper">
-                <a href="?page=<?php echo $this->page() ?>&tab=tab-import" class="nav-tab <?php if( !$active_tab || 'tab-import' == $active_tab){ echo 'nav-tab-active'; } ?>">
+                <a href="?page=<?php echo $this->page() ?>&tab=tab-import" class="nav-tab <?php if( 'tab-import' == $active_tab){ echo 'nav-tab-active'; } ?>">
                     <?php _e('Import', 'woocommerce'); ?>
                 </a>
                 <a href="?page=<?php echo $this->page() ?>&tab=tab-history" class="nav-tab <?php if( 'tab-history' == $active_tab){ echo 'nav-tab-active'; } ?>">
