@@ -34,6 +34,3 @@ class WP_Form_Element_Generator {
         woocommerce_wp_sleect($field);
     }
 }
-
-
-

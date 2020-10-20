@@ -59,6 +59,7 @@ class FileManager
      */
     public static function setImportFile($csv, $id): string
     {
+	    FileManager::createImportFolder($id);
         file_put_contents(self::getImportFilePath($id), $csv);
         
         return self::getImportPath() . $id . '-import.csv';        
@@ -94,8 +95,8 @@ class FileManager
 
             $path = self::getImportPath();
 
-            if (!is_dir($path)) {
-                mkdir($path, 0777);
+            if (!file_exists($path)) {
+                mkdir($path, 0777, true);
             }
 
             if (file_exists($path . sprintf('%s-import.csv', $id))) {
@@ -109,4 +110,3 @@ class FileManager
         umask($old);
     }
 }
-

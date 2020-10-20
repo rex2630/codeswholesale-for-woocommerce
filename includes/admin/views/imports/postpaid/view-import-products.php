@@ -27,7 +27,7 @@ if( isset( $_GET[ 'tab' ] ) ) {
             </nav>
 
              <?php
-                if(!$active_tab || 'tab-import' == $active_tab) {
+                if( 'tab-import' == $active_tab) {
                     include_once(plugin_dir_path( __FILE__ ) . './view-import-products-tabs/-tab-import.php');
                 } else if('tab-history' == $active_tab) {
                     include_once(plugin_dir_path( __FILE__ ) . './view-import-products-tabs/-tab-history.php');

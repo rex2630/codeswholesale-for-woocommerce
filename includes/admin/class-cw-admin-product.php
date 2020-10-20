@@ -74,12 +74,12 @@ if (!class_exists('CW_Admin_Product')) :
             $product_spread_type = $this->get_custom_field($post->ID, CodesWholesaleConst::PRODUCT_SPREAD_TYPE_PROP_NAME, 0);
             $product_spread_value = $this->get_custom_field($post->ID, CodesWholesaleConst::PRODUCT_SPREAD_VALUE_PROP_NAME, 0);
             $product_calculate_price_method = $this->get_custom_field($post->ID, CodesWholesaleConst::PRODUCT_CALCULATE_PRICE_METHOD_PROP_NAME, (empty($global_spread_value) || strlen($global_spread_value) == 0)? 1 : 0);
-            
-            $product_item_options = array(__('---- CHOOSE ONE ----', 'woocommerce'));
 
             foreach ($external_products as $prod) {
                 $product_item_options[$prod->getProductId()] = $prod->getName() . " - " . $prod->getPlatform() . " - " . $prod->getStockQuantity() . " - €" . number_format($prod->getLowestPrice(), 2, '.', '');
             }
+
+			asort($product_item_options);
 
             echo '<div class="options_group">';
 
@@ -360,8 +360,6 @@ if (!class_exists('CW_Admin_Product')) :
             
             return $value;
         }
-
-
     }
 
 endif;
