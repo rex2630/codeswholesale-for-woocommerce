@@ -24,7 +24,6 @@ class CW_Admin {
         include( 'class-cw-admin-menus.php'    );
         include( 'class-cw-admin-assets.php'   );
         include( 'class-cw-admin-product.php'  );
-
     }
 }
 

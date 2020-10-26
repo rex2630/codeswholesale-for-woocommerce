@@ -59,7 +59,7 @@ class FileManager
      */
     public static function setImportFile($csv, $id): string
     {
-	    FileManager::createImportFolder($id);
+//	    FileManager::createImportFolder($id);
         file_put_contents(self::getImportFilePath($id), $csv);
         
         return self::getImportPath() . $id . '-import.csv';        

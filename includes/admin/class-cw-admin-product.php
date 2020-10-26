@@ -80,6 +80,8 @@ if (!class_exists('CW_Admin_Product')) :
             }
 
 			asort($product_item_options);
+			$unsorted = array(__('---- CHOOSE ONE ----', 'woocommerce'));
+			$finished = $unsorted + $product_item_options;
 
             echo '<div class="options_group">';
 
@@ -89,7 +91,7 @@ if (!class_exists('CW_Admin_Product')) :
                 array(
                     'id' => CodesWholesaleConst::PRODUCT_CODESWHOLESALE_ID_PROP_NAME,
                     'label' => __('Select a product from CodesWholesale', 'woocommerce'),
-                    'options' => $product_item_options
+                    'options' => $finished
                 )
             );
  

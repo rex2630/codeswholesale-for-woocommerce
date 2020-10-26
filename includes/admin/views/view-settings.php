@@ -29,7 +29,7 @@
                         <p  class="cw-padding-bottom">
                             <?php _e( 'We are always looking to improve our services. Let us know what you think about our plugin.', 'codeswholesale-for-woocommerce' ) ?>
                         </p>
-                        <a target="_blank" href="https://podio.com/webforms/20883973/1437895" class="cw-btn cw-btn-success cw-full"><?php _e( 'Leave feedback', 'codeswholesale-for-woocommerce' ); ?></a>
+                        <a target="_blank" href="https://github.com/rex2630/codeswholesale-for-woocommerce/issues" class="cw-btn cw-btn-success cw-full"><?php _e( 'Leave feedback', 'codeswholesale-for-woocommerce' ); ?></a>
 
                     </div>
                 </div>
