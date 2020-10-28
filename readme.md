@@ -63,7 +63,7 @@ The next time you want to import products from CodesWholesale, you will see the 
 
 *Import products into CSV file*
 
-OK, so you have applied the right filter and need to export the products to an external management system? Download them as a CSV file and youĂ˘ÂÂre ready to go!
+OK, so you have applied the right filter and need to export the products to an external management system? Download them as a CSV file and you're ready to go!
 
 *Rate the risk of your clients orders*
 
@@ -131,7 +131,7 @@ PHP 7.0 or above is required. Everything will work seamlessly if you stick to th
 
 = Where can I get help? =
 
-You have questions, we have answers. Be sure to visit our recent post [here](https://codeswholesale.com/blog/api-2-0-for-woocommerce-store-owners/) and learn about all the latest features added to the plugin. You can always search the question bank in our [FAQ](https://codeswholesale.com/faq/reseller) and if youĂ˘ÂÂre still in doubt, please reach us out via email: devteam@codeswholesale or skype: devteam.codeswholesale. WeĂ˘ÂÂd love to help!
+You have questions, we have answers. Be sure to visit our recent post [here](https://codeswholesale.com/blog/api-2-0-for-woocommerce-store-owners/) and learn about all the latest features added to the plugin. You can always search the question bank in our [FAQ](https://codeswholesale.com/faq/reseller) and if you're still in doubt, please reach us out via email: devteam@codeswholesale or skype: devteam.codeswholesale. We'd love to help!
 
 = What themes work well with CodesWholesale? =
 
