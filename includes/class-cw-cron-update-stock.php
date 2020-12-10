@@ -64,7 +64,7 @@ if (!class_exists('CW_Update_Stock')) :
 				echo "Adding Product... \n";
 
 				if ( $cw_product->getReleaseDate() == '' ) {
- 					post = array(
+ 					$post = array(
 						'post_author' => '1',
 						'post_status' => "publish",
 						'post_name' => esc_attr($cw_product->getIdentifier()),
